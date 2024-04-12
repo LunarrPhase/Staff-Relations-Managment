@@ -31,16 +31,7 @@ jobs:
       - run:
           name: deploy
           command: '#e.g. ./deploy.sh'
-workflows:
-  example:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
-      - deploy:
-          requires:
-            - test
+
 
 orbs:
   codecov: codecov/codecov@4.0.1
