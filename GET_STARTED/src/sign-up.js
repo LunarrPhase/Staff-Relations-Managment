@@ -64,7 +64,8 @@ e.preventDefault();
     errorMessage = "Please create a password."
   }
   else {
-      errorMessage = "An error occurred. Please try again later.";
+    console.log(error);
+    errorMessage = "An error occurred. Please try again later.";
   }
 
   const errorMessageElement = document.getElementById('error-message');
