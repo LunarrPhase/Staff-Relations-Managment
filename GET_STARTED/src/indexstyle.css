@@ -10,7 +10,7 @@ body {
 }
 a{
     text-decoration: none;
-    color: #304852;
+    color: #132743;
 }
 a:hover{
     text-decoration: underline;
@@ -19,8 +19,9 @@ a:hover{
 }
 
 h1{
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 900;
+    color: #132743;
 }
 p{
     font-size: 18px;
@@ -35,31 +36,31 @@ p{
 }
 
 .login-box h2 {
-    color: #304852; /* Use fourth-color for headings */
+    color: #132743; /* Use fourth-color for headings */
     margin-bottom: 20px;
 }
 
 .login-box input[type="text"],
 .login-box input[type="password"],
-.login-box input[type="button"] {
+.login-box input[type="submit"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #304852; /* Use fourth-color for input borders */
+    border: 1px solid #132743; /* Use fourth-color for input borders */
     border-radius: 20px;
     box-sizing: border-box;
 }
 
-.login-box input[type="button"] {
-    background-color: #304852; /* Use fourth-color for submit button background */
+.login-box input[type="submit"] {
+    background-color: #132743; /* Use fourth-color for submit button background */
     color: #fff;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.login-box input[type="button"]:hover {
-    background-color: #36595f; /* Use third-color for submit button hover background */
+.login-box input[type="submit"]:hover {
+    background-color: #132743; /* Use third-color for submit button hover background */
 }
 
 .login-box .new-user {
@@ -67,7 +68,7 @@ p{
 }
 
 .login-box .new-user a {
-    color: #304852; /* Use fourth-color for links */
+    color: #132743; /* Use fourth-color for links */
     text-decoration: none;
 }
 

@@ -53,6 +53,8 @@ e.preventDefault();
  
  document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
 
+ window.location.href = 'index.html';
+
 })
 .catch((error) => {
   let errorMessage;
