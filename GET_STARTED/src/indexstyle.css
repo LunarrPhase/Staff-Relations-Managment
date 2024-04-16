@@ -42,7 +42,7 @@ p{
 
 .login-box input[type="text"],
 .login-box input[type="password"],
-.login-box input[type="submit"] {
+.login-box input[type="button"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -51,7 +51,7 @@ p{
     box-sizing: border-box;
 }
 
-.login-box input[type="submit"] {
+.login-box input[type="button"] {
     background-color: #132743; /* Use fourth-color for submit button background */
     color: #fff;
     font-weight: bold;
@@ -59,7 +59,7 @@ p{
     transition: background-color 0.3s ease;
 }
 
-.login-box input[type="submit"]:hover {
+.login-box input[type="button"]:hover {
     background-color: #132743; /* Use third-color for submit button hover background */
 }
 
