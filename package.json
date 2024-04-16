@@ -1,0 +1,25 @@
+{
+  "name": "staff-relations-managment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NashTheHash/Staff-Relations-Managment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NashTheHash/Staff-Relations-Managment/issues"
+  },
+  "homepage": "https://github.com/NashTheHash/Staff-Relations-Managment#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "path": "^0.12.7"
+  }
+}
