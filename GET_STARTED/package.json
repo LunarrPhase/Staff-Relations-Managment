@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +11,9 @@
   "dependencies": {
     "firebase": "^10.11.0"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "firebase-functions-test": "^3.2.0",
+    "mocha": "^10.4.0"
+  }
 }
