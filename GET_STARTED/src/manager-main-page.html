@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="manager-main-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+    <style>
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+        }
+
+        #loading .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid  #ffb5b5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
+
+        <nav>
+            
+            <ul class="menu">
+                <li><a href="manager-main-page.html">Home</a></li>
+                <li id = "timesheets"><a href="#">Timesheets</a></li>
+                <li id = "bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Book a Car Wash</a></li>
+                            <li id="meal"><a href="#">Book Your Meal</a></li>
+                        </ul>
+                    </div>
+                
+                </li>
+                <li id = "reports"><a href="#">Reports</a></li>
+                <li id = "logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id = "notifications"><a href="#"><i class="fa-solid fa-bell"></i></a></li>
+            </ul>
+
+        </nav>
+
+        <hr>
+    
+    </header>
+            
+    <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
+        <h2 id = "userInfo"></h2>
+
+        <article class="top-article">
+            <section>
+
+                <img src="manager.svg" alt="background" id="main-pic">
+
+            </section>
+
+            <section class="main-info">
+
+                <h3>“Start by doing what's necessary, then what's possible; and suddenly you are doing the impossible.”</h3>
+                <h4>- St. Francis of Assisi</h4>
+
+            </section>
+
+        </article>
+
+        <article class="bottom-article">
+            <section class="info" id="timesheet-info">
+                <h5>Timesheets made fun</h5>
+                <p>Enjoy a creative and fun way to track your tasks.</p>
+                <img src="time.svg" alt="time-pic">
+            </section>
+
+            <hr>
+
+            <section class="info" id="booking-info">
+                <h5>Bookings made easy</h5>
+                <p>Make your car feel as polished as you do, while you grab your ready-to-go meal.</p>
+                <img src="booking.svg" alt="booking-pic">
+            </section>
+
+            <hr>
+
+            <section class="info" id="feedback-info">
+                <h5>Feedback</h5>
+                <p>Encourage and help your colleagues through uplifting words and insightful comments.</p>
+                <img src="feedback.svg" alt="feedback-pic">
+            </section>
+
+            <hr>
+
+            <section class="info" id="report-info">
+                <h5>Reports</h5>
+                <p>Get reports on your stuff.</p>
+                <img src="undraw_report_re_f5n5.svg" alt="report-pic">
+            </section>
+        </article>
+
+    </main>
+
+            <footer class="footer">
+                <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+            </footer>
+   
+    
+</body>
+
+<!--<script type="module" src="main-page.js"></script>-->
+</html>
