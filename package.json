@@ -20,6 +20,14 @@
   "homepage": "https://github.com/NashTheHash/Staff-Relations-Managment#readme",
   "dependencies": {
     "express": "^4.19.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "chai": "^5.1.0",
+    "firebase": "^10.11.0",
+    "node-fetch": "^2.6.1",
+    "sinon": "^17.0.1"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.2.0",
+    "mocha": "^10.4.0"
   }
 }
