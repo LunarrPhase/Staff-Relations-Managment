@@ -24,7 +24,6 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-
 login.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default form submission
 

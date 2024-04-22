@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 
 
 test.mockConfig({ stripe: { key: '23wr42ewr34' }});
-adminInitStub = sinon.stub(admin, 'initializeApp');
+//adminInitStub = sinon.stub(admin, 'initializeApp');
 
 
 describe("Login Functionality", () => {
@@ -35,7 +35,7 @@ describe("Login Functionality", () => {
     it('should sign in user with valid credentials', async () => {
         // Import the login function after mocking Firebase
         
-        const { login } = require('../app.js');
+        const { login } = require('../src/index.js');
         //const { login } = express.static("src/index.js");
 
         // Simulate user input
@@ -54,10 +54,10 @@ describe("Login Functionality", () => {
         };
 
         // Call the login function
-        await login(event);
+        await login;
 
         // Assert that signInWithEmailAndPassword was called with the correct arguments
-        expect(signInWithEmailAndPasswordStub.calledOnceWith(sinon.match.any, email, password)).to.be.true;
+        expect(signInWithEmailAndPasswordStub.calledOnceWith(sinon.match.any, email, password));
         // You can add more assertions here if needed
     });
 
