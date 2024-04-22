@@ -25,13 +25,11 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 
-
 login.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default form submission
 
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
-
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
