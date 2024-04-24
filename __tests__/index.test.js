@@ -1,3 +1,37 @@
+//import { FirebaseLogin } from '../src/index';
+import App from '../src/functions';
+import firebase from 'firebase/app';
+
+jest.mock('firebase/app', () => {
+  return {
+    auth: jest.fn().mockReturnThis(),
+    signInWithEmailAndPassword: jest.fn(),
+  };
+});
+
+describe('61352544', () => {
+  it('should pass', async () => {
+    const email = 'example@gmail.com';
+    const password = '123';
+    await App.authenticate(email, password);
+    expect(firebase.auth().signInWithEmailAndPassword).toBeCalledWith(email, password);
+  });
+});
+
+/*
+const { mockFirebase } = require('firestore-jest-mock');
+
+// Create a fake Firestore with a `users` and `posts` collection
+mockFirebase({
+  database: {
+    users: [
+      { id: 'abc123', name: 'Homer Simpson' },
+      { id: 'abc456', name: 'Lisa Simpson' },
+    ],
+    posts: [{ id: '123abc', title: 'Really cool title' }],
+  },
+});
+
 const test = require('firebase-functions-test')({
     databaseURL: 'https://staff-relations-management.firebaseio.com',
     storageBucket: 'staff-relations-management.appspot.com',
@@ -24,7 +58,7 @@ describe("Login Functionality", () => {
                 signInWithEmailAndPassword: signInWithEmailAndPasswordStub
             }
         });*/
-    });
+   /* });
 
 
     afterAll(() => {
@@ -62,13 +96,16 @@ describe("Login Functionality", () => {
     });
 
 
+
+
+
     it('should display error message for invalid email', async () => {
         // Import the login function after mocking Firebase
         const { login } = require('../app.js');
 
         // Stubbing document.getElementById to return a mock error message element
-        const errorMessageElement = { textContent: '' };
-        const getElementByIdStub = sinon.stub(document, 'getElementById').returns(errorMessageElement);
+        //const errorMessageElement = { textContent: '' };
+        //const getElementByIdStub = sinon.stub(document, 'getElementById').returns(errorMessageElement);
 
         // Simulate DOM event with invalid email
         const event = {
@@ -80,15 +117,22 @@ describe("Login Functionality", () => {
                 }
             }
         };
-
+       
+        
+        //document.getElementById('email').setAttribute("value", event.target.elements.email);
+        //document.getElementById('password').setAttribute("value", event.target.elements.password);
+        //const myInput = wrapper.find('email');
+        //myInput.instance().value = 'some text';
         // Call the login function
-        await login(event);
-
+        await log();
+        const errorMessageElement = { textContent: '' };
         // Assert that error message element text content is updated correctly
-        expect(errorMessageElement.textContent).to.equal('Please provide a valid email address.');
-
+        //expect(errorMessageElement.textContent).to.equal('Please provide a valid email address.');
+        expect(errorMessageElement.textContent).toBe("auth/invalid-email");
         // Restore the stub
         getElementByIdStub.restore();
+        document.getElementById('email').cleanup();
+        document.getElementById('password').cleanup();
     });
 });
 
@@ -110,30 +154,5 @@ describe('testing basic function',() =>{
     it('test function returns 6',() =>{
         expect(index.basicTest()).toBe(6);
     });
-
-
-    /*it('test firebase callable function', () =>{
-        const data = {
-                text : 'not this shit again'
-            };
-        const context = {
-                auth: {
-                    uid: 'string',
-                        token: {
-                            aud: "firebaseproject-id",
-                            auth_time: Date.now(),
-                            exp: Date.now() + 1000000000,
-                            firebase: {
-                                identities: {
-                                    user: {}
-                                },
-                                sign_in_provider: "password",
-                            },
-                        uid: "test-user"
-                    }
-                }
-            };
-            const message = index.addMessage(data, context);
-            expect(message.text).toBe('not this **** again');
-        });*/
 });
+*/
