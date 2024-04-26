@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="19" lines-covered="10" line-rate="0.5263" branches-valid="7" branches-covered="3" branch-rate="0.4285" timestamp="1714128863744" complexity="0" version="0.1">
+  <sources>
+    <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
+  </sources>
+  <packages>
+    <package name="Staff-Relations-Managment" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="dummy.js" filename="dummy.js" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="Staff-Relations-Managment.src" line-rate="0.5263" branch-rate="0.4285">
+      <classes>
+        <class name="functions.js" filename="src\functions.js" line-rate="0.5263" branch-rate="0.4285">
+          <methods>
+            <method name="FirebaseLogin" hits="2" signature="()V">
+              <lines>
+                <line number="5" hits="2"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="8" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="20" hits="0"/>
+              </lines>
+            </method>
+            <method name="SetErrorMessage" hits="2" signature="()V">
+              <lines>
+                <line number="28" hits="2"/>
+              </lines>
+            </method>
+            <method name="basicTest" hits="1" signature="()V">
+              <lines>
+                <line number="47" hits="1"/>
+              </lines>
+            </method>
+            <method name="isValidAccessKey" hits="0" signature="()V">
+              <lines>
+                <line number="54" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="2" branch="false"/>
+            <line number="10" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="13" hits="0" branch="false"/>
+            <line number="18" hits="0" branch="false"/>
+            <line number="21" hits="0" branch="false"/>
+            <line number="22" hits="0" branch="false"/>
+            <line number="23" hits="0" branch="false"/>
+            <line number="31" hits="2" branch="false"/>
+            <line number="33" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="34" hits="1" branch="false"/>
+            <line number="36" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="40" hits="0" branch="false"/>
+            <line number="43" hits="2" branch="false"/>
+            <line number="48" hits="1" branch="false"/>
+            <line number="49" hits="1" branch="false"/>
+            <line number="50" hits="1" branch="false"/>
+            <line number="55" hits="0" branch="true" condition-coverage="0% (0/3)"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>
