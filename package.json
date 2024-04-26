@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "//": "to test: jest --detectOpenHandles ./__tests__",
+  "//": "to test: jest --detectOpenHandles ./__tests__ else: echo 'tests successful'",
   "scripts": {
-    "test": "echo 'tests completeted'",
+    "test": "jest ./__tests__",
     "start": "node app"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NashTheHash/Staff-Relations-Managment.git"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/dummy.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js"
+      }
   },
   "keywords": [],
   "author": "",
@@ -34,7 +40,12 @@
     "@babel/core": "^7.24.4",
     "@babel/preset-env": "^7.24.4",
     "babel-jest": "^29.7.0",
+    "babel-plugin-transform-import-meta": "^2.2.1",
     "firebase-functions-test": "^3.2.0",
+    "firestore-jest-mock": "^0.25.0",
     "mocha": "^10.4.0"
-  }
+  },
+  "plugins": [
+    "babel-plugin-transform-import-meta"
+  ]
 }
