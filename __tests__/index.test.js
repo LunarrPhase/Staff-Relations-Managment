@@ -3,11 +3,11 @@ import firebase from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 
-const test = require('firebase-functions-test')({
+/*const test = require('firebase-functions-test')({
     databaseURL: 'https://staff-relations-management.firebaseio.com',
     storageBucket: 'staff-relations-management.appspot.com',
     projectId: 'staff-relations-management',
-},'.\staff-relations-management-firebase-adminsdk-3mdbj-5ad4c10a82.json');
+},'.\staff-relations-management-firebase-adminsdk-3mdbj-5ad4c10a82.json');*/
 
 
 const admin = require('firebase-admin');
