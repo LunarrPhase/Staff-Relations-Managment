@@ -58,6 +58,20 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
+
+const timesheetsButton = document.getElementById("timesheets");
+
+// Add event listener to the button
+timesheetsButton.addEventListener("click", () => {
+    // Navigate to the timesheets HTML page
+    window.location.href = "timesheet.html";
+});
+
+
+
+
+
+
 //on-click of login.
 const logout = document.getElementById("logout");
 const logoutTab = async (e) => {

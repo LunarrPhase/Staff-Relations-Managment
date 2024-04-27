@@ -1,0 +1,46 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New task</title>
+    <link rel="stylesheet" href="add-task.css"> <!-- Link to external CSS file -->
+    <script type = "module" src = "timesheet.js"></script>
+</head>
+<body>
+
+<h2>Insert new task</h2>
+
+<form id="timesheetForm">
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="emmail" name="email" required><br><br>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required><br><br>
+
+    <label for="startTime">Start Time:</label>
+    <input type="time" id="startTime" name="startTime" required><br><br>
+
+    <label for="endTime">End Time:</label>
+    <input type="time" id="endTime" name="endTime" required><br><br>
+
+    <label for="totalHours">Total Hours:</label>
+    <input type="number" id="totalHours" name="totalHours" required><br><br>
+
+    <label for="projectCode">Project Code:</label>
+    <input type="text" id="projectCode" name="projectCode" required><br><br>
+
+    <label for="taskDescription">Task Description:</label><br>
+    <textarea id="taskDescription" name="taskDescription" rows="4" required></textarea><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

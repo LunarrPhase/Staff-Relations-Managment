@@ -1,0 +1,28 @@
+.hours{
+    border: 1px solid black;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: 1px solid black;
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: space-around;  
+}
+button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
