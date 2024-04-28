@@ -1,10 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, collection, addDoc , getDocs} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-//import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+//import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getFirestore, collection, addDoc , getDocs, doc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 //import { FirebaseLogin } from './functions.js'
+import {  ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
+document.addEventListener("DOMContentLoaded", function() {
+  
 
 const firebaseConfig = {
     apiKey: "AIzaSyCdhEnmKpeusKPs3W9sQ5AqpN5D62G5BlI",
@@ -19,51 +22,50 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-const realtimeDB = getDatabase(app);
+const realtimDB = getDatabase(app);
 const auth = getAuth();
 const db = getFirestore(app);
-
-// const home = document.getElementById('home');
-
-// feedbackElement.addEventListener('click', async () => {
-//   //getting current user
-//   const user = auth.currentUser;
-//   console.log("clicked!")
-
-//   if (user) {
-//     try {
-      
-//       const userRef = ref(realtimeDb, 'users/' + user.uid)
-
-//       get(userRef).then((snapshot) => {
-//         const userData = snapshot.val();
-//         const role = userData.role;
-//         if (role === "Manager") {
-//           window.location.href = 'manager-main-page.html'
-//         } else if (role === "HR") {
-//           window.location.href = 'admin-main-page.html'
-//         } else {
-//           window.location.href = 'main-page.html'
-//         }
-//       });
-//     } catch (error) {
-//       console.error("Error getting user role:", error)
-//     }
-//   } else {
-//     window.location.href = 'index.html'
-//   }
-// })
+const realtimeDb = getDatabase(app);
 
 const user = auth.currentUser;
-//const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        //console.log("User ID:", user.uid); // Log the user ID
+        const userRef = ref(realtimeDb, 'users/' + user.uid);
+        //console.log(user.uid);
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        //console.log(userData);
+
+        
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        
+      }
+    } else {
+      console.log("User is signed out");
+      
+    }
+  
+
 
 //code for timesheets html
 if (user) {
     const userId = user.uid;
-    if (userId) {
+    if (user.uid) {
         try {
             const timesheetsRef = collection(db, `users/${userId}/timesheets`);
             const querySnapshot = await getDocs(timesheetsRef);
+            
+            //const colRef = collection(db, 'users');
+            //const userDocRef = doc(colRef, userId);
+            //const timesheetsRef = collection(userDocRef, 'timesheets');
+            //const querySnapshot = await getDocs(timesheetsRef);
+            const timesheetsBody = document.getElementById("timeSheetBody");
             
             querySnapshot.forEach((doc) => {
                 // Process each timesheet document
@@ -80,7 +82,7 @@ if (user) {
                     `;
 
                     timesheetsBody.innerHTML += timesheetRow;
-                console.log(doc.id, " => ", doc.data());
+                //console.log(doc.id, " => ", doc.data());
             });
 
             console.log("Timesheets retrieved successfully");
@@ -100,12 +102,6 @@ if (user) {
 
 
 
-
-
-
-
-
-
 //code to go to the add task
 
     //Get the button element by its ID
@@ -117,75 +113,16 @@ if (user) {
         window.location.href = "add-task.html";
     });
 
-    document.getElementById("timesheetForm").addEventListener("submit", async function(event) {
-      event.preventDefault(); 
+    
   
-      //Get input 
-      var fullName = document.getElementById("fullName").value;
-      var email = document.getElementById("email").value;
-      var date = document.getElementById("date").value;
-      var startTime = document.getElementById("startTime").value;
-      var endTime = document.getElementById("endTime").value;
-      var totalHours = document.getElementById("totalHours").value;
-      var projectCode = document.getElementById("projectCode").value;
-      var taskDescription = document.getElementById("taskDescription").value;
   
-      //Get current user ID 
-      //current user is in the realtime database u need to do something like this, this is how i get the currently logged in user in main.js
-    //import onAuthStateChanged where getAuth is if you use it
-        
-// onAuthStateChanged(auth, async (user) => {
-//   if (user) {
-//     try {
-//       //console.log("User ID:", user.uid);
-//       const userRef = ref(realtimDB, 'users/' + user.uid);
-//       const snapshot = await get(userRef);
-//       const userData = snapshot.val();
-//       //console.log(userData);
-//     //   const firstName = userData.firstName || "Unknown";
-//     //   const role = userData.role || "User";
-//       loading.style.display = 'none'
-//     } catch (error) {
-//       console.error("Error fetching user data:", error)
-//       loading.style.display = 'none'
-//     }
-//   } else {
-//     //console.log("User is signed out")
-//     loading.style.display = 'none'
-//   }
-// });
-       
-    //   this syntax is outdated and also gets from the firestore not from realtime database.
-    //   var currentUser = firebase.auth().currentUser;
-    //   var userId = currentUser ? currentUser.uid : null;
   
-      //Store data in Firestore
-      try {
-        const user = auth.currentUser;
-        if (user) {
-            const userId = user.uid;
-            if (userId) {
-                //Adding the timesheet to the user's timesheets subcollection with auto-generated ID
-                const timesheetsRef = collection(db, `users/${userId}/timesheets`);
-                await addDoc(timesheetsRef, {
-                    fullName: fullName,
-                    email: email,
-                    date: date,
-                    startTime: startTime,
-                    endTime: endTime,
-                    projectCode: projectCode,
-                    taskDescription: taskDescription,
-                    totalHours: totalHours
-                });
-                console.log("Timesheet added successfully");
-                window.location.href = "timesheet.html";
-            } else {
-                console.error("User ID not available");
-            }
-        } else {
-            console.error("User not authenticated");
-        }
-    } catch (error) {
-        console.error("Error adding timesheet: ", error);
-    }
   });
+  });
+  
+  
+  
+  
+  
+  
+  
