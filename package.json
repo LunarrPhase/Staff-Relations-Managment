@@ -5,8 +5,8 @@
   "main": "index.js",
   "//": "to test: jest --detectOpenHandles ./__tests__ else: echo 'tests successful'",
   "scripts": {
-    "test": "echo 'tests completed'"
-    
+    "test": "jest ./__tests__",
+    "start": "node app"
   },
   "repository": {
     "type": "git",
