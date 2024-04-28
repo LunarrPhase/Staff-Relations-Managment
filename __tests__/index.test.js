@@ -1,4 +1,4 @@
-import { FirebaseLogin, SetErrorMessage } from '../src/functions.js';
+import { FirebaseLogin, SetLoginError } from '../src/functions.js';
 import firebase from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -84,7 +84,7 @@ describe("Login Functionality", () => {
     it('Displays correct error message for invalid email', async () => {
 
         const Mockerror = {code: "auth/invalid-email"};
-        const errorMessage = SetErrorMessage(Mockerror);
+        const errorMessage = SetLoginError(Mockerror);
         expect(errorMessage).toBe("Please provide a valid email address.");
     });
 
@@ -92,7 +92,7 @@ describe("Login Functionality", () => {
     it('Displays correct error message for invalid credential', async () => {
 
         const Mockerror = {code: "auth/invalid-credential"};
-        const errorMessage = SetErrorMessage(Mockerror);
+        const errorMessage = SetLoginError(Mockerror);
         expect(errorMessage).toBe("Wrong email or password. Please try again.");
   });
 });

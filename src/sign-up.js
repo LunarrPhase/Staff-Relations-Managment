@@ -1,10 +1,12 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+//import { app } from "./initialise-firebase.js";
 import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { isValidAccessKey } from "./functions.js";
+import { isValidAccessKey, SetRole, SetSignUpError } from "./functions.js";
 // TODO: Add SDKs for Firebase products that you w to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
 
 // Your web app's Firebase configuration
@@ -23,6 +25,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const database = getDatabase(app);
 const auth = getAuth();
 
@@ -47,17 +51,7 @@ signUp.addEventListener('click', (e) =>{
         .then((userCredential) => {
 
             const user = userCredential.user;
-            let role;
-
-            if (accessKey === "mR123123") {
-               role = "Manager";
-            }
-            else if (accessKey === "hR456456") {
-                role = "HR";
-            }
-            else if (accessKey === "uR789789"){
-                role = "Staff";
-            }
+            role = SetRole(accessKey);
 
       // Update user profile with role
       /* user.updateProfile({
@@ -77,29 +71,10 @@ signUp.addEventListener('click', (e) =>{
 
         document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
         window.location.href = 'index.html'
-    }).catch((error) => {
+    })
+    .catch((error) => {
 
-            let errorMessage;
-            console.log(errorMessage)
-
-            if (error.code === "auth/email-already-in-use") {
-                errorMessage = "The email used to sign up already exists. Please use a different email.";
-            }
-            else if (error.code === "auth/invalid-email" || document.getElementById('email').value === "") {
-                errorMessage = "Please provide a valid email address."
-            }
-            else if (document.getElementById('password').value === "") {
-                errorMessage = "Please create a password."
-            }
-            else if(error.code=== "auth/invalid-password"){
-                errorMessage = "Password must be atleast 6 characters."
-            }
-            else {
-                errorMessage = "An error occurred. Please try again later.";
-            }
-
-            const errorMessageElement = document.getElementById('error-message');
-            errorMessageElement.textContent = errorMessage;
+            SetSignUpError(error)
         });
     }   
     else {
