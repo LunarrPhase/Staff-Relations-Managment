@@ -44,16 +44,9 @@ function SetErrorMessage(error){
 }
 
 
-function basicTest(){
-    const a = 1;
-    const b = 5;
-    return a + b;
-}
-
-
 function isValidAccessKey(accessKey) {
     return accessKey === "mR123123" || accessKey === "hR456456" || accessKey === "uR789789";
 }
 
 
-export{FirebaseLogin, SetErrorMessage, basicTest, isValidAccessKey};
+export{FirebaseLogin, SetErrorMessage, isValidAccessKey};

@@ -1,16 +1,6 @@
-import { FirebaseLogin, SetErrorMessage, basicTest } from '../src/functions.js';
+import { FirebaseLogin, SetErrorMessage } from '../src/functions.js';
 import firebase from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-
-
-/*const test = require('firebase-functions-test')({
-    databaseURL: 'https://staff-relations-management.firebaseio.com',
-    storageBucket: 'staff-relations-management.appspot.com',
-    projectId: 'staff-relations-management',
-},'.\staff-relations-management-firebase-adminsdk-3mdbj-5ad4c10a82.json');*/
-
-
-const admin = require('firebase-admin');
 
 
 jest.mock('firebase/auth');
@@ -27,25 +17,6 @@ describe('Login', () => {
   });
 });
 
-
-describe('testing basic function',() =>{
-
-    let adminStub;
-  
-    beforeAll(() =>{
-        adminStub = jest.spyOn(admin, 'initializeApp');
-        return;
-    });
-  
-    afterAll(() =>{
-        adminStub.mockRestore();
-        test.cleanup();
-    });
-  
-    it('test function returns 6',() =>{
-        expect(basicTest()).toBe(6);
-    });
-});
 
 jest.mock("firebase/app", () => {
   return {

@@ -15,7 +15,8 @@
   "jest": {
     "moduleNameMapper": {
       "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/dummy.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js"
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/dummy.js"
       },
     "collectCoverage": true,
     "coverageReporters": ["text", "cobertura"]
