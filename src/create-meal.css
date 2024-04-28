@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('create-meal.jpeg');
+    color: #132743; /* Dark blue text color */
+   
+}
+.big-container{
+    display: box;
+    background-color: aliceblue;
+    margin: 0 auto;
+    border: 2px solid #132743;
+    border-radius: 15px; /* Rounded border */
+    padding: 10px;
+    max-width: 90%;
+}
+
+.container {
+    padding: 40px;
+    border: 2px solid #132743; /* Dark blue border */
+    border-radius: 15px; /* Rounded border */
+    background-color: #ffcbcb; /* Light pink background */
+    max-width: 400px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+}
+
+h1, h2 {
+    color: #407088; /* Blue text color for headings */
+    text-align: center;
+}
+
+p {
+    color: #132743; /* Dark blue text color for paragraphs */
+}
+
+.add {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center form items vertically */
+}
+/* Text input fields */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid #132743; /* Dark blue border */
+    border-radius: 5px;
+}
+
+/* Submit button */
+#submit-btn {
+    background-color: #ffb5b5; /* Light red background */
+    color: #132743; /* Dark blue text color */
+    padding: 10px 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Submit button hover effect */
+#submit-btn:hover {
+    background-color: #407088; /* Blue hover color */
+    color: #fff; /* White text color on hover */
+}
+
+form{
+    display: box;
+    margin: 0 auto;
+}
