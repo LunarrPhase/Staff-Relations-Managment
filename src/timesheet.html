@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet</title>
+    <link rel="stylesheet" href="timesheet.css">
+    
+
+</head>
+<body>
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="main-page.html">Home</a></li>
+                <li id="logout"><a href="index.html">Log Out</a></li>
+            </ul>
+        </nav>
+        <hr>
+    </header>
+
+    <h2>Your Timesheets:</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Total Hours</th>
+                <th>Project Code</th>
+                <th>Task Description</th>
+                <th>Total Hours</th>
+            </tr>
+        </thead>
+        <tbody id="timeSheetBody">
+          
+        </tbody>
+    </table>
+
+    <button id="add-task">Add new task</button>
+
+    <script  src="timesheet.js"></script> <!-- Link to external JavaScript file -->
+</body>
+</html>
