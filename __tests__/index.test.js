@@ -85,7 +85,7 @@ describe("Sign up functionality", () => {
 });
 
 
-/*jest.mock("firebase/app", () => {
+jest.mock("firebase/app", () => {
     return {
         initializeApp: jest.fn().mockReturnValue({
             database: jest.fn().mockReturnValue({
@@ -94,7 +94,7 @@ describe("Sign up functionality", () => {
         }), 
         auth: jest.fn().mockReturnValue()
     };
-});*/
+});
 
 /*test("getAlbums function returns an array", () => {
     const data = MusicService.getAlbums();
