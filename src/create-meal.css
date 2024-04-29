@@ -1,0 +1,193 @@
+#submit-btn {
+    background-color: #ff9f9f;
+    
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition-duration: 0.1s;
+  }
+  
+  #submit-btn:hover {
+    background-color: #ffcbcb;
+  }
+  
+
+
+
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.header{
+    width:100%;
+    height: 100px;
+    position: fixed;
+    background-color: #407088;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+nav{
+    margin-right: 40px;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+ul li a{
+    padding: 0 18px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings, li#manage-users{
+    position: relative;
+}
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    left: 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+.notifications{
+    transition: all 0.5s;
+    color: #ffb5b5;
+    transform-origin: center;
+    padding-left: 10px;
+}
+
+.notifications:hover{
+   color: white;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    margin-right: auto;
+}
+
+
+h2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color:#ff9f9f;
+    padding: 10px;
+    margin: 40px;
+    text-align: center;
+}
+
+.footer{
+    width: 100%;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    margin: 50px  0 0 0;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+}
+.food-info{
+    color: black;
+    text-align: center;
+}
+
+
+
+
+
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 70%;
+    border:1px solid black ;
+    border-radius: 20px;
+    margin: 0 auto;
+    background:#4b788f
+}
+.add{
+    display: block;
+    margin: 0 auto;
+}
+
