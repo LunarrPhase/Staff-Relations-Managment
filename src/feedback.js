@@ -31,7 +31,7 @@ feedbackElement.addEventListener('click', async () => {
     try {
       
       const userRef = ref(realtimeDb, 'users/' + user.uid)
-      
+
       get(userRef).then((snapshot) => {
         const userData = snapshot.val();
         const role = userData.role;
