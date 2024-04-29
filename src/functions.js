@@ -1,31 +1,52 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref,  update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 
 /* INDEX */
 
 
-function FirebaseLogin(auth, database, email, password){
+async function FirebaseLogin(auth, database, email, password){
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            const dt = new Date();
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const dt = new Date();
 
-            update(ref(database, 'users/' + user.uid), {
-                last_login: dt,
-            });
-
-            // Redirect to the main page.
-            window.location.href = 'main-page.html';
-        })
-        .catch((error) => {
-
-            const errorMessage = SetLoginError(error);
-            const errorMessageElement = document.getElementById('error-message');
-            errorMessageElement.textContent = errorMessage;
+        await update(ref(database, 'users/' + user.uid), {
+            last_login: dt,
         });
+
+        const userRef = ref(database, 'users/' + user.uid);
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        const role = userData.role || "User"
+        console.log(userData)
+
+        GetRole(role);
+    }
+    catch (error) {
+
+        const errorMessage = SetLoginError(error);
+        const errorMessageElement = document.getElementById('error-message');
+        errorMessageElement.textContent = errorMessage;
+    }
+    finally {
+        document.getElementById('loading-message').style.display = 'none';
+    }
+}
+
+
+function GetRole(role){
+
+    if (role === "Manager") {
+        window.location.href = 'manager-main-page.html';
+    }
+    else if (role === "HR") {
+        window.location.href = 'admin-main-page.html';
+    }
+    else {
+        window.location.href = 'main-page.html';
+    }
 }
 
 
@@ -56,12 +77,12 @@ function isValidAccessKey(accessKey) {
 }
 
 
-function setRole(accessKey){
+function SetRole(accessKey){
 
     let role;
 
     if (accessKey === "mR123123") {
-       role = "Manager";
+        role = "Manager";
     }
     else if (accessKey === "hR456456") {
         role = "HR";
@@ -73,30 +94,27 @@ function setRole(accessKey){
 }
 
 
-function SetSignUpError(error){
-
+function SetSignUpError(error, email, password){
 
     let errorMessage;
 
-            if (error.code === "auth/email-already-in-use") {
-                errorMessage = "The email used to sign up already exists. Please use a different email.";
-            }
-            else if (error.code === "auth/invalid-email" || document.getElementById('email').value === "") {
-                errorMessage = "Please provide a valid email address."
-            }
-            else if (document.getElementById('password').value === "") {
-                errorMessage = "Please create a password."
-            }
-            else if(error.code=== "auth/invalid-password"){
-                errorMessage = "Password must be atleast 6 characters."
-            }
-            else {
-                errorMessage = "An error occurred. Please try again later.";
-            }
-
-            const errorMessageElement = document.getElementById('error-message');
-            errorMessageElement.textContent = errorMessage;
+    if (error.code === "auth/email-already-in-use") {
+        errorMessage = "The email used to sign up already exists. Please use a different email.";
+    }
+    else if (error.code === "auth/invalid-email" || email === "") {
+        errorMessage = "Please provide a valid email address."
+    }
+    else if (password === "") {
+        errorMessage = "Please create a password."
+    }
+    else if(error.code === "auth/invalid-password"){
+        errorMessage = "Password must be atleast 6 characters."
+    }
+    else {
+        errorMessage = "An error occurred. Please try again later.";
+    }
+    return errorMessage;
 }
 
 
-export{FirebaseLogin, SetLoginError, isValidAccessKey, setRole, SetSignUpError};
+export{FirebaseLogin, GetRole, SetLoginError, isValidAccessKey, SetRole, SetSignUpError};

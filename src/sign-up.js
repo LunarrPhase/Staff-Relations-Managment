@@ -73,8 +73,9 @@ signUp.addEventListener('click', (e) =>{
         window.location.href = 'index.html'
     })
     .catch((error) => {
-
-            SetSignUpError(error)
+            SetSignUpError(error, email, password);
+            const errorMessageElement = document.getElementById('error-message');
+            errorMessageElement.textContent = errorMessage;
         });
     }   
     else {
