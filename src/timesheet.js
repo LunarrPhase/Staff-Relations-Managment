@@ -43,11 +43,13 @@ homebtn.addEventListener('click', async () => {
           window.location.href = 'admin-main-page.html'
         } else {
           window.location.href = 'main-page.html'
+
         }
       });
     } catch (error) {
       console.error("Error getting user role:", error)
     }
+
   } else {
     window.location.href = 'index.html'
   }
@@ -109,6 +111,7 @@ homebtn.addEventListener('click', async () => {
         });
     });
 });
+
   
   
   
