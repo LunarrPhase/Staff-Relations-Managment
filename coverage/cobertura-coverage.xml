@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="16" lines-covered="7" line-rate="0.4375" branches-valid="7" branches-covered="3" branch-rate="0.4285" timestamp="1714340457488" complexity="0" version="0.1">
+<coverage lines-valid="44" lines-covered="23" line-rate="0.5227" branches-valid="29" branches-covered="21" branch-rate="0.7241" timestamp="1714352883370" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
   </sources>
@@ -15,53 +15,86 @@
         </class>
       </classes>
     </package>
-    <package name="Staff-Relations-Managment.src" line-rate="0.4375" branch-rate="0.4285">
+    <package name="Staff-Relations-Managment.src" line-rate="0.5227" branch-rate="0.7241">
       <classes>
-        <class name="functions.js" filename="src\functions.js" line-rate="0.4375" branch-rate="0.4285">
+        <class name="functions.js" filename="src\functions.js" line-rate="0.5227" branch-rate="0.7241">
           <methods>
-            <method name="FirebaseLogin" hits="2" signature="()V">
-              <lines>
-                <line number="5" hits="2"/>
-              </lines>
-            </method>
-            <method name="(anonymous_1)" hits="0" signature="()V">
+            <method name="FirebaseLogin" hits="0" signature="()V">
               <lines>
                 <line number="8" hits="0"/>
               </lines>
             </method>
-            <method name="(anonymous_2)" hits="0" signature="()V">
+            <method name="GetRole" hits="0" signature="()V">
               <lines>
-                <line number="20" hits="0"/>
+                <line number="39" hits="0"/>
               </lines>
             </method>
-            <method name="SetErrorMessage" hits="2" signature="()V">
+            <method name="SetLoginError" hits="2" signature="()V">
               <lines>
-                <line number="28" hits="2"/>
+                <line number="53" hits="2"/>
               </lines>
             </method>
-            <method name="isValidAccessKey" hits="0" signature="()V">
+            <method name="isValidAccessKey" hits="5" signature="()V">
               <lines>
-                <line number="47" hits="0"/>
+                <line number="75" hits="5"/>
+              </lines>
+            </method>
+            <method name="SetRole" hits="3" signature="()V">
+              <lines>
+                <line number="80" hits="3"/>
+              </lines>
+            </method>
+            <method name="SetSignUpError" hits="6" signature="()V">
+              <lines>
+                <line number="97" hits="6"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="7" hits="2" branch="false"/>
             <line number="10" hits="0" branch="false"/>
             <line number="11" hits="0" branch="false"/>
+            <line number="12" hits="0" branch="false"/>
             <line number="13" hits="0" branch="false"/>
-            <line number="18" hits="0" branch="false"/>
+            <line number="15" hits="0" branch="false"/>
+            <line number="19" hits="0" branch="false"/>
+            <line number="20" hits="0" branch="false"/>
             <line number="21" hits="0" branch="false"/>
-            <line number="22" hits="0" branch="false"/>
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)"/>
             <line number="23" hits="0" branch="false"/>
-            <line number="31" hits="2" branch="false"/>
-            <line number="33" hits="2" branch="true" condition-coverage="100% (2/2)"/>
-            <line number="34" hits="1" branch="false"/>
-            <line number="36" hits="1" branch="true" condition-coverage="50% (1/2)"/>
-            <line number="37" hits="1" branch="false"/>
-            <line number="40" hits="0" branch="false"/>
-            <line number="43" hits="2" branch="false"/>
-            <line number="48" hits="0" branch="true" condition-coverage="0% (0/3)"/>
+            <line number="25" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="31" hits="0" branch="false"/>
+            <line number="34" hits="0" branch="false"/>
+            <line number="41" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="42" hits="0" branch="false"/>
+            <line number="44" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="45" hits="0" branch="false"/>
+            <line number="48" hits="0" branch="false"/>
+            <line number="58" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="59" hits="1" branch="false"/>
+            <line number="61" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="62" hits="1" branch="false"/>
+            <line number="65" hits="0" branch="false"/>
+            <line number="68" hits="2" branch="false"/>
+            <line number="76" hits="5" branch="true" condition-coverage="100% (3/3)"/>
+            <line number="84" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="85" hits="1" branch="false"/>
+            <line number="87" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="88" hits="1" branch="false"/>
+            <line number="90" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="91" hits="1" branch="false"/>
+            <line number="93" hits="3" branch="false"/>
+            <line number="101" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="102" hits="1" branch="false"/>
+            <line number="104" hits="5" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="105" hits="2" branch="false"/>
+            <line number="107" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="108" hits="1" branch="false"/>
+            <line number="110" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="111" hits="1" branch="false"/>
+            <line number="114" hits="1" branch="false"/>
+            <line number="116" hits="6" branch="false"/>
           </lines>
         </class>
       </classes>
