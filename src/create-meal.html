@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create meal</title>
+    <link rel="stylesheet" href="create-meal.css">
+</head>
+<body>
+<div class="big-container">
+
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
+
+        <nav>
+            
+            <ul>
+                <li><a href="admin-main-page.html">Home</a></li>
+                <li id = "manage-users"><a href="#">Manage Users</a>
+                <!--this is where the drop down stuff was-->
+                </li>
+                <li id = "feedback"><a href="#">Request Feedback</a></li>
+                <li id = "bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+                            <li id="meal"><a href="#">Meal Bookings</a></li>
+                        </ul>
+                    </div>
+                
+                </li>
+                <li id = "meals"><a href="#">Meal Options</a></li>
+                <li id = "logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id="notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="#" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+
+        <hr>
+    
+    </header>
+
+
+    <h2>Pick Meal options for the week</h2>
+    <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
+    <div class="container">
+    
+    <h2>Create a new meal</h2>
+
+        <form class="add">
+            <label for="day">Day:</label><br>
+            <input type="text" id="day" name="day"  required><br><br>
+          
+            <label for="diet">Diet:</label><br>
+            <input type="text" id="diet" name="diet" required><br><br>
+          
+            <label for="meal">Meal:</label><br>
+            <input type="text" id="meal" name="meal" required><br><br>
+          
+            <input type="submit" value="Submit" id="submit-btn">
+          </form>
+          
+    </form>
+
+</div>
+
+</div>
+
+    <script type="module" src="create-meal.js"></script>
+
+    <footer class="footer">
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+    </footer>
+</body>
+</html>

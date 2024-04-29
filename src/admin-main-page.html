@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+
     <style>
         #loading {
             display: none;
@@ -17,7 +18,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.9);
             z-index: 9999;
         }
 
@@ -51,18 +52,9 @@
                 <nav>
                     
                     <ul>
-                        <li><a href="./admin-main-page.html">Home</a></li>
+                        <li><a href="admin-main-page.html">Home</a></li>
                         <li id = "manage-users"><a href="#">Manage Users</a>
-
-                            <div class="drop-down">
-                                <ul>
-                                    <li id="onboard-staff"><a href="#">Onboard Staff</a></li>
-                                    <li id="remove-access"><a href="#">Remove Access</a></li>
-                                    <li id="change-permission"><a href="#">Change Permissions</a></li>
-                                </ul>
-                            </div>
-                        
-                        
+                        <!--this is where the drop down stuff was-->
                         </li>
                         <li id = "feedback"><a href="#">Request Feedback</a></li>
                         <li id = "bookings"><a href="#">Bookings</a>
@@ -77,7 +69,14 @@
                         </li>
                         <li id = "meals"><a href="#">Meal Options</a></li>
                         <li id = "logout"><a href="index.html">Log Out</a></li>
-                        <li class="notifications" id = "notifications"><a href="#"><i class="fa-solid fa-bell"></i></a></li>
+                        <li class="notifications" id="notifications">
+                            <i class="fa-solid fa-bell"></i>
+                            <div id="popover-content" class="popover-content" aria-hidden="true">
+                                <h3>Notifications</h3>
+                                <p>You have no notifications.</p>
+                                <a href="#" class="see-all-link">See all</a>
+                            </div>
+                        </li>
                     </ul>
 
                 </nav>
@@ -87,12 +86,11 @@
             </header>
             
             <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
-                <h2 id = "userInfo"></h2>
 
                 <article class="top-article">
                     <section>
-
-                        <img src="./img/admin.svg" alt="background" id="main-pic">
+                        <h2 id = "userInfo"></h2>
+                        <img src="admin.svg" alt="background" id="main-pic">
 
                     </section>
 
@@ -100,6 +98,9 @@
 
                         <h3>“Start by doing what's necessary, then what's possible; and suddenly you are doing the impossible.”</h3>
                         <h4>- St. Francis of Assisi</h4>
+                        <div id="feedback-button">
+                            <span id="feedback-icon"><i class="fa-regular fa-pen-to-square"></i></span>
+                        </div>
 
                     </section>
 
@@ -109,7 +110,7 @@
                     <section class="info" id="manage-info">
                         <h5>Manage Users</h5>
                         <p>Have total control of the site's users, all in your hands, at the tap of a button.</p>
-                        <img src="./img/time.svg" alt="time-pic">
+                        <img src="time.svg" alt="time-pic">
                     </section>
 
                     <hr>
@@ -117,7 +118,7 @@
                     <section class="info" id="feedback-info">
                         <h5>Request Feedback</h5>
                         <p>Im not too sure how this works.</p>
-                        <img src="./img/feedback.svg" alt="booking-pic">
+                        <img src="feedback.svg" alt="booking-pic">
                     </section>
 
                     <hr>
@@ -125,7 +126,7 @@
                     <section class="info" id="booking-info">
                         <h5>View Bookings</h5>
                         <p>Be able to survey all meal and car wash bookings made by users. </p>
-                        <img src="./img/booking.svg" alt="feedback-pic">
+                        <img src="booking.svg" alt="feedback-pic">
                     </section>
 
                     <hr>
@@ -133,7 +134,7 @@
                     <section class="info" id="meal-info">
                         <h5>Create Meal Options</h5>
                         <p>Let out your inner chef by offering innovative meal options.</p>
-                        <img src="./img/undraw_report_re_f5n5.svg" alt="report-pic">
+                        <img src="undraw_report_re_f5n5.svg" alt="report-pic">
                     </section>
                 </article>
 
@@ -146,5 +147,8 @@
     
 </body>
 
-<!--<script type="module" src="main-page.js"></script>-->
+<script type="module" src="main-page.js"></script>
+<script type="module" src="manage-user.js"></script>
+<script type="module" src ="admin-main-page.js"></script>
+
 </html>

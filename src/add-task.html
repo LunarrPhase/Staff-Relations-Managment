@@ -1,18 +1,21 @@
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New task</title>
-     <!-- Link to external CSS file -->
+
+    <link rel="stylesheet" href="add-task.css"> <!-- Link to external CSS file -->
+
     <script type = "module" src = "addTask.js"></script>
 </head>
 <body>
 
-<h2>Insert new task</h2>
+<main class="container">
+    <article class="new-task-box">
+
+        <h2>Insert new task</h2>
 
 <form id="timesheetForm">
     <label for="fullName">Full Name:</label>
@@ -39,9 +42,15 @@
     <label for="taskDescription">Task Description:</label><br>
     <textarea id="taskDescription" name="taskDescription" rows="4" required></textarea><br><br>
 
-    <button type="submit">Submit</button>
-   
+
+    <a href="timesheet.html"><button type="submit" class="submit">Submit</button></a>
+
+
 </form>
+
+    </article>
+
+</main>
 
 </body>
 </html>
