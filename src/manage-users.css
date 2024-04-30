@@ -4,12 +4,17 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    background-image: url(img/manageusers.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px;
+    background-position-y: 150px;
 }
 
 .main{
     flex:1;
     padding-top: 80px;
-    background-color: #f0f0f0;
+    /*background-color: #f0f0f0;*/
 }
 
 .header{
