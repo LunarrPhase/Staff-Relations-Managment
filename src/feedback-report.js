@@ -38,21 +38,26 @@ const makePDF = async () => {
   const feedbackRef = collection(db, 'feedback');
   const querySnapshot = await getDocs(query(feedbackRef, where('recipient', '==', email)));
 
-  const feedbackData = [];
+  const feedbackData = []
   querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    feedbackData.push(data);
-  })
+    if (doc.exists) {
+        const data = doc.data()
+        feedbackData.push(data)
+    } else {
+        feedbackData.push("No Feedback yet!");
+    }
+})
+
 
   const feedbackPdf = new jsPDF()
-  let yPos = 10;
+  let axis = 10;
   feedbackData.forEach((feedback) => {
-    feedbackPdf.text(`From: ${feedback.sender}`, 10, yPos)
-    yPos += 10
-    feedbackPdf.text(`Type: ${feedback.type}`, 10, yPos)
-    yPos += 10
-    feedbackPdf.text(`Message: ${feedback.message}`, 10, yPos)
-    yPos += 15
+    feedbackPdf.text(`From: ${feedback.sender}`, 10, axis)
+    axis += 10
+    feedbackPdf.text(`Type: ${feedback.type}`, 10, axis)
+    axis += 10
+    feedbackPdf.text(`Message: ${feedback.message}`, 10, axis)
+    axis += 15
   })
 
   feedbackPdf.save('feedback_report.pdf')
