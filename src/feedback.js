@@ -51,6 +51,11 @@ feedbackElement.addEventListener('click', async () => {
   }
 })
 
+const recipientEmail = document.getElementById('recipient')
+//access realtime database.
+//for each user, check the email, if email matches input then it is fine
+//if no email matches then send a notification that the entered email does not exist.
+
 const form = document.querySelector('form')
 
 form.addEventListener('submit', async (e) => {
