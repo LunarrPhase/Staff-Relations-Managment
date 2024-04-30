@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const dayInput = document.getElementById('day').value;
       const dietInput = document.getElementById('diet').value;
-      const mealInput = document.getElementById('meal').value;
+      const mealInput = document.getElementById('mealValue').value;
       const colRef = collection(db,'mealOptions');
 
       // Add a subcollection for each day
@@ -41,8 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         meal: mealInput,
       });
 
-      // Reset the form after adding the document
-      document.getElementById('add').reset();
     }); 
   }
 });
