@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="all-reports.css">
+    <title>All Reports</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Reports</h1>
+
+        <nav>
+                    
+            <ul>
+                <li><a href="admin-main-page.html">Home</a></li>
+                <!--this is where the drop down stuff was-->
+                </li>
+                <li id = "logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id="notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+    </header>
+    
+        <section class="image-container">
+            <a  id = 'hoverMakePdf' href="feedback-report.html">
+                <img src="./img/undraw_feedback_re_urmj.svg" alt="">
+                <span class="overlay-text">Feedback Report</span>
+            </a>
+            <a href="">
+                <img src="./img/undraw_screen_time_vkev.svg" alt="">
+                <span class="overlay-text">Timesheets Report</span>
+            </a>
+            <a href="">
+                <img src="./img/undraw_online_groceries_a02y.svg" alt="">
+                <span class="overlay-text">Meals Booked Report</span>
+            </a>
+         </section>
+
+         <footer class="footer">
+            <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+        </footer>
+</body>
+<script src="feedback-report.js" type="module"></script>
+</html>
