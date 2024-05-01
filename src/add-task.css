@@ -35,6 +35,8 @@ h2{
     box-shadow: 2px 4px 6px #132743; 
     align-items: center;
     text-align: center;
+
+    overflow-wrap: break-word;
 }
 
 .submit{
