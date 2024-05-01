@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    background-image: url(img/manageusers.svg);
+    background-image: url(img/eating-together.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -15,6 +15,7 @@ body {
     flex:1;
     padding-top: 80px;
     /*background-color: #f0f0f0;*/
+    
 }
 
 .header{
@@ -290,5 +291,3 @@ footer p{
 p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-
