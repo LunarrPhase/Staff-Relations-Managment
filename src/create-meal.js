@@ -27,16 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
     addMealForm.addEventListener('click', async (e) => {
       e.preventDefault();
 
-      const dayInput = document.getElementById('day').value;
+      const dateInput = document.getElementById('date').value;
       const dietInput = document.getElementById('diet').value;
       const mealInput = document.getElementById('mealValue').value;
       const colRef = collection(db,'mealOptions');
 
       // Add a subcollection for each day
-      const dayDocRef = doc(colRef, dayInput);
-      const dayColRef = collection(dayDocRef, 'meals');
+      const dateDocRef = doc(colRef, dateInput);
+      const dateColRef = collection(dateDocRef, 'meals');
 
-      await addDoc(dayColRef, {
+      await addDoc(dateColRef, {
         diet: dietInput,
         meal: mealInput,
       });
