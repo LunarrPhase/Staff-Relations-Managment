@@ -129,6 +129,18 @@ h3{
     color: black;
 }
 
+.footer{
+    width: 100%;
+    height: 35px;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0;
+    position: fixed;
+    margin: 0;
+}
+
 .table-container {
     max-width: 800px;
     margin: 20px auto;
