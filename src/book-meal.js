@@ -1,9 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, where, getDocs, query,  doc, setDoc, addDoc, getDoc  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, where, getDocs, query,  doc , addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   // Firebase configuration
-const firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyCdhEnmKpeusKPs3W9sQ5AqpN5D62G5BlI",
     authDomain: "staff-relations-management.firebaseapp.com",
     databaseURL: "https://staff-relations-management-default-rtdb.firebaseio.com",
@@ -31,44 +31,35 @@ const firebaseConfig = {
   }
 
   // Populate meals dropdown based on selected date and diet
-  // Populate meals dropdown based on selected date and diet
   async function populateMeals() {
     if (areInputsSelected()) {
       const selectedDate = dateInput.value;
       const selectedDiet = dietSelect.value;
-      const mealOptionsRef = doc(collection(db, 'mealOptions'), selectedDate);
+      const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
   
-      const mealOptionsSnapshot = await getDoc(mealOptionsRef);
-      //console.log(mealOptionsSnapshot);
+      const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
+      console.log(mealOptionsSnapshot);
   
-      if (mealOptionsSnapshot.exists()) {
-        const mealsCollectionRef = collection(mealOptionsRef, 'meals');
-        const mealsQuery = query(mealsCollectionRef, where('diet', '==', selectedDiet));
-        const mealsSnapshot = await getDocs(mealsQuery);
-        console.log(mealsSnapshot);
+      mealSelect.innerHTML = '';
   
-        mealSelect.innerHTML = '';
-  
-        mealsSnapshot.forEach((mealDoc) => {
-          const mealData = mealDoc.data();
-          console.log(mealData);
+      mealOptionsSnapshot.forEach((mealDoc) => {
+        const mealData = mealDoc.data();
+        if (mealData.diet === selectedDiet) {
           const option = document.createElement('option');
           option.text = mealData.meal;
           option.value = mealData.meal;
           mealSelect.add(option);
-        });
-      }
+        }
+      });
     }
   }
-  
-  
   
   // Add event listeners
   dietSelect.addEventListener('change', populateMeals);
   dateInput.addEventListener('change', populateMeals);
 
   // Form submission
-  if(submit){
+  if (submit) {
     submit.addEventListener('click', async (e) => {
       e.preventDefault();
       if (areInputsSelected()) {
@@ -90,7 +81,7 @@ const firebaseConfig = {
         });
 
         // Clear form inputs after submission
-        form.reset();
+        document.querySelector('.mealForm').reset();
       } else {
         console.log("Please select both date and diet.");
       }
