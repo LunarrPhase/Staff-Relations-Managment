@@ -22,23 +22,17 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    z-index: 1;
 }
 
 nav{
-    height: 80px;
-    justify-content: center;
-    text-align: center;
+    margin-right: 40px;
 }
 
 ul{
-    height: 50px;
     display: flex;
     list-style-type: none;
-    margin-right: 20px;
-    margin-bottom: 0;
-    padding-right: 20px;
-    padding-top: 10px;
-    justify-content: center;
+    margin-left: 0px;
 }
 
 ul li a{
@@ -79,7 +73,6 @@ ul li:hover .drop-down{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-top: 0;
     left: 0;
-    padding: 10px 0;
 
 }
 
