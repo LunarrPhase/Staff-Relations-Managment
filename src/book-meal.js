@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getFirestore, collection, where, getDocs, query,  doc , addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   // Firebase configuration
@@ -16,11 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
 
   // Get a Firestore instance
-  const db = getFirestore(app);
+ const db = getFirestore(app);
 
-  const submit = document.getElementById('submit-btn');
+  auth.onAuthStateChanged(user => {
+    if (user) {
+
+
+          const submit = document.getElementById('submit-btn');
   const dietSelect = document.getElementById('diet');
   const mealSelect = document.getElementById('meal');
   const dateInput = document.getElementById('date');
@@ -64,17 +70,26 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       if (areInputsSelected()) {
         const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
+        
         const selectedDate = dateInput.value;
         const selectedDiet = dietSelect.value;
         const selectedMeal = mealSelect.value;
 
         // Here you can perform the submission logic, like adding the booking to Firestore.
         // Example:
-        const mealBookingsRef = collection(db, 'mealBookings');
+
+        const userId = user.uid;
+        console.log(userId);
+        const mealBookingsRef = collection(db, `users/${userId}/mealOrders`);
+        const userEmail = user.email;
+        
+
+
+        //working code:
+        //const mealBookingsRef = collection(db, 'user');
         await addDoc(mealBookingsRef, {
           name: name,
-          email: email,
+          email: userEmail,
           date: selectedDate,
           diet: selectedDiet,
           meal: selectedMeal
@@ -87,4 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+      
+      console.log("User is signed in:", user.uid);
+    }
+
+    else {
+        // No user is signed in
+        console.log("No user is signed in.");
+      }
+});
+
+
+
+
 });
