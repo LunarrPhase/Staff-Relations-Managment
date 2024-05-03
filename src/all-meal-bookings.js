@@ -22,31 +22,39 @@ const db = getFirestore(app)
 
 //access firebase, then document for the day...
 
+// Function to fetch and display bookings based on the selected date
 async function displayBookings() {
-  const selectedDate = document.getElementById('day').value
+  const selectedDate = document.getElementById('day').value;
   console.log(selectedDate)
-  const bookingsRef = collection(db, 'mealBookings')
-  const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+  const usersRef = collection(db, 'users');
+  const usersSnapshot = await getDocs(usersRef);
 
-  const usersList = document.getElementById('usersList')
+  const usersList = document.getElementById('usersList');
   usersList.innerHTML = ''
 
-  querySnapshot.forEach((doc) => {
-    const bookingData = doc.data()
-    const row = document.createElement('tr')
-    if(bookingData.email){
+  usersSnapshot.forEach(async (userDoc) => {
+    const userId = userDoc.id;
+    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+    const mealOrdersSnapshot = await getDocs(mealOrdersRef)
 
-      row.innerHTML = `
-      <td>${bookingData.name}</td>
-      <td>${bookingData.email}</td>
-      <td>${bookingData.diet}</td>
-      <td>${bookingData.date}</td>
-    `;
-
-    }
-    usersList.appendChild(row);
-  })
+    mealOrdersSnapshot.forEach((mealOrderDoc) => {
+      const mealOrderData = mealOrderDoc.data()
+      if (mealOrderData.date === selectedDate) {
+        console.log(mealOrderData)
+        const row = document.createElement('tr')
+        row.innerHTML = `
+          <td>${mealOrderData.name}</td>
+          <td>${mealOrderData.email}</td>
+          <td>${mealOrderData.diet}</td>
+          <td>${mealOrderData.date}</td>
+        `;
+        usersList.appendChild(row);
+      }
+    });
+  });
 }
 
-document.getElementById('day').addEventListener('change', displayBookings)
+// Add event listener to the day select element
+document.getElementById('day').addEventListener('change', displayBookings);
+
 document.getElementById('load-more').addEventListener('click', displayBookings)
