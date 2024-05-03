@@ -2,7 +2,7 @@
 //so if HR wants to see Monday meal bookings, they should be able to choose day and see from that day.
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where, doc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
  
 const firebaseConfig = {
@@ -22,26 +22,57 @@ const db = getFirestore(app)
 
 //access firebase, then document for the day...
 
-// Function to fetch and display bookings based on the selected date
 async function displayBookings() {
-  const selectedDate = document.getElementById('day').value;
+  const selectedDate = document.getElementById('day').value
   console.log(selectedDate)
+  const bookingsRef = collection(db, 'mealBookings')
+  const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+
+
+  const usersList = document.getElementById('usersList')
+  usersList.innerHTML = ''
+
+
+  querySnapshot.forEach((doc) => {
+    const bookingData = doc.data()
+    const row = document.createElement('tr')
+    if(bookingData.email){
+
+
+      row.innerHTML = `
+      <td>${bookingData.name}</td>
+      <td>${bookingData.email}</td>
+      <td>${bookingData.diet}</td>
+      <td>${bookingData.date}</td>
+    `;
+
+
+    }
+    usersList.appendChild(row);
+  })
+}
+
+
+
+async function displayAllBookings() {
   const usersRef = collection(db, 'users');
   const usersSnapshot = await getDocs(usersRef);
 
   const usersList = document.getElementById('usersList');
-  usersList.innerHTML = ''
+  usersList.innerHTML = ''; // Clear previous data
 
   usersSnapshot.forEach(async (userDoc) => {
     const userId = userDoc.id;
-    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
-    const mealOrdersSnapshot = await getDocs(mealOrdersRef)
+    const userDocRef = doc(db, 'users', userId);
+    const userMealOrdersRef = collection(userDocRef, 'mealOrders');
+    const userMealOrdersSnapshot = await getDocs(userMealOrdersRef);
 
-    mealOrdersSnapshot.forEach((mealOrderDoc) => {
-      const mealOrderData = mealOrderDoc.data()
-      if (mealOrderData.date === selectedDate) {
-        console.log(mealOrderData)
-        const row = document.createElement('tr')
+    userMealOrdersSnapshot.forEach((mealOrderDoc) => {
+     
+      const mealOrderData = mealOrderDoc.data();
+      console.log(mealOrderData)
+     
+        const row = document.createElement('tr');
         row.innerHTML = `
           <td>${mealOrderData.name}</td>
           <td>${mealOrderData.email}</td>
@@ -49,7 +80,6 @@ async function displayBookings() {
           <td>${mealOrderData.date}</td>
         `;
         usersList.appendChild(row);
-      }
     });
   });
 }
@@ -57,4 +87,5 @@ async function displayBookings() {
 // Add event listener to the day select element
 document.getElementById('day').addEventListener('change', displayBookings);
 
-document.getElementById('load-more').addEventListener('click', displayBookings)
+
+document.getElementById('load-more').addEventListener('click', displayAllBookings)
