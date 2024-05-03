@@ -72,7 +72,7 @@ function loadUsers() {
     })
 }
 
-loadUsers()
+//loadUsers()
 document.getElementById('load-more').addEventListener('click', loadUsers)
 
 

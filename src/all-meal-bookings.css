@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    background-image: url(img/manageusers.svg);
+    background-image: url(img/eating-together.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -15,6 +15,7 @@ body {
     flex:1;
     padding-top: 80px;
     /*background-color: #f0f0f0;*/
+    
 }
 
 .header{
@@ -27,17 +28,23 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    z-index: 1;
 }
 
 nav{
-    margin-right: 40px;
+    height: 80px;
+    justify-content: center;
+    text-align: center;
 }
 
 ul{
+    height: 50px;
     display: flex;
     list-style-type: none;
-    margin-left: 0px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    padding-right: 20px;
+    padding-top: 10px;
+    justify-content: center;
 }
 
 ul li a{
@@ -78,6 +85,7 @@ ul li:hover .drop-down{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-top: 0;
     left: 0;
+    padding: 10px 0;
 
 }
 
@@ -283,5 +291,3 @@ footer p{
 p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-

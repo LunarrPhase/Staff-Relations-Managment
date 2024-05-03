@@ -1,7 +1,9 @@
-import { getDatabase, ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-
+import { getDatabase, set, ref,  update, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+// TODO: Add SDKs for Firebase products that you w to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -30,7 +32,7 @@ const auth = getAuth();
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
-      //console.log("User ID:", user.uid); // Log the user ID
+      //console.log("User ID:", user.uid);
       const userRef = ref(database, 'users/' + user.uid);
       const snapshot = await get(userRef);
       const userData = snapshot.val();
@@ -46,14 +48,14 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('userInfo').textContent = `Hello, User ${firstName}`;
       }
       
-      loading.style.display = 'none';
+      loading.style.display = 'none'
     } catch (error) {
-      console.error("Error fetching user data:", error);
-      loading.style.display = 'none';
+      console.error("Error fetching user data:", error)
+      loading.style.display = 'none'
     }
   } else {
-    //console.log("User is signed out");
-    loading.style.display = 'none';
+    //console.log("User is signed out")
+    loading.style.display = 'none'
   }
 });
 
@@ -84,45 +86,11 @@ notifications.addEventListener('click', function(event) {
 });
 
 
-//const dbRef = firebase.database().ref('users');
-//const usersList = document.getElementById('usersList'); // Make sure to define usersList
+const giveFeedback = document.getElementById('feedback-button')
+giveFeedback.addEventListener('click', ()=>{
+  window.location.href = 'feedback.html'
+})
 
-/*const manageUsersTab = async (e) => {
-  e.preventDefault();
-  try {
-    dbRef.on('value', (snapshot) => {
-      usersList.innerHTML = '';
-      snapshot.forEach((childSnapshot) => {
-        const user = childSnapshot.val();
-        const li = document.createElement('li');
-        li.textContent = `${user.firstName} - ${user.email}`;
-        usersList.appendChild(li);
-      });
-    });
-    window.location.href = 'manage-users.html'
-  } catch (error) {
-    console.log(error.code);
-  }
-};*/
-
-const manageUsers = document.getElementById('manage-users');
-manageUsers.addEventListener('click', () => {
-  // Redirect to manage-users.html
-  window.location.href = 'manage-users.html';
-});
 
 
 });
-
-
-//code for clicking the element with id=feedback-info and being led to a page where you find every employee
-
-
-var element = document.getElementById("feedback-info");
-
-// Adding an event listener for a click event
-element.addEventListener("click", function() {
-  window.location.href = "feedback.html";
-    console.log("Element clicked!");
-});
-
