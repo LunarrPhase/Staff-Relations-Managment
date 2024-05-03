@@ -51,8 +51,6 @@ async function displayBookings() {
 
 //i made this to be able to view all users without filtering by date.
 async function displayAllBookings() {
-  const selectedDate = document.getElementById('day').value
-  console.log(selectedDate)
   const bookingsRef = collection(db, 'mealOrders')
   const querySnapshot = await getDocs(query(bookingsRef))
 
