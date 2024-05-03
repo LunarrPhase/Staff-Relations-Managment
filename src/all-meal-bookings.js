@@ -25,7 +25,7 @@ const db = getFirestore(app)
 async function displayBookings() {
   const selectedDate = document.getElementById('day').value
   console.log(selectedDate)
-  const bookingsRef = collection(db, 'mealBookings')
+  const bookingsRef = collection(db, 'mealOrders')
   const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
 
 
@@ -37,16 +37,40 @@ async function displayBookings() {
     const bookingData = doc.data()
     const row = document.createElement('tr')
     if(bookingData.email){
-
-
       row.innerHTML = `
       <td>${bookingData.name}</td>
       <td>${bookingData.email}</td>
       <td>${bookingData.diet}</td>
       <td>${bookingData.date}</td>
-    `;
+    `
+
+    }
+    usersList.appendChild(row);
+  })
+}
+
+//i made this to be able to view all users without filtering by date.
+async function displayAllBookings() {
+  const selectedDate = document.getElementById('day').value
+  console.log(selectedDate)
+  const bookingsRef = collection(db, 'mealOrders')
+  const querySnapshot = await getDocs(query(bookingsRef))
 
 
+  const usersList = document.getElementById('usersList')
+  usersList.innerHTML = ''
+
+
+  querySnapshot.forEach((doc) => {
+    const bookingData = doc.data()
+    const row = document.createElement('tr')
+    if(bookingData.email){
+      row.innerHTML = `
+      <td>${bookingData.name}</td>
+      <td>${bookingData.email}</td>
+      <td>${bookingData.diet}</td>
+      <td>${bookingData.date}</td>
+    `
     }
     usersList.appendChild(row);
   })
@@ -54,38 +78,5 @@ async function displayBookings() {
 
 
 
-async function displayAllBookings() {
-  const usersRef = collection(db, 'users');
-  const usersSnapshot = await getDocs(usersRef);
-
-  const usersList = document.getElementById('usersList');
-  usersList.innerHTML = ''; // Clear previous data
-
-  usersSnapshot.forEach(async (userDoc) => {
-    const userId = userDoc.id;
-    const userDocRef = doc(db, 'users', userId);
-    const userMealOrdersRef = collection(userDocRef, 'mealOrders');
-    const userMealOrdersSnapshot = await getDocs(userMealOrdersRef);
-
-    userMealOrdersSnapshot.forEach((mealOrderDoc) => {
-     
-      const mealOrderData = mealOrderDoc.data();
-      console.log(mealOrderData)
-     
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${mealOrderData.name}</td>
-          <td>${mealOrderData.email}</td>
-          <td>${mealOrderData.diet}</td>
-          <td>${mealOrderData.date}</td>
-        `;
-        usersList.appendChild(row);
-    });
-  });
-}
-
-// Add event listener to the day select element
-document.getElementById('day').addEventListener('change', displayBookings);
-
-
+document.getElementById('day').addEventListener('change', displayBookings)
 document.getElementById('load-more').addEventListener('click', displayAllBookings)
