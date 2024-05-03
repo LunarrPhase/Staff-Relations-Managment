@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add a subcollection for each day
       const dateDocRef = doc(colRef, dateInput);
       const dateColRef = collection(dateDocRef, 'meals');
+      console.log(dateDocRef);
 
       await addDoc(dateColRef, {
         diet: dietInput,

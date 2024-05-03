@@ -1,10 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, addDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, where, getDocs, query,  doc, setDoc, addDoc, getDoc  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
+  // Firebase configuration
+const firebaseConfig = {
     apiKey: "AIzaSyCdhEnmKpeusKPs3W9sQ5AqpN5D62G5BlI",
     authDomain: "staff-relations-management.firebaseapp.com",
     databaseURL: "https://staff-relations-management-default-rtdb.firebaseio.com",
@@ -16,78 +15,85 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   // Initialize Firebase
-  initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
 
   // Get a Firestore instance
-  const db = getFirestore();
+  const db = getFirestore(app);
 
-  const form = document.querySelector('.mealForm');
+  const submit = document.getElementById('submit-btn');
   const dietSelect = document.getElementById('diet');
   const mealSelect = document.getElementById('meal');
   const dateInput = document.getElementById('date');
 
+  // Function to check if both date and diet are selected
+  function areInputsSelected() {
+    return dateInput.value !== "" && dietSelect.value !== "";
+  }
+
   // Populate meals dropdown based on selected date and diet
-  dietSelect.addEventListener('change', async () => {
-    await populateMeals();
-  });
-
-  dateInput.addEventListener('change', async () => {
-    await populateMeals();
-  });
-
+  // Populate meals dropdown based on selected date and diet
   async function populateMeals() {
-    const selectedDate = dateInput.value;
-    const selectedDiet = dietSelect.value;
-  
-    if (selectedDate && selectedDiet) {
+    if (areInputsSelected()) {
+      const selectedDate = dateInput.value;
+      const selectedDiet = dietSelect.value;
       const mealOptionsRef = doc(collection(db, 'mealOptions'), selectedDate);
+  
       const mealOptionsSnapshot = await getDoc(mealOptionsRef);
+      //console.log(mealOptionsSnapshot);
   
       if (mealOptionsSnapshot.exists()) {
         const mealsCollectionRef = collection(mealOptionsRef, 'meals');
-        const mealsSnapshot = await getDocs(mealsCollectionRef);
+        const mealsQuery = query(mealsCollectionRef, where('diet', '==', selectedDiet));
+        const mealsSnapshot = await getDocs(mealsQuery);
+        console.log(mealsSnapshot);
   
-        // Clear previous options
         mealSelect.innerHTML = '';
   
         mealsSnapshot.forEach((mealDoc) => {
           const mealData = mealDoc.data();
-          if (mealData.diet === selectedDiet) {
-            const option = document.createElement('option');
-            option.text = mealData.meal;
-            option.value = mealData.meal;
-            mealSelect.add(option);
-          }
+          console.log(mealData);
+          const option = document.createElement('option');
+          option.text = mealData.meal;
+          option.value = mealData.meal;
+          mealSelect.add(option);
         });
-      } else {
-        console.log("No meal options found for the selected date.");
       }
     }
   }
   
+  
+  
+  // Add event listeners
+  dietSelect.addEventListener('change', populateMeals);
+  dateInput.addEventListener('change', populateMeals);
 
   // Form submission
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const selectedDate = dateInput.value;
-    const selectedDiet = dietSelect.value;
-    const selectedMeal = mealSelect.value;
+  if(submit){
+    submit.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (areInputsSelected()) {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const selectedDate = dateInput.value;
+        const selectedDiet = dietSelect.value;
+        const selectedMeal = mealSelect.value;
 
-    // Here you can perform the submission logic, like adding the booking to Firestore.
-    // Example:
-    const mealBookingsRef = collection(db, 'mealBookings');
-    await addDoc(mealBookingsRef, { // Corrected variable name here
-      name: name,
-      email: email,
-      date: selectedDate,
-      diet: selectedDiet,
-      meal: selectedMeal
+        // Here you can perform the submission logic, like adding the booking to Firestore.
+        // Example:
+        const mealBookingsRef = collection(db, 'mealBookings');
+        await addDoc(mealBookingsRef, {
+          name: name,
+          email: email,
+          date: selectedDate,
+          diet: selectedDiet,
+          meal: selectedMeal
+        });
+
+        // Clear form inputs after submission
+        form.reset();
+      } else {
+        console.log("Please select both date and diet.");
+      }
     });
-
-    // Clear form inputs after submission
-    form.reset();
-  });
-
+  }
 });
