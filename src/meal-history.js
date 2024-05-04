@@ -116,7 +116,7 @@ homebtn.addEventListener('click', async () => {
 
 //back button to all reports
 
-const backbtn = document.getElementById('back');
+const backbtn = document.getElementById('back-btn');
 
 backbtn.addEventListener("click", function() {
 
