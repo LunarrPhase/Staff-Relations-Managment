@@ -51,6 +51,35 @@ ul li a{
 
 }
 
+#home{
+
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+}
+
+#home::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+    
+}
+
+
+#home:hover::after {
+    width: 100%;
+}
+
+#home:hover{
+
+    cursor:pointer;
+
+}
+
 li a::after{
     content: '';
     display: block;
@@ -223,9 +252,6 @@ p{
 
 }
 
-.image-container img:hover{
-    transform: scale(1.1);
-}
 
 .overlay-text {
     position: absolute;
@@ -238,12 +264,12 @@ p{
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
-    opacity: 0; /* Initially hide the overlay */
-    transition: opacity 0.3s; /* Add a transition for a smooth effect */
+    opacity: 0;
+    transition: opacity 0.3s; 
 }
 
 .image-container a:hover .overlay-text {
-    opacity: 1; /* Show the overlay text on hover */
+    opacity: 1; 
 }
 
 img{
