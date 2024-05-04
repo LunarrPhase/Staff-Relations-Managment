@@ -21,6 +21,33 @@ main{
     padding-top: 100px;
 }
 
+.top-sec{
+    display: flex;
+}
+
+#back-btn{
+    margin:0px 30px;
+    background-color: #fb9191;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    transition: transform 0.5s ease;
+}
+
+#back-btn:hover{
+    box-shadow: 1px 3px 3px #132743; 
+    animation: shake 1s; 
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
 .flex-article{
     display: flex;
     justify-content: space-around;
@@ -86,7 +113,7 @@ body{
     height: 80px;
     position: fixed;
     background-color: #407088;
-    padding-left: 10px;
+    padding-left: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -95,7 +122,7 @@ body{
 }
 
 nav{
-    margin-right: 40px;
+    margin-right: 50px;
 }
 
 ul{
@@ -105,7 +132,7 @@ ul{
 }
 
 ul li a{
-    padding: 0 18px;
+    padding: 0 20px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
