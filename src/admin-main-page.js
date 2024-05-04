@@ -18,17 +18,9 @@
    measurementId: "G-7J5915RDP9"
  };
 
- // Initialize Firebase
- const app = initializeApp(firebaseConfig);
- const database = getDatabase(app);
- const auth = getAuth();
 
-// Get the currently signed-in user
-
-// Get the element with the id "meal-info"
 const mealInfo = document.getElementById('meal-info');
 
-// Add an event listener to it
 mealInfo.addEventListener('click', function(event) {
     window.location.href = 'create-meal.html'; 
     console.log('Meal info clicked!');
