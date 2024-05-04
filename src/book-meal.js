@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getFirestore, collection, where, getDocs, query,  doc , addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAuth} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   // Firebase configuration
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
+  const realtimeDb = getDatabase(app)
 
   // Get a Firestore instance
  const db = getFirestore(app);
@@ -64,6 +66,37 @@ document.addEventListener('DOMContentLoaded', function() {
   dietSelect.addEventListener('change', populateMeals);
   dateInput.addEventListener('change', populateMeals);
 
+const goHome = document.getElementById('home');
+goHome.addEventListener('click', async () => {
+  //getting current user
+  const user = auth.currentUser;
+  console.log("clicked!")
+
+  if (user) {
+    try {
+      
+      const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+      get(userRef).then((snapshot) => {
+        const userData = snapshot.val();
+        const role = userData.role;
+        if (role === "Manager") {
+          window.location.href = 'manager-main-page.html'
+        } else if (role === "HR") {
+          window.location.href = 'admin-main-page.html'
+        } else {
+          window.location.href = 'main-page.html'
+        }
+      });
+    } catch (error) {
+      console.error("Error getting user role:", error)
+    }
+  } else {
+    window.location.href = 'index.html'
+  }
+})
+
+
   
 if (submit) {
   submit.addEventListener('click', async (e) => {
@@ -90,15 +123,15 @@ if (submit) {
         meal: selectedMeal
       });
 
-      
-      const mealOrdersCollectionRef = collection(db, 'mealOrders');
+      //i added this so we could have a seperate mealOrders collections
+      const mealOrdersCollectionRef = collection(db, 'mealOrders')
       await addDoc(mealOrdersCollectionRef, {
         name: name,
         email: userEmail,
         date: selectedDate,
         diet: selectedDiet,
         meal: selectedMeal
-      });
+      })
 
       
       document.querySelector('.mealForm').reset();

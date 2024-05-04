@@ -52,6 +52,35 @@ ul li a{
 
 }
 
+#home{
+
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+}
+
+#home::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+    
+}
+
+
+#home:hover::after {
+    width: 100%;
+}
+
+#home:hover{
+
+    cursor:pointer;
+
+}
+
 li a::after{
     content: '';
     display: block;
