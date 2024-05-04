@@ -313,12 +313,6 @@ dietbtn.addEventListener("click", function() {
     
 
 
-
-
-
-
-    
-
     });
 
 });
