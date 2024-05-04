@@ -364,41 +364,41 @@ dietbtn.addEventListener("click", function() {
     
     
 
-    const GeneratePDF = document.getElementById('GeneratePDF');
+    // const GeneratePDF = document.getElementById('GeneratePDF');
 
-    GeneratePDF.addEventListener("click", function() {
+    // GeneratePDF.addEventListener("click", function() {
     
-    (async () => {
-	    try {
+    // (async () => {
+	   //  try {
   
 	    
-        const user = auth.currentUser;
-        if (!user) {
-            console.error("User not authenticated");
-            return;
-        }
+    //     const user = auth.currentUser;
+    //     if (!user) {
+    //         console.error("User not authenticated");
+    //         return;
+    //     }
 
-        const userId = user.uid;
-        if (!userId) {
-            console.error("User ID not available");
-            return;
-        }
+    //     const userId = user.uid;
+    //     if (!userId) {
+    //         console.error("User ID not available");
+    //         return;
+    //     }
 
-        const timesheetsRef = collection(db, `users/${userId}/timesheets`);
-        const querySnapshot = await getDocs(timesheetsRef);
+    //     const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+    //     const querySnapshot = await getDocs(timesheetsRef);
 
-        const timesheetsByProject = {};
+    //     const timesheetsByProject = {};
 
-        querySnapshot.forEach((doc) => {
-            const timesheetData = doc.data();
-            const projectCode = timesheetData.projectCode;
+    //     querySnapshot.forEach((doc) => {
+    //         const timesheetData = doc.data();
+    //         const projectCode = timesheetData.projectCode;
 
-            if (!timesheetsByProject[projectCode]) {
-                timesheetsByProject[projectCode] = [];
-            }
+    //         if (!timesheetsByProject[projectCode]) {
+    //             timesheetsByProject[projectCode] = [];
+    //         }
 
-            timesheetsByProject[projectCode].push(timesheetData);
-        });
+    //         timesheetsByProject[projectCode].push(timesheetData);
+    //     });
         
         
         
@@ -410,118 +410,118 @@ dietbtn.addEventListener("click", function() {
 
 
 
-        // Generate PDF from timesheetsByProject
-        const doc = new jsPDF();
+    //     // Generate PDF from timesheetsByProject
+    //     const doc = new jsPDF();
 
-        let yOffset = 10;
-        for (const projectCode in timesheetsByProject) {
-            doc.setFontSize(16);
-            doc.text(`Project: ${projectCode}`, 10, yOffset);
+    //     let yOffset = 10;
+    //     for (const projectCode in timesheetsByProject) {
+    //         doc.setFontSize(16);
+    //         doc.text(`Project: ${projectCode}`, 10, yOffset);
 
-            const table = [];
-            timesheetsByProject[projectCode].forEach(timesheetData => {
-                table.push([
-                    timesheetData.date,
-                    timesheetData.startTime,
-                    timesheetData.endTime,
-                    timesheetData.taskName,
-                    timesheetData.taskDescription,
-                    timesheetData.totalHours
-                ]);
-            });
+    //         const table = [];
+    //         timesheetsByProject[projectCode].forEach(timesheetData => {
+    //             table.push([
+    //                 timesheetData.date,
+    //                 timesheetData.startTime,
+    //                 timesheetData.endTime,
+    //                 timesheetData.taskName,
+    //                 timesheetData.taskDescription,
+    //                 timesheetData.totalHours
+    //             ]);
+    //         });
 
-            doc.autoTable({
-                startY: yOffset + 10,
-                head: [['Date', 'Start Time', 'End Time', 'Task Name', 'Task Description', 'Total Hours']],
-                body: table
-            });
+    //         doc.autoTable({
+    //             startY: yOffset + 10,
+    //             head: [['Date', 'Start Time', 'End Time', 'Task Name', 'Task Description', 'Total Hours']],
+    //             body: table
+    //         });
 
-            yOffset = doc.autoTable.previous.finalY + 20;
-        }
+    //         yOffset = doc.autoTable.previous.finalY + 20;
+    //     }
 
-        doc.save('timesheets.pdf');
-        console.log("PDF generated successfully");
-    } catch (error) {
-        console.error("Error generating PDF: ", error);
-    }
+    //     doc.save('timesheets.pdf');
+    //     console.log("PDF generated successfully");
+    // } catch (error) {
+    //     console.error("Error generating PDF: ", error);
+    // }
     
     
-    })();
+    // })();
 
-    });
+    // });
 
 
 
-    const GenerateCSV = document.getElementById('GenerateCSV');
+    // const GenerateCSV = document.getElementById('GenerateCSV');
 
-    GenerateCSV.addEventListener("click", function() {
+    // GenerateCSV.addEventListener("click", function() {
     
-     (async () => {
-        try {
-            const user = auth.currentUser;
-            if (!user) {
-                console.error("User not authenticated");
-                return;
-            }
+    //  (async () => {
+    //     try {
+    //         const user = auth.currentUser;
+    //         if (!user) {
+    //             console.error("User not authenticated");
+    //             return;
+    //         }
 
-            const userId = user.uid;
-            if (!userId) {
-                console.error("User ID not available");
-                return;
-            }
+    //         const userId = user.uid;
+    //         if (!userId) {
+    //             console.error("User ID not available");
+    //             return;
+    //         }
 
-            const timesheetsRef = collection(db, `users/${userId}/timesheets`);
-            const querySnapshot = await getDocs(timesheetsRef);
+    //         const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+    //         const querySnapshot = await getDocs(timesheetsRef);
 
-            const allTimesheets = [];
+    //         const allTimesheets = [];
 
-            querySnapshot.forEach((doc) => {
-                const timesheetData = doc.data();
-                allTimesheets.push(timesheetData);
-            });
+    //         querySnapshot.forEach((doc) => {
+    //             const timesheetData = doc.data();
+    //             allTimesheets.push(timesheetData);
+    //         });
 
-            // Generate CSV file with all timesheets
-            const csvData = allTimesheets.map(timesheetData => {
-                return [
-                    timesheetData.date,
-                    timesheetData.startTime,
-                    timesheetData.endTime,
-                    timesheetData.projectCode,
-                    timesheetData.taskName,
-                    timesheetData.taskDescription,
-                    timesheetData.totalHours
-                ].join(',');
-            }).join('\n');
+    //         // Generate CSV file with all timesheets
+    //         const csvData = allTimesheets.map(timesheetData => {
+    //             return [
+    //                 timesheetData.date,
+    //                 timesheetData.startTime,
+    //                 timesheetData.endTime,
+    //                 timesheetData.projectCode,
+    //                 timesheetData.taskName,
+    //                 timesheetData.taskDescription,
+    //                 timesheetData.totalHours
+    //             ].join(',');
+    //         }).join('\n');
 
-            // Download CSV file
-            downloadCSV(csvData, `all_timesheets.csv`);
+    //         // Download CSV file
+    //         downloadCSV(csvData, `all_timesheets.csv`);
 
-            console.log("CSV file generated successfully");
-        } catch (error) {
-            console.error("Error generating CSV file: ", error);
-        }
-    })();
+    //         console.log("CSV file generated successfully");
+    //     } catch (error) {
+    //         console.error("Error generating CSV file: ", error);
+    //     }
+    // })();
     
     
     
 
 	//end csv generation
 
-    });
+    //});
     
-    function downloadCSV(csvData, filename) {
+//     function downloadCSV(csvData, filename) {
     
-    const blob = new Blob([csvData], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
+//     const blob = new Blob([csvData], { type: 'text/csv' });
+//     const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-}
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = filename;
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//     window.URL.revokeObjectURL(url);
+// }
     
     
 
