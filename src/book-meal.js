@@ -64,44 +64,51 @@ document.addEventListener('DOMContentLoaded', function() {
   dietSelect.addEventListener('change', populateMeals);
   dateInput.addEventListener('change', populateMeals);
 
-  // Form submission
-  if (submit) {
-    submit.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (areInputsSelected()) {
-        const name = document.getElementById('name').value;
-        
-        const selectedDate = dateInput.value;
-        const selectedDiet = dietSelect.value;
-        const selectedMeal = mealSelect.value;
+  
+if (submit) {
+  submit.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (areInputsSelected()) {
+      const name = document.getElementById('name').value;
+      
+      const selectedDate = dateInput.value;
+      const selectedDiet = dietSelect.value;
+      const selectedMeal = mealSelect.value;
 
-        // Here you can perform the submission logic, like adding the booking to Firestore.
-        // Example:
+     
 
-        const userId = user.uid;
-        console.log(userId);
-        const mealBookingsRef = collection(db, `users/${userId}/mealOrders`);
-        const userEmail = user.email;
-        
+      const userId = user.uid;
+      console.log(userId);
+      const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+      const userEmail = user.email;
+
+      await addDoc(userMealOrdersRef, {
+        name: name,
+        email: userEmail,
+        date: selectedDate,
+        diet: selectedDiet,
+        meal: selectedMeal
+      });
+
+      
+      const mealOrdersCollectionRef = collection(db, 'mealOrders');
+      await addDoc(mealOrdersCollectionRef, {
+        name: name,
+        email: userEmail,
+        date: selectedDate,
+        diet: selectedDiet,
+        meal: selectedMeal
+      });
+
+      
+      document.querySelector('.mealForm').reset();
+    } else {
+      console.log("Please select both date and diet.");
+    }
+  });
+}
 
 
-        //working code:
-        //const mealBookingsRef = collection(db, 'user');
-        await addDoc(mealBookingsRef, {
-          name: name,
-          email: userEmail,
-          date: selectedDate,
-          diet: selectedDiet,
-          meal: selectedMeal
-        });
-
-        // Clear form inputs after submission
-        document.querySelector('.mealForm').reset();
-      } else {
-        console.log("Please select both date and diet.");
-      }
-    });
-  }
       
       console.log("User is signed in:", user.uid);
     }
