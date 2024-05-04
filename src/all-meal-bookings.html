@@ -36,20 +36,20 @@
     <main class="main" >
 
         <section class="table-container">
+            <div class="table-header">
+                <h2>All Meal Bookings</h2>
+            </div>
+
+            <div>
+
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Surname</th>
                         <th>Email</th>
-                        <th>Booking</th>
+                        <th>Diet</th>
                         <th>Day
-                            <select id="day" name="day" required>
-                                <option value="monday">Monday</option>
-                                <option value="tuesday">Tuesday</option>
-                                <option value="wednesday">Wednesday</option>
-                                <option value="thursday">Thursday</option>
-                                <option value="friday">Friday</option>
+                            <input type="date" id="day" name="day" required>
                                
                             </select>
                         </th>
@@ -60,12 +60,15 @@
                     
                 </tbody>
             </table>
+        </div>
         </section>
         <section class="load-more">
-            <button id="load-more">Load Users</button>
+            <button id="load-more">Load All Bookings</button>
         </section>
     
         </main>
     
 </body>
+
+<script src = "all-meal-bookings.js" type = "module"></script>
 </html>

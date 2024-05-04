@@ -3,20 +3,21 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #fce9e9;
+    width: 100%;
    
 }
 
 .main{
     flex:1;
-    padding-top: 80px;
+    max-width: 100%;
+    padding-top: 100px;
     /*background-color: #f0f0f0;*/
 }
 
 .header{
     width:100%;
     height: 80px;
-    /*position: fixed;*/
     background-color: #407088;
     padding-left: 10px;
     display: flex;
@@ -48,6 +49,35 @@ ul li a{
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
+
+}
+
+#home{
+
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+}
+
+#home::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+    
+}
+
+
+#home:hover::after {
+    width: 100%;
+}
+
+#home:hover{
+
+    cursor:pointer;
 
 }
 
@@ -184,6 +214,30 @@ p{
     font-size: 12px;
 }
 
+#back-btn{
+    background-color: #132743;
+    margin: 20px 30px;
+    border: 1px solid #407088;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 17px;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+#back-btn:hover{
+    background-color: #274353;
+    animation: shake 1s; 
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
 .image-container {
     display: grid;
     flex-direction: row;
@@ -191,8 +245,7 @@ p{
     padding: 10px;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 40px;
-    margin-left: 80px;
-    margin-top: 100px;
+    margin-left: 20px;
 }
 
 .image-container a {
@@ -208,9 +261,12 @@ p{
     width: 300px;
     height: 300px;
     border-radius: 10px;
-    border-color: #407088;
-    border-style: double;
+    border: 3px outset #407088;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
     transition: transform 0.3s;
+    background-color: #fff;
+    transition: 1s;
 }
 
 
@@ -219,6 +275,7 @@ p{
     height: 300px;
 
 }
+
 
 .overlay-text {
     position: absolute;
@@ -231,12 +288,12 @@ p{
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
-    opacity: 0; /* Initially hide the overlay */
-    transition: opacity 0.3s; /* Add a transition for a smooth effect */
+    opacity: 0;
+    transition: opacity 0.3s; 
 }
 
 .image-container a:hover .overlay-text {
-    opacity: 1; /* Show the overlay text on hover */
+    opacity: 1; 
 }
 
 img{

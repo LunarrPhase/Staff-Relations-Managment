@@ -27,6 +27,7 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    z-index: 1;
 }
 
 nav{
@@ -40,7 +41,9 @@ ul{
 }
 
 ul li a{
-    padding: 0 18px;
+
+    padding: 0 25px;
+
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
@@ -240,7 +243,9 @@ tbody tr:hover{
     margin-top: 10px;
     height: 50px;
     border-radius: 5px;
+
     background-color: #FAE7E9;
+
     border: 1px solid #ddd;
     text-align: center;
 }
@@ -295,6 +300,7 @@ footer p{
     padding: 10px;
     bottom: 0;
 }
+
 
 /*css for the report*/
 
@@ -372,6 +378,7 @@ footer p{
     color: #ffcbcb;
     background-color: #1d3c67;
 }
+
 
 
 .truncate {

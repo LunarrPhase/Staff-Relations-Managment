@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getFirestore, collection, where, getDocs, query,  doc , addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAuth} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   // Firebase configuration
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
+  const realtimeDb = getDatabase(app)
 
   // Get a Firestore instance
  const db = getFirestore(app);
@@ -64,44 +66,82 @@ document.addEventListener('DOMContentLoaded', function() {
   dietSelect.addEventListener('change', populateMeals);
   dateInput.addEventListener('change', populateMeals);
 
-  // Form submission
-  if (submit) {
-    submit.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (areInputsSelected()) {
-        const name = document.getElementById('name').value;
-        
-        const selectedDate = dateInput.value;
-        const selectedDiet = dietSelect.value;
-        const selectedMeal = mealSelect.value;
+const goHome = document.getElementById('home');
+goHome.addEventListener('click', async () => {
+  //getting current user
+  const user = auth.currentUser;
+  console.log("clicked!")
 
-        // Here you can perform the submission logic, like adding the booking to Firestore.
-        // Example:
+  if (user) {
+    try {
+      
+      const userRef = ref(realtimeDb, 'users/' + user.uid)
 
-        const userId = user.uid;
-        console.log(userId);
-        const mealBookingsRef = collection(db, `users/${userId}/mealOrders`);
-        const userEmail = user.email;
-        
-
-
-        //working code:
-        //const mealBookingsRef = collection(db, 'user');
-        await addDoc(mealBookingsRef, {
-          name: name,
-          email: userEmail,
-          date: selectedDate,
-          diet: selectedDiet,
-          meal: selectedMeal
-        });
-
-        // Clear form inputs after submission
-        document.querySelector('.mealForm').reset();
-      } else {
-        console.log("Please select both date and diet.");
-      }
-    });
+      get(userRef).then((snapshot) => {
+        const userData = snapshot.val();
+        const role = userData.role;
+        if (role === "Manager") {
+          window.location.href = 'manager-main-page.html'
+        } else if (role === "HR") {
+          window.location.href = 'admin-main-page.html'
+        } else {
+          window.location.href = 'main-page.html'
+        }
+      });
+    } catch (error) {
+      console.error("Error getting user role:", error)
+    }
+  } else {
+    window.location.href = 'index.html'
   }
+})
+
+
+  
+if (submit) {
+  submit.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (areInputsSelected()) {
+      const name = document.getElementById('name').value;
+      
+      const selectedDate = dateInput.value;
+      const selectedDiet = dietSelect.value;
+      const selectedMeal = mealSelect.value;
+
+     
+
+      const userId = user.uid;
+      console.log(userId);
+      const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+      const userEmail = user.email;
+
+      await addDoc(userMealOrdersRef, {
+        name: name,
+        email: userEmail,
+        date: selectedDate,
+        diet: selectedDiet,
+        meal: selectedMeal
+      });
+
+      //i added this so we could have a seperate mealOrders collections
+      const mealOrdersCollectionRef = collection(db, 'mealOrders')
+      await addDoc(mealOrdersCollectionRef, {
+        name: name,
+        email: userEmail,
+        date: selectedDate,
+        diet: selectedDiet,
+        meal: selectedMeal
+      })
+
+      
+      document.querySelector('.mealForm').reset();
+    } else {
+      console.log("Please select both date and diet.");
+    }
+  });
+}
+
+
       
       console.log("User is signed in:", user.uid);
     }

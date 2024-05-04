@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create meal</title>
     <link rel="stylesheet" href="create-meal.css">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="big-container">
 
     <header class="header">
         <h1>Staff-Relations Management</h1>
@@ -19,18 +19,16 @@
                 <li id = "manage-users"><a href="#">Manage Users</a>
                 <!--this is where the drop down stuff was-->
                 </li>
-                <li id = "feedback"><a href="#">Request Feedback</a></li>
                 <li id = "bookings"><a href="#">Bookings</a>
 
                     <div class="drop-down">
                         <ul>
-                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
-                            <li id="meal"><a href="#">Meal Bookings</a></li>
+                            <li id="carwash"><a href="#">Book Carwash</a></li>
+                            <li id="meal"><a href="book-meal.html">Book Meal</a></li>
                         </ul>
                     </div>
                 
                 </li>
-                <li id = "meals"><a href="#">Meal Options</a></li>
                 <li id = "logout"><a href="index.html">Log Out</a></li>
                 <li class="notifications" id="notifications">
                     <i class="fa-solid fa-bell"></i>
@@ -43,17 +41,31 @@
             </ul>
 
         </nav>
-
-        <hr>
     
     </header>
 
+    <main>
 
-    <h2>Pick Meal options for the week</h2>
-    <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
-    <div class="container">
-    
-    <h2>Create a new meal</h2>
+        <section class="top-sec">
+            
+        <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+        <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
+
+        </section>
+
+    <article class="flex-article">
+        <section>
+            <img src="img/tea.svg" alt="food" id="food-icon1">
+            <img src="img/dessert.svg" alt="food" id="food-icon2">
+            <img src="img/sushi.svg" alt="food" id="food-icon3">
+            <img src="img/pizza.svg" alt="food" id="food-icon2">
+            <img src="img/burger.svg" alt="food" id="food-icon1">
+        </section>
+
+
+        <section class="container">
+
+            <h2>Create a new meal</h2>
 
         <form class="add">
             
@@ -71,17 +83,45 @@
           
             <input type="submit" value="Submit" id="submit-btn">
           </form>
+
           
-    </form>
+
+        </section>
+
+        <section>
+            <img src="img/eggs.svg" alt="food" id="food-icon1">
+            <img src="img/roll.svg" alt="food" id="food-icon2">
+            <img src="img/soda.svg" alt="food" id="food-icon3">
+            <img src="img/fish.svg" alt="food" id="food-icon2">
+            <img src="img/wrap.svg" alt="food" id="food-icon1">
+
+        </section>
 
 </div>
 
 </div>
 
-    <script type="module" src="create-meal.js"></script>
-
-    <footer class="footer">
-        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-    </footer>
 </body>
+<script type="module" src="create-meal.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    const notifications = document.getElementById('notifications');
+
+    const popoverContent = notifications.querySelector('.popover-content');
+
+
+    notifications.addEventListener('click', function(event) {
+
+        event.preventDefault(); 
+
+        popoverContent.classList.toggle('show-popover');
+
+    });
+
+});
+
+</script>
+
 </html>

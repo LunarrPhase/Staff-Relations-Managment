@@ -54,6 +54,7 @@ function SetLoginError(error){
 
     let errorMessage;
     //console.log(error.code);
+    document.getElementById("authenticating").style.display = "none";
 
     if (error.code === "auth/invalid-email") {
         errorMessage = "Please provide a valid email address.";
@@ -97,7 +98,6 @@ function SetRole(accessKey){
 function SetSignUpError(error, email, password){
 
     let errorMessage;
-
     if (error.code === "auth/email-already-in-use") {
         errorMessage = "The email used to sign up already exists. Please use a different email.";
     }

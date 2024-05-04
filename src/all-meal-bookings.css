@@ -130,6 +130,20 @@ h3{
     color: black;
 }
 
+.table-header{
+    width: 100%;
+    margin-bottom: 10px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #fbc9c9;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+h2{
+    margin:10px auto;
+}
+
 .table-container {
     max-width: 800px;
     margin: 20px auto;
@@ -158,6 +172,10 @@ table th {
 
 table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+tbody tr:hover{
+    background-color: #fff;
 }
 
 .fas, .fa-solid {
@@ -291,3 +309,4 @@ footer p{
 p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
