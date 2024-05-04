@@ -2,9 +2,7 @@
 //so if HR wants to see Monday meal bookings, they should be able to choose day and see from that day.
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getFirestore, collection, getDocs, query, where, doc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
  
 const firebaseConfig = {
@@ -18,10 +16,65 @@ const firebaseConfig = {
   measurementId: "G-7J5915RDP9"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore(app);
-const realtimeDb = getDatabase(app);
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
 
 //access firebase, then document for the day...
+
+async function displayBookings() {
+  const selectedDate = document.getElementById('day').value
+  console.log(selectedDate)
+  const bookingsRef = collection(db, 'mealOrders')
+  const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+
+
+  const usersList = document.getElementById('usersList')
+  usersList.innerHTML = ''
+
+
+  querySnapshot.forEach((doc) => {
+    const bookingData = doc.data()
+    const row = document.createElement('tr')
+    if(bookingData.email){
+      row.innerHTML = `
+      <td>${bookingData.name}</td>
+      <td>${bookingData.email}</td>
+      <td>${bookingData.diet}</td>
+      <td>${bookingData.date}</td>
+    `
+
+    }
+    usersList.appendChild(row);
+  })
+}
+
+//i made this to be able to view all users without filtering by date.
+async function displayAllBookings() {
+  const bookingsRef = collection(db, 'mealOrders')
+  const querySnapshot = await getDocs(query(bookingsRef))
+
+
+  const usersList = document.getElementById('usersList')
+  usersList.innerHTML = ''
+
+
+  querySnapshot.forEach((doc) => {
+    const bookingData = doc.data()
+    const row = document.createElement('tr')
+    if(bookingData.email){
+      row.innerHTML = `
+      <td>${bookingData.name}</td>
+      <td>${bookingData.email}</td>
+      <td>${bookingData.diet}</td>
+      <td>${bookingData.date}</td>
+    `
+    }
+    usersList.appendChild(row);
+  })
+}
+
+
+
+document.getElementById('day').addEventListener('change', displayBookings)
+document.getElementById('load-more').addEventListener('click', displayAllBookings)

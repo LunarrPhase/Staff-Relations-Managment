@@ -89,7 +89,6 @@ form.addEventListener('submit', async (e) => {
   try {
     const emailExists = await checkEmailExists(recipient);
     if (!emailExists) {
-      // Email does not exist, show notification
       alert('The entered email does not exist.');
       return;
     }

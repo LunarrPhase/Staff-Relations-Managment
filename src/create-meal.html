@@ -23,13 +23,12 @@
 
                     <div class="drop-down">
                         <ul>
-                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
-                            <li id="meal"><a href="#">Meal Bookings</a></li>
+                            <li id="carwash"><a href="#">Book Carwash</a></li>
+                            <li id="meal"><a href="book-meal.html">Book Meal</a></li>
                         </ul>
                     </div>
                 
                 </li>
-                <li id = "meals"><a href="#">Meal Options</a></li>
                 <li id = "logout"><a href="index.html">Log Out</a></li>
                 <li class="notifications" id="notifications">
                     <i class="fa-solid fa-bell"></i>
@@ -102,10 +101,27 @@
 
 </div>
 
-    <script type="module" src="create-meal.js"></script>
-
-    <!--<footer class="footer">
-        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-    </footer>-->
 </body>
+<script type="module" src="create-meal.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    const notifications = document.getElementById('notifications');
+
+    const popoverContent = notifications.querySelector('.popover-content');
+
+
+    notifications.addEventListener('click', function(event) {
+
+        event.preventDefault(); 
+
+        popoverContent.classList.toggle('show-popover');
+
+    });
+
+});
+
+</script>
+
 </html>

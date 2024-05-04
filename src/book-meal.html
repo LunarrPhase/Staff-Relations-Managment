@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book meal</title>
     <link rel="stylesheet" href="book-meal.css">
+
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -15,7 +16,7 @@
         <nav>
             
             <ul class="menu">
-                <li id = "home"><a href="main-page.html">Home</a></li>
+                <li id = "home" type = "button">Home</li>
                 <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
                 <li id="bookings"><a href="#">Bookings</a>
                     <div class="drop-down">
@@ -89,7 +90,28 @@
     </main>
 
 
-
     <script type="module" src="book-meal.js"></script>
 </body>
 </html>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    const notifications = document.getElementById('notifications');
+
+    const popoverContent = notifications.querySelector('.popover-content');
+
+
+    notifications.addEventListener('click', function(event) {
+
+        event.preventDefault(); 
+
+        popoverContent.classList.toggle('show-popover');
+
+    });
+
+});
+
+
+
+</script>

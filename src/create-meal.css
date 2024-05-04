@@ -247,17 +247,50 @@ p{
 
 
 
+/* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
 .popover-content {
     display: none;
     position: absolute;
     top: 60px;
-    right: 20px;
+    right: 40px;
     width: fit-content;
     background-color: #f9f9f9;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+    color:#fb9191;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.see-all-link:hover {
+    text-decoration: underline;
+}
+
+
+.show-popover {
+    display: block !important;
 }
 
 .container{
