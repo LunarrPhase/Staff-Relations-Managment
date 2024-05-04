@@ -143,6 +143,19 @@ h3{
     box-shadow: 0 2px 4px #9ec7d5;
     align-items: center;
 }
+.footer{
+    width: 100%;
+    height: 35px;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0;
+    margin: 0;
+    position: fixed;
+}
+
+
 
 table {
     width: 100%;

@@ -10,6 +10,10 @@ body {
     flex:1;
     padding-top: 80px;
     background-color: #f0f0f0;
+    
+}
+
+.main-article{
     text-align: center;
 }
 
@@ -37,7 +41,9 @@ ul{
 }
 
 ul li a{
+
     padding: 0 25px;
+
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
@@ -237,9 +243,11 @@ tbody tr:hover{
     margin-top: 10px;
     height: 50px;
     border-radius: 5px;
-    background-color: #fbc9c9;
-    border: 1px solid #ddd;
 
+    background-color: #FAE7E9;
+
+    border: 1px solid #ddd;
+    text-align: center;
 }
 
 h2{
@@ -292,6 +300,85 @@ footer p{
     padding: 10px;
     bottom: 0;
 }
+
+
+/*css for the report*/
+
+.back-sec{
+    margin: 20px;
+    margin-bottom: 0;
+    color: #fff;
+    margin-right: 100px;
+    background-color: #4b788f;
+    border: 1px solid #4b788f;
+    border-radius: 25px;
+    padding: 8px;
+    width: 60px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-sec:hover{
+    border: 1px solid #000;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+#back-btn {
+    background-color: #4b788f;
+    border: none;
+    color: white;
+    font-size: 19px;
+    transition: transform 0.5s ease;
+}
+
+#back-btn:hover{
+    animation: shake 0.8s;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+
+#GenerateByProject, #GenerateByTask, #GenerateByDiet, #GenerateByDate{
+    margin: 10px 40px;
+    border: 1px solid #9ec7d5;
+    border-radius: 10px;
+    background-color: #9ec7d5;
+    padding: 10px;
+    font-size: 15px;
+    transition: 1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#GenerateByProject:hover, #GenerateByTask:hover, #GenerateByDiet:hover, #GenerateByDate:hover{
+    transform: scale(1.1);
+    border-color: #000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+#GeneratePDF, #GenerateCSV{
+    margin: 10px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #132743;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#GeneratePDF:hover, #GenerateCSV:hover{
+    color: #ffcbcb;
+    background-color: #1d3c67;
+}
+
 
 
 .truncate {

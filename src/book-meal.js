@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (user) {
 
 
-          const submit = document.getElementById('submit-btn');
+  const submit = document.getElementById('submit-btn');
   const dietSelect = document.getElementById('diet');
   const mealSelect = document.getElementById('meal');
   const dateInput = document.getElementById('date');
