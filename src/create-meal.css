@@ -1,6 +1,5 @@
 #submit-btn {
     background-color: #ff9f9f;
-    
     border: none;
     color: white;
     padding: 10px 20px;
@@ -8,18 +7,68 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 20px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 10px;
     transition-duration: 0.1s;
   }
   
   #submit-btn:hover {
-    background-color: #ffcbcb;
+    background-color: #fb9191;
   }
   
+main{
+    padding-top: 100px;
+}
 
+.flex-article{
+    display: flex;
+    justify-content: space-around;
+}
 
+section{
+    flex: 1;
+}
+
+#food-icon1{
+    width: 100px;
+    height: 90px;
+    margin: 20px 100px;
+    transition: 0.3s;
+    background-color: #c2d0d5;
+    border-radius: 40px;
+    box-shadow: 2px 4px 6px #132743; 
+}
+
+#food-icon2{
+    width: 90px;
+    height: 100px;
+    margin: 30px 100px;
+    transition: 0.3s;
+    background-color: #b0cdd7;
+    border-radius: 50px;
+    box-shadow: 2px 4px 6px #132743; 
+}
+
+#food-icon3{
+    width: 100px;
+    height: 100px;
+    margin: 30px 230px;
+    transition: 0.3s;
+    background-color: #b0cdd7;
+    border-radius: 50px;
+    box-shadow: 2px 4px 6px #132743; 
+}
+
+#food-icon1:hover, #food-icon2:hover, #food-icon3:hover{
+    transform: rotate(40deg);
+}
+
+#day, #diet, #mealValue{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+}
 
 
 body{
@@ -27,12 +76,14 @@ body{
     display: flex;
     flex-direction: column;
     margin: 0;
+    background-color: #fbdada;
+    background: radial-gradient(50% 50%, #fff, #fdd5d5);
     font-family: sans-serif;
 }
 
 .header{
     width:100%;
-    height: 100px;
+    height: 80px;
     position: fixed;
     background-color: #407088;
     padding-left: 10px;
@@ -40,6 +91,7 @@ body{
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    z-index: 1;
 }
 
 nav{
@@ -134,24 +186,29 @@ h1{
 h2{
     display: flex;
     justify-content: center;
+    font-size: 30px;
     flex-direction: column;
-    color:#ff9f9f;
+    color:#132743;
     padding: 10px;
-    margin: 40px;
+    margin: 30px;
     text-align: center;
 }
 
 .footer{
     width: 100%;
+    height: 35px;
     background-color: #407088;
     bottom: 0;
     text-align: center;
-    margin: 50px  0 0 0;
+    padding-top: 0;
+    margin: 30px  0 0 0;
 }
 
 p{
     color: #ffb5b5;
     font-size: 12px;
+    margin: 0;
+    bottom: 0;
 }
 .food-info{
     color: black;
@@ -179,15 +236,25 @@ p{
 .container{
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     flex-direction: column;
-    max-width: 70%;
-    border:1px solid black ;
+    max-width: 30%;
+    border:2px solid black ;
     border-radius: 20px;
-    margin: 0 auto;
-    background:#4b788f
+    margin: 20px auto;
+    background-color: #fff;
+    backdrop-filter: blur(5px);
+    position: fixed;
+    z-index: 1;
+    box-shadow: 2px 4px 6px #132743; 
 }
 .add{
     display: block;
     margin: 0 auto;
+}
+
+p{
+    margin-top: 10px;
 }
 

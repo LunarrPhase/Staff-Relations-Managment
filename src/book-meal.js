@@ -108,6 +108,7 @@ if (submit) {
   });
 }
 
+
       
       console.log("User is signed in:", user.uid);
     }

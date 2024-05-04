@@ -23,27 +23,21 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    z-index: 1;
 }
 
 nav{
-    height: 80px;
-    justify-content: center;
-    text-align: center;
+    margin-right: 40px;
 }
 
 ul{
-    height: 50px;
     display: flex;
     list-style-type: none;
-    margin-right: 20px;
-    margin-bottom: 0;
-    padding-right: 20px;
-    padding-top: 10px;
-    justify-content: center;
+    margin-left: 0px;
 }
 
 ul li a{
-    padding: 0 30px;
+    padding: 0 25px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
@@ -243,7 +237,7 @@ tbody tr:hover{
     margin-top: 10px;
     height: 50px;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #fbc9c9;
     border: 1px solid #ddd;
 
 }
