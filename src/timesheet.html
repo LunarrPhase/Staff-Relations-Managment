@@ -1,94 +1,211 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Timesheet</title>
+
     <link rel="stylesheet" href="timesheet.css">
+
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+
     
 
+
+
 </head>
+
 <body>
+
     <header class="header">
+
         <h1>Staff-Relations Management</h1>
 
+
+
         <nav>
+
             
+
             <ul class="menu">
+
+
+
+                
+
                 <li id="home"><a href="#">Home</a></li>
-                <li id="reports"><a href="#">Reports</a></li>
-                <li id="logout"><a href="index.html">Log Out</a></li>
-                <li class="notifications" id="notifications">
-                    <a href="#"><i class="fa-solid fa-bell"></i></a>
-                    <div id="popover-content" class="popover-content" aria-hidden="true">
-                        <h3>Notifications</h3>
-                        <p>You have no notifications.</p>
-                        <a href="#" class="see-all-link">See all</a>
+
+
+
+                <li id="timesheets"><a href="timesheet.html">Timesheets</a></li>
+
+                <li id="bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+
+                        <ul>
+
+                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+
+                            <li id="meal"><a href="#">Meal Bookings</a></li>
+
+                        </ul>
+
                     </div>
+
                 </li>
+
+                <li id="reports"><a href="#">Reports</a></li>
+
+                <li id="logout"><a href="index.html">Log Out</a></li>
+
+                <li class="notifications" id="notifications">
+
+                    <a href="#"><i class="fa-solid fa-bell"></i></a>
+
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+
+                        <h3>Notifications</h3>
+
+                        <p>You have no notifications.</p>
+
+                        <a href="#" class="see-all-link">See all</a>
+
+                    </div>
+
+                </li>
+
             </ul>
+
             
+
             
+
+
 
         </nav>
 
+
+
     
+
     </header>
+
+
 
     <main class="main">
 
+
+
     <article class="table-container">
+
         <section class="table-header">
+
             <h2>Your Timesheets</h2>
+
         </section>
+
         <section>
 
+
+
             <table>
+
                 <thead>
+
                     <tr>
+
                         <th>Date</th>
+
                         <th>Start Time</th>
+
                         <th>End Time</th>
-                        <th>Total Hours</th>
+
                         <th>Project Code</th>
+                        <th>Task Name</th>
+
                         <th>Task Description</th>
+
                         <th>Total Hours</th>
+
                     </tr>
+
                 </thead>
+
                 <tbody id="timeSheetBody">
+
                   
+
                 </tbody>
+
             </table>
+
         </section>
+
+
 
     </article>
 
 
+
+
+
     <a href="add-task.html"><button id="add-task">Add new task</button></a>
+
+
 
 </main>
 
+
+
 <footer class="footer">
+
     <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+
 </footer>
 
+
+
+
     <script type="module "src="timesheet.js"></script> <!-- Link to external JavaScript file -->
+
     
+
 </body>
+
 </html>
+
+
 
 <script type="module" src="main-page.js"></script>
 
+
+
 <script>
+
     document.addEventListener("DOMContentLoaded", function() {
+
     const notifications = document.getElementById('notifications');
+
     const popoverContent = notifications.querySelector('.popover-content');
+
     
+
     notifications.addEventListener('click', function(event) {
+
         event.preventDefault(); 
+
         popoverContent.classList.toggle('show-popover');
+
     });
+
 });
+
+
 
 </script>

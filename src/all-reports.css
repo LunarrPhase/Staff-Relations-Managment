@@ -1,0 +1,253 @@
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fce9e9;
+   
+}
+
+.main{
+    flex:1;
+    padding-top: 80px;
+    /*background-color: #f0f0f0;*/
+}
+
+.header{
+    width:100%;
+    height: 80px;
+    /*position: fixed;*/
+    background-color: #407088;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+
+nav{
+    height: 80px;
+    justify-content: center;
+    text-align: center;
+}
+
+ul{
+    height: 50px;
+    display: flex;
+    list-style-type: none;
+    margin-right: 20px;
+    margin-bottom: 0;
+    padding-right: 20px;
+    padding-top: 10px;
+    justify-content: center;
+}
+
+ul li a{
+    padding: 0 18px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings, li#manage-users{
+    position: relative;
+}
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    left: 0;
+    padding: 10px 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+.notifications{
+    transition: all 0.5s;
+    color: #ffb5b5;
+    transform-origin: center;
+
+}
+
+.notifications:hover{
+   color: white;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3{
+    color: black;
+}
+
+/* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.see-all-link:hover {
+    text-decoration: underline;
+}
+
+
+.show-popover {
+    display: block !important;
+}
+
+.footer{
+    width: 100%;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    position: fixed;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+}
+
+.image-container {
+    display: grid;
+    flex-direction: row;
+    align-items: center; 
+    padding: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-left: 30px;
+    margin-top: 50px;
+}
+
+.image-container a {
+    position: relative;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: inherit; /* Inherit text color from parent */
+}
+
+.image-container img {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    border: 3px outset #407088;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    transition: transform 0.3s;
+    background-color: #fff;
+    transition: 1s;
+}
+
+
+.image-container img {
+    width: 300px;
+    height: 300px;
+
+}
+
+.image-container img:hover{
+    transform: scale(1.1);
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(90, 177, 184, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    opacity: 0; /* Initially hide the overlay */
+    transition: opacity 0.3s; /* Add a transition for a smooth effect */
+}
+
+.image-container a:hover .overlay-text {
+    opacity: 1; /* Show the overlay text on hover */
+}
+
+img{
+    border-radius: 10px;
+    border-color: #407088;
+    border-style: double;
+}

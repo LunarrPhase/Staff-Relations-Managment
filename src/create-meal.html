@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create meal</title>
     <link rel="stylesheet" href="create-meal.css">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="big-container">
 
     <header class="header">
         <h1>Staff-Relations Management</h1>
@@ -48,27 +48,52 @@
     
     </header>
 
-
-    <h2>Pick Meal options for the week</h2>
+    <main>
     <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
-    <div class="container">
-    
-    <h2>Create a new meal</h2>
+
+    <article class="flex-article">
+        <section>
+            <img src="img/tea.svg" alt="food" id="food-icon1">
+            <img src="img/dessert.svg" alt="food" id="food-icon2">
+            <img src="img/sushi.svg" alt="food" id="food-icon3">
+            <img src="img/pizza.svg" alt="food" id="food-icon2">
+            <img src="img/burger.svg" alt="food" id="food-icon1">
+        </section>
+
+
+        <section class="container">
+
+            <h2>Create a new meal</h2>
 
         <form class="add">
-            <label for="day">Day:</label><br>
-            <input type="text" id="day" name="day"  required><br><br>
+            
+            <label for="date">Day:</label><br>
+            <input type="date" id="date" name="date"  required><br><br>
+
           
             <label for="diet">Diet:</label><br>
             <input type="text" id="diet" name="diet" required><br><br>
           
             <label for="meal">Meal:</label><br>
-            <input type="text" id="meal" name="meal" required><br><br>
+            <input type="text" id="mealValue" name="meal" required><br><br>
+
+
           
             <input type="submit" value="Submit" id="submit-btn">
           </form>
+
           
-    </form>
+
+        </section>
+
+        <section>
+            <img src="img/eggs.svg" alt="food" id="food-icon1">
+            <img src="img/roll.svg" alt="food" id="food-icon2">
+            <img src="img/soda.svg" alt="food" id="food-icon3">
+            <img src="img/fish.svg" alt="food" id="food-icon2">
+            <img src="img/wrap.svg" alt="food" id="food-icon1">
+
+        </section>
 
 </div>
 
@@ -76,8 +101,8 @@
 
     <script type="module" src="create-meal.js"></script>
 
-    <footer class="footer">
+    <!--<footer class="footer">
         <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-    </footer>
+    </footer>-->
 </body>
 </html>

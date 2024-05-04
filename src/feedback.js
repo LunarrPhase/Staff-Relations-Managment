@@ -51,49 +51,71 @@ feedbackElement.addEventListener('click', async () => {
   }
 })
 
+const checkEmailExists = async (email) => {
+  const usersRef = ref(realtimeDb, 'users')
+  const snapshot = await get(usersRef)
+  const users = snapshot.val()
+
+  for (const key in users) {
+    if (users[key].email === email) {
+      return true
+    }
+  }
+
+  return false
+};
 const form = document.querySelector('form')
 
 form.addEventListener('submit', async (e) => {
-  e.preventDefault()
+  e.preventDefault();
 
-  const recipient = document.getElementById('recipient').value
-  const type = document.getElementById('type').value
-  const message = document.getElementById('message').value
+  const recipient = document.getElementById('recipient').value;
+  const type = document.getElementById('type').value;
+  const message = document.getElementById('message').value;
 
   const user = auth.currentUser;
-  const userRef = ref(realtimeDb, 'users/' + user.uid)
+  const userRef = ref(realtimeDb, 'users/' + user.uid);
 
-  let email = null
+  let email = null;
 
   try {
     const snapshot = await get(userRef);
     const userData = snapshot.val();
-    email = userData.email
+    email = userData.email;
   } catch (error) {
     console.error("Error getting user email:", error);
   }
 
   try {
-    await addDoc(collection(db, 'feedback'), {
-      message: message,
-      recipient: recipient,
-      type: type,
-      sender: email 
-    })
+    const emailExists = await checkEmailExists(recipient);
+    if (!emailExists) {
+      // Email does not exist, show notification
+      alert('The entered email does not exist.');
+      return;
+    }
+  
+    try {
+      await addDoc(collection(db, 'feedback'), {
+        message: message,
+        recipient: recipient,
+        type: type,
+        sender: email 
+      });
 
-  const modal = document.getElementById('myModal');
-  modal.style.display = 'block';
+      const modal = document.getElementById('myModal');
+      modal.style.display = 'block';
 
-
-  const closeButton = document.getElementsByClassName('close')[0];
-  closeButton.onclick = function() {
-    modal.style.display = 'none';
-  }
-    form.reset()
+      const closeButton = document.getElementsByClassName('close')[0];
+      closeButton.onclick = function() {
+        modal.style.display = 'none';
+      };
+      form.reset();
+    } catch (error) {
+      console.error('Error adding feedback: ', error);
+    }
   } catch (error) {
-    console.error('Error adding feedback: ', error)
+    console.error('Error checking email existence:', error);
   }
-})
-
+});
 
 

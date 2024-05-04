@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book meal</title>
+    <link rel="stylesheet" href="book-meal.css">
+
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
+
+        <nav>
+            
+            <ul class="menu">
+                <li id = "home"><a href="main-page.html">Home</a></li>
+                <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id="bookings"><a href="#">Bookings</a>
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Book a Car Wash</a></li>
+                            <li id="meals"><a href="#">Book Your Meal</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
+                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id="notifications">
+                    <a href="#"><i class="fa-solid fa-bell"></i></a>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="#" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+            
+            
+
+        </nav>
+    
+    </header>
+
+    <main class="main">
+
+        <article class="form-container" >
+
+            <section>
+                <h4>Book Your Meal!</h4>
+            </section>
+
+            <form class="mealForm">
+                <div>
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" required><br><br>
+                </div>
+                
+                <div>
+                    <label for="date">Date:</label><br>
+                    <input type="date" id="date" name="date" required><br><br>
+                </div>
+                <div>
+                    <label for="diet">Dietary Restrictions:</label><br>
+                    <select id="diet" name="diet" required>
+                        <option value="">Select</option>
+                        <option value="None">None</option>
+                        <option value="Kosher">Kosher</option>
+                        <option value="Halal">Halal</option>
+                        <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
+                        <option value="Gluten-Free">Gluten-Free</option>
+                        <option value="Low-Carb/Keto">Low-Carb/Keto</option>
+                        <option value="Paleo">Paleo</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                    </select><br><br>
+                </div>
+                <div>
+                    <label for="meal">Preferred Meal:</label><br>
+                    <select id="meal" name="meal" required></select><br><br>
+                </div>
+                <div>
+                    <button id="submit-btn">Submit</button>
+                </div>
+            </form>
+
+        </article>
+
+    </main>
+
+
+    <script type="module" src="book-meal.js"></script>
+</body>
+</html>
