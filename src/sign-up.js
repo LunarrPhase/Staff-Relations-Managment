@@ -51,7 +51,7 @@ signUp.addEventListener('click', (e) =>{
         .then((userCredential) => {
 
             const user = userCredential.user;
-            role = SetRole(accessKey);
+            let role = SetRole(accessKey);
 
       // Update user profile with role
       /* user.updateProfile({
@@ -73,7 +73,7 @@ signUp.addEventListener('click', (e) =>{
         window.location.href = 'index.html'
     })
     .catch((error) => {
-            console.log(error);
+            console.log(error.code);
             const errorMessage = SetSignUpError(error, email, password);
             const errorMessageElement = document.getElementById('error-message');
             errorMessageElement.textContent = errorMessage;
