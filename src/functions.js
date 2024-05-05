@@ -116,4 +116,21 @@ function SetSignUpError(error, email, password){
 }
 
 
-export{FirebaseLogin, GetRole, SetLoginError, isValidAccessKey, SetRole, SetSignUpError};
+/* TIMESHEET */
+
+
+function ChangeWindow(role){
+
+    if (role === "Manager") {
+        window.location.href = 'manager-main-page.html'
+    }
+    else if (role === "HR") {
+        window.location.href = 'admin-main-page.html'
+    }
+    else {
+        window.location.href = 'main-page.html'
+    }
+}
+
+
+export{FirebaseLogin, GetRole, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, ChangeWindow};

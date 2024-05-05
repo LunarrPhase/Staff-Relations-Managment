@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="45" lines-covered="23" line-rate="0.5111" branches-valid="29" branches-covered="21" branch-rate="0.7241" timestamp="1714902569733" complexity="0" version="0.1">
+<coverage lines-valid="50" lines-covered="26" line-rate="0.52" branches-valid="33" branches-covered="23" branch-rate="0.6969" timestamp="1714920159276" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
   </sources>
@@ -15,9 +15,9 @@
         </class>
       </classes>
     </package>
-    <package name="Staff-Relations-Managment.src" line-rate="0.5111" branch-rate="0.7241">
+    <package name="Staff-Relations-Managment.src" line-rate="0.52" branch-rate="0.6969">
       <classes>
-        <class name="functions.js" filename="src\functions.js" line-rate="0.5111" branch-rate="0.7241">
+        <class name="functions.js" filename="src\functions.js" line-rate="0.52" branch-rate="0.6969">
           <methods>
             <method name="FirebaseLogin" hits="0" signature="()V">
               <lines>
@@ -47,6 +47,11 @@
             <method name="SetSignUpError" hits="6" signature="()V">
               <lines>
                 <line number="97" hits="6"/>
+              </lines>
+            </method>
+            <method name="ChangeWindow" hits="1" signature="()V">
+              <lines>
+                <line number="122" hits="1"/>
               </lines>
             </method>
           </methods>
@@ -96,6 +101,11 @@
             <line number="110" hits="1" branch="false"/>
             <line number="113" hits="1" branch="false"/>
             <line number="115" hits="6" branch="false"/>
+            <line number="124" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="125" hits="0" branch="false"/>
+            <line number="127" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="128" hits="1" branch="false"/>
+            <line number="131" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>

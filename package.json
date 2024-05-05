@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "//": "to test: jest --detectOpenHandles ./__tests__ else: echo 'tests successful'",
+  "//": "to test: jest ./__tests__ else: echo 'tests completed'",
   "scripts": {
-    "test": "echo 'tests completed'",
+    "test": "jest ./__tests__",
     "start": "node app"
   },
   "repository": {
