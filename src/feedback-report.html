@@ -1,16 +1,74 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="feedback-report.css">
+  <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
   <title>Feedback Report</title>
-  
+
 </head>
+
 <body>
-  <button id="makePdf">Generate PDF Report</button>
+
+  <header class="header">
+
+    <h1>Staff-Relations Management</h1>
+
+    <nav>
+
+        
+
+        <ul class="menu">
+   
+
+            <li id="home"><a href="#">Home</a></li>
+
+            <li id="logout"><a href="index.html">Log Out</a></li>
+            
+
+        </ul>
+
+    </nav>
+
+</header>
+  
+  <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
+
+    <a href="all-reports.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+
+    <article>
+    
+    <section class="button">
+      <h2>Download a report on all the feedback that you have received.</h2>
+      <h3>What advice have your colleagues been giving you? </h3>
+      <button id="makePdf">Generate PDF Report</button>
+
+    </section>
+
+    <section class="image">
+      <img src="feedback-img.svg" alt="feedback" id="image">
+    </section>
+
+  </article>
+
+  </main>
+
+  <footer class="footer">
+
+    <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+
+</footer>
+    
+  </body>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js""></script>
   <script src="feedback-report.js" type="module"></script>
-</body>
+
 </html>
+
+<script type="module" src="main-page.js"></script>

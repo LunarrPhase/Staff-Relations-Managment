@@ -25,7 +25,7 @@ body {
 .container{
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(background.svg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(img/background.svg);
     background-position: center;
     background-size: cover;
     position: absolute;

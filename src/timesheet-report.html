@@ -8,7 +8,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Timesheet</title>
+
+    <title>Timesheet Report</title>
+
 
     <link rel="stylesheet" href="timesheet.css">
 
@@ -42,11 +44,44 @@
 
                 <li id="home"><a href="#">Home</a></li>
 
-                <li id="back"><a href="#">Back</a></li>
+
+                <li id="timesheets"><a href="timesheet.html">Timesheets</a></li>
+
+                <li id="bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+
+                        <ul>
+
+                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+
+                            <li id="meal"><a href="book-meal.html">Meal Bookings</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </li>
+
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
 
                 <li id="logout"><a href="index.html">Log Out</a></li>
 
-                
+                <li class="notifications" id="notifications">
+
+                    <a href="#"><i class="fa-solid fa-bell"></i></a>
+
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+
+                        <h3>Notifications</h3>
+
+                        <p>You have no notifications.</p>
+
+                        <a href="#" class="see-all-link">See all</a>
+
+                    </div>
+
+                </li>
 
             </ul>
 
@@ -67,38 +102,43 @@
 
 
     <main class="main">
-
-    
-
-    <a href="#"><button id="GenerateByProject">Generate Timesheets by Project</button></a>
-
-    <a href="#"><button id="GenerateByTask">Generate Timesheets by Task</button></a>
-
-    <article class="table-container">
-
-        <section class="table-header">
-
-            <h2>Timesheets</h2>
-
+        <section class="back-sec">
+            <a href="all-reports.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
         </section>
 
-        <section id = 'timesheetReport'>
+        <article class="main-article">
 
+            <a href="#"><button id="GenerateByProject">Generate Timesheets by Project</button></a>
 
+            <a href="#"><button id="GenerateByTask">Generate Timesheets by Task</button></a>
+        
+            <article class="table-container">
+        
+                <section class="table-header">
+        
+                    <h2>Timesheets</h2>
+        
+                </section>
+        
+                <section id = 'timesheetReport'>
+        
+        
+                </section>
+        
+        
+        
+            </article>
+        
+        
 
-            
+        </article>
 
+        <section class="pdf-csv">
+            <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
+        
+            <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
         </section>
 
-
-
-    </article>
-
-
-
-    <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
-
-    <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
 
     
 

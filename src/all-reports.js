@@ -20,9 +20,10 @@ const auth = getAuth();
 const db = getFirestore(app);
 const realtimeDb = getDatabase(app);
 
-const feedbackElement = document.getElementById('feedbackButton');
+const goHome = document.getElementById('home')
+const backButton = document.getElementById('back-btn')
 
-feedbackElement.addEventListener('click', async () => {
+goHome.addEventListener('click', async () => {
   //getting current user
   const user = auth.currentUser;
   console.log("clicked!")
@@ -51,70 +52,32 @@ feedbackElement.addEventListener('click', async () => {
   }
 })
 
-const checkEmailExists = async (email) => {
-  const usersRef = ref(realtimeDb, 'users')
-  const snapshot = await get(usersRef)
-  const users = snapshot.val()
-
-  for (const key in users) {
-    if (users[key].email === email) {
-      return true
-    }
-  }
-
-  return false
-};
-const form = document.querySelector('form')
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const recipient = document.getElementById('recipient').value;
-  const type = document.getElementById('type').value;
-  const message = document.getElementById('message').value;
-
+backButton.addEventListener('click', async () => {
+  //getting current user
   const user = auth.currentUser;
-  const userRef = ref(realtimeDb, 'users/' + user.uid);
+  console.log("clicked!")
 
-  let email = null;
-
-  try {
-    const snapshot = await get(userRef);
-    const userData = snapshot.val();
-    email = userData.email;
-  } catch (error) {
-    console.error("Error getting user email:", error);
-  }
-
-  try {
-    const emailExists = await checkEmailExists(recipient);
-    if (!emailExists) {
-      alert('The entered email does not exist.');
-      return;
-    }
-  
+  if (user) {
     try {
-      await addDoc(collection(db, 'feedback'), {
-        message: message,
-        recipient: recipient,
-        type: type,
-        sender: email 
+      
+      const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+      get(userRef).then((snapshot) => {
+        const userData = snapshot.val();
+        const role = userData.role;
+        if (role === "Manager") {
+          window.location.href = 'manager-main-page.html'
+        } else if (role === "HR") {
+          window.location.href = 'admin-main-page.html'
+        } else {
+          window.location.href = 'main-page.html'
+        }
       });
-
-      const modal = document.getElementById('myModal');
-      modal.style.display = 'block';
-
-      const closeButton = document.getElementsByClassName('close')[0];
-      closeButton.onclick = function() {
-        modal.style.display = 'none';
-      };
-      form.reset();
     } catch (error) {
-      console.error('Error adding feedback: ', error);
+      console.error("Error getting user role:", error)
     }
-  } catch (error) {
-    console.error('Error checking email existence:', error);
+  } else {
+    window.location.href = 'index.html'
   }
-});
-
+})
 
