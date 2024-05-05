@@ -26,6 +26,7 @@ async function FirebaseLogin(auth, database, email, password){
     }
     catch (error) {
 
+        document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
         const errorMessageElement = document.getElementById('error-message');
         errorMessageElement.textContent = errorMessage;
@@ -53,8 +54,6 @@ function GetRole(role){
 function SetLoginError(error){
 
     let errorMessage;
-    //console.log(error.code);
-    document.getElementById("authenticating").style.display = "none";
 
     if (error.code === "auth/invalid-email") {
         errorMessage = "Please provide a valid email address.";
