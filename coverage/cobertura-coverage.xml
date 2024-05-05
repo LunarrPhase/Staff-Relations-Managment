@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="45" lines-covered="23" line-rate="0.5111" branches-valid="29" branches-covered="21" branch-rate="0.7241" timestamp="1714902569733" complexity="0" version="0.1">
+<coverage lines-valid="46" lines-covered="29" line-rate="0.6304" branches-valid="31" branches-covered="26" branch-rate="0.8387" timestamp="1714924595671" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
   </sources>
@@ -15,18 +15,18 @@
         </class>
       </classes>
     </package>
-    <package name="Staff-Relations-Managment.src" line-rate="0.5111" branch-rate="0.7241">
+    <package name="Staff-Relations-Managment.src" line-rate="0.6304" branch-rate="0.8387">
       <classes>
-        <class name="functions.js" filename="src\functions.js" line-rate="0.5111" branch-rate="0.7241">
+        <class name="functions.js" filename="src\functions.js" line-rate="0.6304" branch-rate="0.8387">
           <methods>
             <method name="FirebaseLogin" hits="0" signature="()V">
               <lines>
                 <line number="8" hits="0"/>
               </lines>
             </method>
-            <method name="GetRole" hits="0" signature="()V">
+            <method name="ChangeWindow" hits="3" signature="()V">
               <lines>
-                <line number="40" hits="0"/>
+                <line number="40" hits="3"/>
               </lines>
             </method>
             <method name="SetLoginError" hits="2" signature="()V">
@@ -49,6 +49,11 @@
                 <line number="97" hits="6"/>
               </lines>
             </method>
+            <method name="truncateText" hits="1" signature="()V">
+              <lines>
+                <line number="122" hits="1"/>
+              </lines>
+            </method>
           </methods>
           <lines>
             <line number="10" hits="0" branch="false"/>
@@ -67,11 +72,11 @@
             <line number="31" hits="0" branch="false"/>
             <line number="32" hits="0" branch="false"/>
             <line number="35" hits="0" branch="false"/>
-            <line number="42" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="43" hits="0" branch="false"/>
-            <line number="45" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="46" hits="0" branch="false"/>
-            <line number="49" hits="0" branch="false"/>
+            <line number="42" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="43" hits="1" branch="false"/>
+            <line number="45" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="49" hits="1" branch="false"/>
             <line number="58" hits="2" branch="true" condition-coverage="100% (2/2)"/>
             <line number="59" hits="1" branch="false"/>
             <line number="61" hits="1" branch="true" condition-coverage="50% (1/2)"/>
@@ -96,6 +101,7 @@
             <line number="110" hits="1" branch="false"/>
             <line number="113" hits="1" branch="false"/>
             <line number="115" hits="6" branch="false"/>
+            <line number="123" hits="1" branch="true" condition-coverage="50% (1/2)"/>
           </lines>
         </class>
       </classes>

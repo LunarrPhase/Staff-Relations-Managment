@@ -22,7 +22,7 @@ async function FirebaseLogin(auth, database, email, password){
         const role = userData.role || "User"
         console.log(userData)
 
-        GetRole(role);
+        ChangeWindow(role);
     }
     catch (error) {
 
@@ -37,7 +37,7 @@ async function FirebaseLogin(auth, database, email, password){
 }
 
 
-function GetRole(role){
+function ChangeWindow(role){
 
     if (role === "Manager") {
         window.location.href = 'manager-main-page.html';
@@ -116,4 +116,12 @@ function SetSignUpError(error, email, password){
 }
 
 
-export{FirebaseLogin, GetRole, SetLoginError, isValidAccessKey, SetRole, SetSignUpError};
+/* TIMESHEET */
+
+
+function truncateText(text, maxLength) {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text; 
+}
+
+
+export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText };
