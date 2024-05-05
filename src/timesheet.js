@@ -2,7 +2,7 @@ import { database as realtimeDb, auth, firestore as db } from './firebaseInit.js
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { ChangeWindow } from './functions.js';
+import { ChangeWindow, truncateText } from './functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -80,11 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         else {
             console.error("User not authenticated");
-        }
-        
-        //truncate long text to fit it in the table
-        function truncateText(text, maxLength) {
-            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text; 
         }
         
         //code to go to the add task

@@ -1,8 +1,13 @@
-import { ChangeWindow } from "../src/functions.js";
+import { truncateText } from "../src/functions";
 
 
-const hrPage = "admin-main-page.html";
-const managerPage = "manager-main-page.html";
-const userPage = "main-page.html";
+describe("Check truncations", () => {
+
+    it("ignores", () => {
+        const text = "00000";
+        const newtext = truncateText(text, 20);
+        expect(newtext.length).toBeLessThanOrEqual(20);
+    })
+})
 
  

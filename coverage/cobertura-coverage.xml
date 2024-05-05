@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="45" lines-covered="28" line-rate="0.6222" branches-valid="29" branches-covered="25" branch-rate="0.862" timestamp="1714922781470" complexity="0" version="0.1">
+<coverage lines-valid="46" lines-covered="29" line-rate="0.6304" branches-valid="31" branches-covered="26" branch-rate="0.8387" timestamp="1714924595671" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
   </sources>
@@ -15,9 +15,9 @@
         </class>
       </classes>
     </package>
-    <package name="Staff-Relations-Managment.src" line-rate="0.6222" branch-rate="0.862">
+    <package name="Staff-Relations-Managment.src" line-rate="0.6304" branch-rate="0.8387">
       <classes>
-        <class name="functions.js" filename="src\functions.js" line-rate="0.6222" branch-rate="0.862">
+        <class name="functions.js" filename="src\functions.js" line-rate="0.6304" branch-rate="0.8387">
           <methods>
             <method name="FirebaseLogin" hits="0" signature="()V">
               <lines>
@@ -47,6 +47,11 @@
             <method name="SetSignUpError" hits="6" signature="()V">
               <lines>
                 <line number="97" hits="6"/>
+              </lines>
+            </method>
+            <method name="truncateText" hits="1" signature="()V">
+              <lines>
+                <line number="122" hits="1"/>
               </lines>
             </method>
           </methods>
@@ -96,6 +101,7 @@
             <line number="110" hits="1" branch="false"/>
             <line number="113" hits="1" branch="false"/>
             <line number="115" hits="6" branch="false"/>
+            <line number="123" hits="1" branch="true" condition-coverage="50% (1/2)"/>
           </lines>
         </class>
       </classes>

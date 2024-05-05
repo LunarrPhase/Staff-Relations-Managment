@@ -119,5 +119,9 @@ function SetSignUpError(error, email, password){
 /* TIMESHEET */
 
 
+function truncateText(text, maxLength) {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text; 
+}
 
-export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError };
+
+export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText };
