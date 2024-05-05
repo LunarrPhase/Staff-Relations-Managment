@@ -379,15 +379,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
