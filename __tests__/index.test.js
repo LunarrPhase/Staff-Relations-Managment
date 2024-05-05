@@ -1,7 +1,7 @@
-import { SetLoginError } from '../src/functions.js';
+import { SetLoginError, ChangeWindow } from '../src/functions.js';
 
 
-describe("Login Functionality", () => {
+describe("Error handling", () => {
 
     it('Displays correct error message for invalid email', async () => {
 
@@ -17,3 +17,33 @@ describe("Login Functionality", () => {
         expect(errorMessage).toBe("Wrong email or password. Please try again.");
     });
 });
+
+
+describe("Change Window functionality", () => {
+
+    const hrPage = "admin-main-page.html";
+    const managerPage = "manager-main-page.html";
+    const userPage = "main-page.html";
+
+    Object.defineProperty(globalThis, "window", {
+        value: { location: { href: "" } },
+        writable: true,
+    });
+
+    it("Should go to HR page", function () {
+        ChangeWindow("HR");
+        expect(window).toEqual({location: {href: hrPage} });
+    });
+
+
+    it("Should go to manager page", function () {
+        ChangeWindow("Manager");
+        expect(window).toEqual({location: {href: managerPage} });
+    });
+
+
+    it("Should go to user page", function () {
+        ChangeWindow("User");
+        expect(window).toEqual({location: {href: userPage} });
+    });
+})

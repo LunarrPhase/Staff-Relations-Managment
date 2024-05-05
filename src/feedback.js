@@ -1,6 +1,7 @@
 import { database as realtimeDb, auth, firestore as db} from './firebaseInit.js';
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { ChangeWindow } from './functions.js';
 
  
 const feedbackElement = document.getElementById('feedbackButton');
@@ -17,18 +18,10 @@ feedbackElement.addEventListener('click', async () => {
         const userRef = ref(realtimeDb, 'users/' + user.uid)
 
         get(userRef).then((snapshot) => {
+            
             const userData = snapshot.val();
             const role = userData.role;
-
-            if (role === "Manager") {
-                window.location.href = 'manager-main-page.html'
-            }
-            else if (role === "HR") {
-                window.location.href = 'admin-main-page.html'
-            }
-            else {
-                window.location.href = 'main-page.html'
-            }
+            ChangeWindow(role);
         });
     }
     catch (error) {

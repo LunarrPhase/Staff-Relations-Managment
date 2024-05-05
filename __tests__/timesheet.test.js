@@ -1,9 +1,8 @@
 import { ChangeWindow } from "../src/functions.js";
 
 
-describe("Timesheet functionality", () => {
+const hrPage = "admin-main-page.html";
+const managerPage = "manager-main-page.html";
+const userPage = "main-page.html";
 
-    it("Sends", () => {
-        ChangeWindow("HR")
-    })
-})
+ 

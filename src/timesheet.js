@@ -2,6 +2,7 @@ import { database as realtimeDb, auth, firestore as db } from './firebaseInit.js
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { ChangeWindow } from './functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -22,16 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         const userData = snapshot.val();
                         const role = userData.role;
-
-                        if (role === "Manager") {
-                            window.location.href = 'manager-main-page.html'
-                        }
-                        else if (role === "HR") {
-                            window.location.href = 'admin-main-page.html'
-                        }
-                        else {
-                            window.location.href = 'main-page.html'
-                        }
+                        ChangeWindow(role);
                     });
                 }
                 catch (error) {
