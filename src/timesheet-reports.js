@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
 
         //back button to all reports
-        const backbtn = document.getElementById('back');
+        const backbtn = document.getElementById('back-btn');
 
         backbtn.addEventListener("click", function() {
             // Navigate the user to a new HTML page
