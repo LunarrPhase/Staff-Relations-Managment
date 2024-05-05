@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    background-image: url(img/manageusers.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -177,8 +176,8 @@ table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-tbody tr:hover{
-    background-color: #fff;
+table tbody tr:hover{
+    background-color: #fdf4f4;
 }
 
 .table-header{
