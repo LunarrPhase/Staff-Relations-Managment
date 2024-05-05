@@ -1,0 +1,276 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.header{
+    width:100%;
+    height: 80px;
+    position: fixed;
+    background-color: #407088;
+    padding-left: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 50px;
+}
+
+ul li a{
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings{
+    position: relative;
+}
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    left: 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.notifications{
+    transition: all 0.5s;
+    color: #ffb5b5;
+    transform-origin: center;
+
+}
+
+.notifications a:hover{
+    color: white;
+ }
+ 
+
+.main{
+    flex:1;
+    padding-top: 80px;
+    background-color: white;
+
+}
+
+h2{
+    color: #132743;
+    padding: 10px;
+}
+
+.footer{
+    width: 100%;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+}
+
+#main-pic{
+    width: 600px;
+    height: 380px;
+    margin: 20px;
+    margin-top: 0;
+    padding: 10px;
+    background-color: #9ec7d5;
+    border-radius: 10px;
+}
+
+.top-article{
+    display: flex;
+
+}
+
+.main-info{
+    margin: auto;
+    width: 580px;
+    text-align: center;
+    justify-content: center;
+}
+
+h3{
+    font-family: "Roboto", sans-serif;
+    font-size: 37px;
+    margin: 10px;
+    color: #132743;
+}
+
+
+h4{
+    font-family: "Roboto", sans-serif;
+    font-style: italic;
+    color: #132743;
+}
+
+.bottom-article{
+    display: flex;
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    justify-content: space-around;
+}
+
+.info{
+    width: 250px;
+    height: 300px;
+    text-align: center;
+    transition: 1s;
+}
+
+.info:hover{
+    transform: scale(1.2);
+    z-index: 2;
+}
+
+h5{
+    font-size: 25px;
+    font-family: "Roboto", sans-serif;
+    color: #132743;
+    text-decoration: underline;
+}
+
+.info img{
+    width: 100px;
+    height: 100px;
+}
+
+.info p{
+    font-size: 15px;
+    color: #454854;
+}
+
+#timesheet-info, #feedback-info{
+    margin-bottom: auto;
+}
+
+#booking-info, #report-info{
+    margin-top: 70px;
+}
+
+/* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.see-all-link:hover {
+    text-decoration: underline;
+}
+
+
+.show-popover {
+    display: block !important;
+}
+
+#feedback-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 90px; 
+    height: 50px; 
+    border-radius: 25px; 
+    background-color: #90D26D;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+
+#feedback-icon {
+    font-size: 24px;
+}

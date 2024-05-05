@@ -1,0 +1,49 @@
+{
+  "name": "staff-relations-managment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "//": "to test: jest --detectOpenHandles ./__tests__ else: echo 'tests successful'",
+  "scripts": {
+    "test": "jest ./__tests__",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NashTheHash/Staff-Relations-Managment.git"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/dummy.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/dummy.js"
+    },
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NashTheHash/Staff-Relations-Managment/issues"
+  },
+  "homepage": "https://github.com/NashTheHash/Staff-Relations-Managment#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase": "^10.11.0",
+    "firebase-admin": "^12.1.0",
+    "jest": "^29.7.0",
+    "jsdom": "^24.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "jest": "^29.7.0"
+  },
+  "plugins": [
+    "babel-plugin-transform-import-meta"
+  ]
+}

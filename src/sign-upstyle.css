@@ -1,0 +1,80 @@
+a{
+    text-decoration: none;
+    color: #132743;
+
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+body {
+    font-family:sans-serif; 
+    background-color: #ececec; 
+}
+
+#info{
+    font-size: 28px;
+}
+
+.container{
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(background.svg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1, p {
+    color: #132743; 
+    text-align: center; 
+    margin-top: 30px; 
+}
+
+.login-box {
+    width: 300px; 
+    margin-top: auto;
+    margin:auto; 
+    background-color: #fff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+input[type="text"],
+input[type="password"],
+input[type="button"] {
+    width: calc(100% - 40px); 
+    padding: 10px;
+    margin: 10px auto; 
+    border: 1px solid #385170; /* Use third-color for input borders */
+    align-self: center;
+    border-radius: 20px; 
+    outline: none; 
+}
+
+input[type="button"] {
+    background-color: #132743; /* Use fourth-color for submit button background */
+    width: calc(100% - 20px);
+    color: #fff; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: #385170; /* Darker shade of third-color on hover */
+}
+
+.error {
+    border-color: red;
+}
+

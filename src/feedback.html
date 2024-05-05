@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <link rel="stylesheet" type="text/css" href="feedback.css">
+</head>
+<body>
+    
+    <header>
+        <button class="back-button" id = 'feedbackButton'><img src="./img/reply-solid.svg" alt="back-icon" class="back-icon"></button>
+        <img src="./img/feedback_background.svg" alt="background" class="feedback_background">
+    </header>
+
+    <main>
+        <article class="container">
+            <h2>Feedback Form</h2>
+            <form action="#" method="post">
+                <label for="recipient">Recipient's Email address </label>
+                <input type="email" id="recipient" name="recipient" required>
+    
+                <label for="type">Type of Feedback:</label>
+                <select id="type" name="type" required>
+                    <option value="positive">Positive</option>
+                    <option value="negative">Negative</option>
+                    <option value="neutral">Neutral</option>
+                </select>
+    
+                <label for="message">Feedback Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <div>
+                    <input type="submit" value="Submit Feedback">
+                </div>
+            </form>
+        </article>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p>Feedback submitted successfully!</p>
+            </div>
+          </div>
+          
+    </main>
+</body>
+<script type="module" src="feedback.js"></script>
+</html>

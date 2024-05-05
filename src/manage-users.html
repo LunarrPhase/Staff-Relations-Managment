@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+    <link rel="stylesheet" href="manage-users.css">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <header class="header">
+        <h1>Manage users</h1>
+
+        <nav>
+                    
+            <ul>
+                <li><a href="admin-main-page.html">Home</a></li>
+                <!--this is where the drop down stuff was-->
+                </li>
+                <li id = "feedback"><a href="#">Request Feedback</a></li>
+                <!--<li id = "bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+                            <li id="meal"><a href="#">Meal Bookings</a></li>
+                        </ul>
+                    </div>
+                
+                </li>-->
+                <li id = "meals"><a href="#">Meal Options</a></li>
+                <li id = "logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id="notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+
+    
+    </header>
+
+
+    <main class="main">
+    <section class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody id="usersList">
+
+                
+            </tbody>
+        </table>
+    </section>
+    <section class="load-more">
+        <button id="load-more">Load Users</button>
+    </section>
+
+    </main>
+
+<!--<footer class="footer">
+    <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+</footer>-->
+</body>
+
+
+</html>
+
+<script src="manage-user.js" type="module"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const notifications = document.getElementById('notifications')
+    const popoverContent = notifications.querySelector('.popover-content')
+    
+    notifications.addEventListener('click', function(event) {
+        event.preventDefault()
+        popoverContent.classList.toggle('show-popover')
+    })
+})
+
+</script>

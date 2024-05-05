@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="admin-main-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+
+    <style>
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+        }
+
+        #loading .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid  #ffb5b5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+            <header class="header">
+                <h1>Staff-Relations Management</h1>
+
+                <nav>
+                    
+                    <ul>
+                        
+                        <li id = "manage-users"><a href="#">Manage Users</a>
+                        <!--this is where the drop down stuff was--></li>
+                        <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                        <li id = "feedback"><a href="all-reports.html">Reports</a></li>
+                        <li id = "bookings"><a href="#">Bookings</a>
+
+                            <div class="drop-down">
+                                <ul>
+                                    <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+                                    <li id="meal"><a href="all-meal-bookings.html">Meal Bookings</a></li>
+                                </ul>
+                            </div>
+                        
+                        </li>
+                        <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
+                        <li id = "logout"><a href="index.html">Log Out</a></li>
+                        <li class="notifications" id="notifications">
+                            <i class="fa-solid fa-bell"></i>
+                            <div id="popover-content" class="popover-content" aria-hidden="true">
+                                <h3>Notifications</h3>
+                                <p>You have no notifications.</p>
+                                <a href="#" class="see-all-link">See all</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+
+                <hr>
+            
+            </header>
+            
+            <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
+
+                <article class="top-article">
+                    <section>
+                        <h2 id = "userInfo"></h2>
+                        <img src="./img/admin.svg" alt="background" id="main-pic">
+
+                    </section>
+
+                    <section class="main-info">
+
+                        <h3>“Start by doing what's necessary, then what's possible; and suddenly you are doing the impossible.”</h3>
+                        <h4>- St. Francis of Assisi</h4>
+                        <div id="feedback-button">
+                        <span id="feedback-icon"><i class="fa-regular fa-pen-to-square"></i></span>
+            
+                        </div>
+
+                    </section>
+
+                </article>
+
+                <article class="bottom-article">
+                    <section class="info" id="manage-info">
+                        <h5>Manage Users</h5>
+                        <p>Have total control of the site's users, all in your hands, at the tap of a button.</p>
+                        <img src="./img/time.svg" alt="time-pic">
+                    </section>
+
+                    <hr>
+
+                    <section class="info" id="feedback-info">
+                        <h5>Request Feedback</h5>
+                        <p>Im not too sure how this works.</p>
+                        <img src="./img/feedback.svg" alt="booking-pic">
+                    </section>
+
+                    <hr>
+
+                    <section class="info" id="booking-info">
+                        <h5>View Bookings</h5>
+                        <p>Be able to survey all meal and car wash bookings made by users. </p>
+                        <img src="./img/booking.svg" alt="feedback-pic">
+                    </section>
+
+                    <hr>
+
+                    <section class="info" id="meal-info">
+                        <h5>Create Meal Options</h5>
+                        <p>Let out your inner chef by offering innovative meal options.</p>
+                        <img src="./img/undraw_report_re_f5n5.svg" alt="report-pic">
+                    </section>
+                </article>
+
+            </main>
+
+            <footer class="footer">
+                <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+            </footer>
+   
+    
+</body>
+
+<script type="module" src="main-page.js"></script>
+<script type="module" src="manage-user.js"></script>
+<script type="module" src ="admin-main-page.js"></script>
+
+</html>
