@@ -309,8 +309,8 @@ footer p{
     margin-bottom: 0;
     color: #fff;
     margin-right: 100px;
-    background-color: #4b788f;
-    border: 1px solid #4b788f;
+    background-color: #132743;
+    border: 1px solid #132743;
     border-radius: 25px;
     padding: 8px;
     width: 60px;
@@ -321,19 +321,17 @@ footer p{
 .back-sec:hover{
     border: 1px solid #000;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+    animation: shake 0.8s;
 }
 
 #back-btn {
-    background-color: #4b788f;
+    background-color: #132743;
     border: none;
     color: white;
     font-size: 19px;
     transition: transform 0.5s ease;
 }
 
-#back-btn:hover{
-    animation: shake 0.8s;
-}
 
 @keyframes shake {
     0% { transform: rotate(0deg); }

@@ -67,14 +67,24 @@
 
             <h2>Create a new meal</h2>
 
-        <form class="add">
+        <form class="add" id ="add">
             
             <label for="date">Day:</label><br>
             <input type="date" id="date" name="date"  required><br><br>
 
           
-            <label for="diet">Diet:</label><br>
-            <input type="text" id="diet" name="diet" required><br><br>
+            <label for="diet">Dietary Restrictions:</label><br>
+                    <select id="diet" name="diet" required>
+                        <option value="">Select</option>
+                        <option value="None">None</option>
+                        <option value="Kosher">Kosher</option>
+                        <option value="Halal">Halal</option>
+                        <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
+                        <option value="Gluten-Free">Gluten-Free</option>
+                        <option value="Low-Carb/Keto">Low-Carb/Keto</option>
+                        <option value="Paleo">Paleo</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                    </select><br><br>
           
             <label for="meal">Meal:</label><br>
             <input type="text" id="mealValue" name="meal" required><br><br>
