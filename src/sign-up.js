@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { database, auth } from "./initialise-firebase.js";
+import { database, auth } from "./firebaseInit.js";
 import { set, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { isValidAccessKey, SetRole, SetSignUpError } from "./functions.js";
