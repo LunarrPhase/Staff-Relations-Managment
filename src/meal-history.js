@@ -54,11 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "all-reports.html";
         });
 
-        //code for meal order history report
-
-        // <a href="#"><button id="GenerateByDiet">Generate Meal history by Diet</button></a>
-        // <a href="#"><button id="GenerateByDate">Generate Meal history by Date</button></a>
-
+   
         //get the meals by diet
         const dietbtn = document.getElementById('GenerateByDiet');
         dietbtn.addEventListener("click", function() {
@@ -208,6 +204,128 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             })();
         });
+
+
+
+
+
+//generate pdf for meal history
+
+const GeneratePDF = document.getElementById('GeneratePDF');
+
+GeneratePDF.addEventListener("click", async function() {
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+        // Initialize data object for meal orders grouped by date
+        const mealOrdersByDate = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const date = mealOrderData.date;
+            if (!mealOrdersByDate[date]) {
+                mealOrdersByDate[date] = [];
+            }
+            mealOrdersByDate[date].push(mealOrderData);
+        });
+
+        // Generate PDF
+        const doc = new jsPDF();
+        doc.text("Meal Order History", 10, 10);
+        
+        let startY = 20;
+        for (const date in mealOrdersByDate) {
+            doc.text(`Date: ${date}`, 10, startY);
+            const tableData = mealOrdersByDate[date].map(mealOrder => [mealOrder.diet, mealOrder.meal]);
+            doc.autoTable({
+                startY: startY + 10,
+                head: [['Diet', 'Meal']],
+                body: tableData
+            });
+            startY = doc.autoTable.previous.finalY + 10;
+        }
+        
+        doc.save('meal_order_history_by_date.pdf');
+
+        console.log("PDF generated successfully");
+    } catch (error) {
+        console.error("Error generating PDF: ", error);
+    }
+});
+
+
+//generate csv
+const GenerateCSV = document.getElementById('GenerateCSV');
+
+GenerateCSV.addEventListener("click", async function() {
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+
+        // Initialize data object for meal orders grouped by date
+        const mealOrdersByDate = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const date = mealOrderData.date;
+            if (!mealOrdersByDate[date]) {
+                mealOrdersByDate[date] = [];
+            }
+            mealOrdersByDate[date].push(mealOrderData);
+        });
+
+        // Generate CSV content
+        let csvContent = "Date,Diet,Meal\n";
+        for (const date in mealOrdersByDate) {
+            mealOrdersByDate[date].forEach(mealOrder => {
+                csvContent += `${date},${mealOrder.diet},${mealOrder.meal}\n`;
+            });
+        }
+
+        // Download CSV file
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', 'meal_order_history_by_date.csv');
+        document.body.appendChild(link);
+        link.click();
+
+        console.log("CSV generated successfully");
+    } catch (error) {
+        console.error("Error generating CSV: ", error);
+    }
+});
+
+
+
+
+
+
+
     });
 
 });

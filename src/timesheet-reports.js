@@ -54,10 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "all-reports.html";
         });
 
-        //code for timesheets report
-        // <a href="#"><button id="GenerateByProject">Generate Project Timesheets</button></a>
-        // <a href="#"><button id="GenerateByTask">Generate Task Timesheets</button></a>
-
+       
         //get the timesheets by project
         const projectbtn = document.getElementById('GenerateByProject');
 
@@ -312,6 +309,8 @@ document.addEventListener("DOMContentLoaded", function() {
             })();
         });
 
+
+        //generate csv
         const GenerateCSV = document.getElementById('GenerateCSV');
         GenerateCSV.addEventListener("click", function() {
     
