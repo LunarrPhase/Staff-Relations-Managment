@@ -16,22 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 return day.value !== "" && typeCarwash.value !== ""
             }
 
-            async function canBookSlot(day) {
-                const bookingRef = doc(db, 'carWashBookings', day);
-                const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
-            
-                let totalBookedSlots = 0;
-                bookingsSnapshot.forEach(async (doc) => {
-                    const slotBookingRef = doc.ref;
-                    const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
-                    const bookedSlotsSnapshot = await getDocs(bookedSlotsRef);
-                    totalBookedSlots += bookedSlotsSnapshot.size;
-                });
-            
-                return totalBookedSlots < 5;
+            async function canBookSlot(day, hour) {
+                const dayName = new Date(day).toLocaleDateString('en-US', { weekday: 'long' })
+                const bookingRef = doc(db, 'carWashBookings', `${day}-${dayName}`)
+                const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour)
+                const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots')
+                const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
+                //debugging
+                //console.log(`Booked Slots for ${hour}: ${bookedSlotsSnapshot.size}`)
+                return bookedSlotsSnapshot.size < 5;
             }
             
-
+            
+            
+            
+            
             
             async function bookSlot(hour) {
                 const selectedDay = day.value;
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const selectedSlot = timeSlot.value;
                 const userEmail = user.email;
             
-                if (await canBookSlot(selectedDay)) {
+                if (await canBookSlot(selectedDay, hour)){
                     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
                     const selectedDate = new Date(selectedDay)
                     const dayName = daysOfWeek[selectedDate.getDay()]
