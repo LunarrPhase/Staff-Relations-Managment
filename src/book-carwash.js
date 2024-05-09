@@ -17,13 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             async function canBookSlot(day) {
-                //carWashBookings/friday
-                const bookingRef = doc(db, 'carWashBookings', `${day}`)
-                //get daySlotBookings
+                const bookingRef = doc(db, 'carWashBookings', day);
                 const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
-                const numBookings = bookingsSnapshot.size;
-                return numBookings < 5;
+            
+                let totalBookedSlots = 0;
+                bookingsSnapshot.forEach(async (doc) => {
+                    const slotBookingRef = doc.ref;
+                    const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
+                    const bookedSlotsSnapshot = await getDocs(bookedSlotsRef);
+                    totalBookedSlots += bookedSlotsSnapshot.size;
+                });
+            
+                return totalBookedSlots < 5;
             }
+            
 
             
             async function bookSlot(hour) {
