@@ -13,13 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const day = document.getElementById('date');
 
             function areInputsSelected() {
-                return day.value !== "" && typeCarwash.value !== "";
+                return day.value !== "" && typeCarwash.value !== ""
             }
 
             async function canBookSlot(day) {
                 //carWashBookings/friday
                 const bookingRef = doc(db, 'carWashBookings', `${day}`)
-                const timeSlot = document.getElementById('timeSlot');
                 //get daySlotBookings
                 const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
                 const numBookings = bookingsSnapshot.size;
@@ -35,16 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const userEmail = user.email;
             
                 if (await canBookSlot(selectedDay)) {
-                    let count = 0
-                    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                    const selectedDate = new Date(selectedDay);
-                    const dayName = daysOfWeek[selectedDate.getDay()];
+                    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                    const selectedDate = new Date(selectedDay)
+                    const dayName = daysOfWeek[selectedDate.getDay()]
             
                     const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
                     const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
                     const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
             
-                    const slotSnapshot = await getDoc(slotBookingRef);
+                    const slotSnapshot = await getDoc(slotBookingRef)
                     if (!slotSnapshot.exists()) {
                         await setDoc(slotBookingRef, {})
                     }
@@ -58,10 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
             
             
-                    alert(`Slot booked for ${hour}`);
-                    updateAvailableSlots(selectedDay);
+                    alert(`Slot booked for ${hour}`)
+                    updateAvailableSlots(selectedDay)
                 } else {
-                    alert(`No available slots today for ${hour}`);
+                    alert(`No available slots today for ${hour}`)
                 }
             }
             
@@ -116,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             slot: selectedTimeSlot
                         })
 
+                        //to view all car wash bookings easier you can create another collection that will store all bookings
+                        //ever made then you can either view all, or view all by a selectable date.
                         /*const carwashCollectionRef = collection(db, 'carWashOrders')
                         await addDoc(carwashCollectionRef, {
                             name: name,
@@ -166,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+//this is to make sure only monday and friday are selectable.
 manageDate()
 
 
