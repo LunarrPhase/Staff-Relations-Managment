@@ -1,5 +1,5 @@
 import { database as realtimeDb, auth, firestore as db } from './firebaseInit.js';
-import { collection, getDocs, doc, setDoc, addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, getDocs, doc, setDoc, addDoc, getDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { manageDate, ChangeWindow } from './functions.js';
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
@@ -35,21 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 const userEmail = user.email;
             
                 if (await canBookSlot(selectedDay)) {
-                    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                    const selectedDate = new Date(selectedDay)
-                    const dayName = daysOfWeek[selectedDate.getDay()]
+                    let count = 0
+                    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    const selectedDate = new Date(selectedDay);
+                    const dayName = daysOfWeek[selectedDate.getDay()];
             
-                    const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`)
-                    const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour)
+                    const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
+                    const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
+                    const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
             
-                    await setDoc(slotBookingRef, {
+                    const slotSnapshot = await getDoc(slotBookingRef);
+                    if (!slotSnapshot.exists()) {
+                        await setDoc(slotBookingRef, {})
+                    }
+            
+                    await setDoc(doc(bookedSlotsRef, `${userEmail}`), {
                         day: selectedDay,
                         name: name,
                         type: selectedType,
                         slot: selectedSlot,
                         email: userEmail,
-                    });
-                    console.log(`Slot booked for ${hour}`);
+                    })
+            
+            
+                    alert(`Slot booked for ${hour}`);
                     updateAvailableSlots(selectedDay);
                 } else {
                     alert(`No available slots today for ${hour}`);
@@ -57,37 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             
+            
+            
             async function updateAvailableSlots(selectedDay) {
                 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                 const selectedDate = new Date(selectedDay);
-                const dayName = daysOfWeek[selectedDate.getDay()];
-                //getting the day document.
-                const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
-                //get the collection of that day, monday/daySlotBookings.
-                const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
-                const bookedSlots = {};
-                //each id in that daySlotBooking for Monday...
-                bookingsSnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    //console.log(data)
-                    const {slot} = data;
-                    //console.log(slot)
-                    if (!bookedSlots[slot]) {
-                        bookedSlots[slot] = 0;
-                    }
-                    bookedSlots[slot]++;
-                });
+                const dayName = daysOfWeek[selectedDate.getDay()]
             
-                const timeSlots = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM'];
-                timeSlots.forEach((slot) => {
-                    const availableSlots = 5 - (bookedSlots[slot] ? bookedSlots[slot] : 0);
-                    console.log(`Available slots for ${slot}: ${availableSlots}`);
-                    const slotElement = document.getElementById(`${slot}-slots`);
+                const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`)
+               // const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
+            
+                const timeSlots = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM']
+                timeSlots.forEach(async (slot) => {
+                    const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
+                    const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
+                    const availableSlots = 5 - bookedSlotsSnapshot.size;
+                    console.log(`Available slots for ${slot}: ${availableSlots}`)
+                    const slotElement = document.getElementById(`${slot}-slots`)
                     if (slotElement) {
                         slotElement.innerText = availableSlots.toString();
                     }
                 });
             }
+            
 
             
 
