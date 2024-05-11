@@ -68,8 +68,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const popoverContent = document.getElementById('popover-content');
 
     notifications.addEventListener('click', function(event) {
-        event.preventDefault(); 
+        //event.preventDefault(); 
         popoverContent.classList.toggle('show-popover');
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!popoverContent.contains(event.target) && !notifications.contains(event.target)) {
+            popoverContent.classList.remove('show-popover');
+        }
     });
 
     const giveFeedback = document.getElementById('feedback-button')

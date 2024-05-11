@@ -89,8 +89,6 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-
-
 .notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
