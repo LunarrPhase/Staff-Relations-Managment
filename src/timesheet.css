@@ -262,6 +262,10 @@ h2{
     justify-content: space-around;  
 }*/
 
+.add-task{
+    text-align: center;
+}
+
 #add-task{
     background-color: #132743; /* Use fourth-color for submit button background */
     color: #fff; 
@@ -270,7 +274,6 @@ h2{
     width: 400px; 
     padding: 10px;
     margin: 10px auto; 
-    margin-left: 400px;
     border: 1px solid #385170; /* Use third-color for input borders */
     align-self: center;
     border-radius: 20px; 

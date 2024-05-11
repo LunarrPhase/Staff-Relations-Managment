@@ -98,7 +98,7 @@ h1{
 
 }
 
-.notifications a:hover{
+.notifications .fa-bell:hover{
     color: white;
  }
  

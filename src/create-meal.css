@@ -102,7 +102,7 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin: auto;
     background-color: #fbdada;
     background: radial-gradient(50% 50%, #fff, #fdd5d5);
     font-family: sans-serif;

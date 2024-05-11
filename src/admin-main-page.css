@@ -89,14 +89,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
 
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
