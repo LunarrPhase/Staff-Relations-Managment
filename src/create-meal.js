@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const addMealForm = document.getElementById('submit-btn');
 
   if(addMealForm){
-    addMealForm.addEventListener('submit', async (e) => {
+    addMealForm.addEventListener('click', async (e) => {
       e.preventDefault();
 
       const dateInput = document.getElementById('date').value;
@@ -41,8 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         diet: dietInput,
         meal: mealInput,
       });
-      addMealForm.reset()
-    });
 
+    }); 
   }
 });

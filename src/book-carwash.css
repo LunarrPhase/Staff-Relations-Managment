@@ -1,0 +1,297 @@
+main{
+    height: 100%;
+    width: 100%;
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+body{
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image:url(img/car.svg);
+    background-color: #b7d1da;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    font-family: sans-serif;
+}
+
+.header{
+    width:100%;
+    height: 80px;
+    position: fixed;
+    background-color: #407088;
+    padding-left: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+nav{
+    margin-right: 10px;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 50px;
+}
+
+ul li a{
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+#home{
+
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+}
+
+#home::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+    
+}
+
+
+#home:hover::after {
+    width: 100%;
+}
+
+#home:hover{
+
+    cursor:pointer;
+
+}
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings{
+    position: relative;
+}
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    left: 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+.notifications{
+    transition: all 0.5s;
+    color: #ffb5b5;
+    transform-origin: center;
+    padding-left: 10px;
+}
+
+.notifications a:hover{
+   color: white;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 30px;
+    margin-left: 40px;
+    margin-right: auto;
+}
+
+
+h2{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    flex-direction: column;
+    color:#132743;
+    padding: 10px;
+    margin: 30px;
+    text-align: center;
+}
+
+/* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.see-all-link:hover {
+    text-decoration: underline;
+}
+
+
+.show-popover {
+    display: block !important;
+}
+
+.footer{
+    width: 100%;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+}
+
+.form-container{
+    width: 280px;
+    margin: 20px 70px;
+    margin-left: auto;
+    margin-top: 30px;
+    height: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+h4{
+    font-size: 25px;
+    margin: 10px;
+    margin-bottom: 30px;
+    transition: 5s;
+}
+
+
+section{
+    text-align: center;
+}
+
+label{
+    margin: 20px;
+}
+
+#name, #date, #carWashType, #timeSlot{
+    border: 1px solid #000;
+    padding: 4px;
+    margin: 3px;
+    margin-left: 50px;
+    border-radius: 10px;
+}
+
+
+
+#name{
+    padding-left: 10px;
+}
+
+#date{
+    width: 167px;
+    text-align: center;
+}
+
+#carWashType{
+    width: 176px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#timeSlot{
+    width: 176px;
+    cursor: pointer;
+}
+
+#submit-btn{
+    background-color: #132743; /* Use fourth-color for submit button background */
+    width: calc(100% - 40px);
+    margin: 10px;
+    margin-left: 20px;
+    color: #fff; 
+    font-weight: bold; 
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 20px;
+}
+
+#submit-btn:hover{
+    background-color: #385170
+}

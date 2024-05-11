@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book meal</title>
+    <link rel="stylesheet" href="book-carwash.css">
+
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
+
+        <nav>
+            
+            <ul class="menu">
+                <li id = "home" type = "button">Home</li>
+                <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id="bookings"><a href="#">Bookings</a>
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Book a Car Wash</a></li>
+                            <li id="meals"><a href="book-meal.html">Book Your Meal</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
+                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li class="notifications" id="notifications">
+                    <a href="#"><i class="fa-solid fa-bell"></i></a>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+            
+            
+
+        </nav>
+    
+    </header>
+
+    <main class="main">
+
+        <article class="form-container" >
+
+            <section>
+                <h4>Book Your Carwash!</h4>
+            </section>
+
+            <form id="carForm" class = "carForm">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+        
+                <label for="date">Day(Monday/Friday):</label><br>
+                <input type="date" id="date" name="date" required><br><br>
+                
+        
+                <label for="carWashType">Car Wash Type:</label><br>
+                <select id="carWashType" name="carWashType" required>
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Premium">Premium</option>
+                </select><br><br>
+        
+                <label for="timeSlot">Time Slot:</label><br>
+                <select id="timeSlot" name="timeSlot" required>
+                    <option value="8AM">8:00 AM</option>
+                    <option value="9AM">9:00 AM</option>
+                    <option value="10AM">10:00 AM</option>
+                    <option value="11AM">11:00 AM</option>
+                    <option value="12PM">12:00 PM</option>
+                    <option value="1PM">1:00 PM</option>
+                    <option value="2PM">2:00 PM</option>
+                    <option value="3PM">3:00 PM</option>
+                    <option value="4PM">4:00 PM</option>
+                </select><br><br>
+        
+                <button id="submit-btn">Submit</button>
+            </form>
+        </article>
+
+    </main>
+
+
+    <script type="module" src="book-carwash.js"></script>
+    <script type = "module" src = "main-page.js"></script>
+</body>
+</html>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    const notifications = document.getElementById('notifications');
+
+    const popoverContent = notifications.querySelector('.popover-content');
+
+
+    notifications.addEventListener('click', function(event) {
+
+        event.preventDefault(); 
+
+        popoverContent.classList.toggle('show-popover');
+
+    });
+
+});
+
+</script>
