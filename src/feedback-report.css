@@ -196,6 +196,8 @@ article{
     margin-top: 10px;
     border-radius: 20px;
     box-shadow: 0 7px 7px rgba(252, 199, 232, 0.6);
+    max-width: 40%;
+    max-height: 400px;
 }
 
 section{
@@ -213,7 +215,8 @@ h3{
     font-size: 13px;
 }
 
-#makePdf{
+#makePdf, 
+#screenReport{
     background-color: #20406c;
     margin: 20px;
     color: #f0f0f0;
@@ -251,6 +254,8 @@ h3{
     margin-bottom: 25px;
     border-radius: 20px;
     box-shadow: 0 7px 7px rgba(0, 0, 0, 0.6);
+    max-width: 200px;
+    max-height: 200px;
 }
 
 #image{
@@ -279,4 +284,58 @@ footer p{
     margin: 0;
     padding: 10px;
     bottom: 0;
+}
+
+
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    padding-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px #9ec7d5;
+    align-items: center;
+}
+#existingTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+table th:last-child, table td:last-child{
+    border-right: none;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover{
+    background-color: #fdf4f4;
+    border: 1.5px dotted #bebebe;
+}
+
+.thead{
+    width: 100%;
+    margin-top: 10px;
+    height: 50px;
+    border-radius: 5px;
+
+    background-color: #FAE7E9;
+
+    border: 1px solid #ddd;
+    text-align: center;
 }
