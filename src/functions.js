@@ -153,5 +153,12 @@ function manageDate(){
     });
 }
 
+function getDayName(year, month, day) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const date = new Date(year, month - 1, day);
+    return daysOfWeek[date.getDay()]
+}
 
-export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate};
+
+
+export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName};
