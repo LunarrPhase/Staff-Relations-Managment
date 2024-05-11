@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #F8F8FF;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -107,14 +107,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
 
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
