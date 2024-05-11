@@ -213,6 +213,7 @@ h2{
     background-color: #407088;
     bottom: 0;
     text-align: center;
+    position: fixed;
 }
 
 p{
