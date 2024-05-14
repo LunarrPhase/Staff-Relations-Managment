@@ -1,15 +1,19 @@
 body{
     min-height: 100vh;
     display: flex;
+    position: relative;
     flex-direction: column;
-    margin: 0;
+    margin: auto;
     font-family: sans-serif;
     background-color: #F8F8FF;
 }
 
 main{
+    position: absolute;
     height: 100%;
-    padding-top: 80px;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 80px;
 }
 
 .header{
@@ -21,6 +25,7 @@ main{
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    z-index: 1;
 }
 
 ul{
@@ -95,10 +100,36 @@ h1{
     margin-left: 10px;
 }
 
-h2{
+h2 {
     color: #132743;
-    padding: 10px;
+    padding: 5px 10px;
+    margin:10px auto 0 auto;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    transition: color 0.5s ease;
 }
+
+h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(224, 160, 208, 0), rgba(222, 119, 188, 0.5)); /* Ripple gradient */
+    transition: transform 0.5s ease-out;
+    pointer-events: none; /* Ensures the pseudo-element doesn't interfere with mouse events */
+    z-index: -1;  
+    transform: translateX(-100%); /* Start the pseudo-element off-screen to the left */
+    border-radius: 20px;
+}
+
+h2:hover::before {
+    transform: translateX(0); /* Move the pseudo-element to the right to reveal the gradient */
+}
+
+
 
 .notifications{
     transition: all 0.5s;
@@ -154,6 +185,17 @@ h2{
 
 .show-popover {
     display: block !important;
+}
+
+.table-container{
+    height: 100%;
+    margin:10px;
+    border: 2px inset #C0C0C0;
+}
+
+
+#NotificationContainer{
+    margin: 10px;
 }
 
 .footer{
