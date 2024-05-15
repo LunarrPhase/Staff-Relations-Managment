@@ -37,18 +37,27 @@ async function FirebaseLogin(auth, database, email, password){
 }
 
 
-function ChangeWindow(role){
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+
+function ChangeWindow(role){
+    
     if (role === "Manager") {
+        sleep(5000)
         window.location.href = 'manager-main-page.html';
     }
     else if (role === "HR") {
+        sleep(5000)
         window.location.href = 'admin-main-page.html';
     }
     else {
+        sleep(5000)
         window.location.href = 'main-page.html';
     }
 }
+
 
 
 function SetLoginError(error){
@@ -161,4 +170,4 @@ function getDayName(year, month, day) {
 
 
 
-export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName};
+export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep};

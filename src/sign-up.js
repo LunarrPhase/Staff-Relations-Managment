@@ -51,3 +51,4 @@ signUp.addEventListener('click', (e) =>{
         document.getElementById('error-message').textContent = "Invalid access key.";
     }
 });
+

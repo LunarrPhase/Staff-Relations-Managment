@@ -1,13 +1,16 @@
 import { database, auth } from "./firebaseInit.js"
 import { ref,  update, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import {sleep } from "./functions.js";
+
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-
+    event.preventDefault()
     const loading = document.getElementById('loading');
     loading.style.display = 'block'; // Show loading animation
 
+    
     //get the currently signed in user
     onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     notifications.addEventListener('click', function(event) {
         event.preventDefault(); 
-        popoverContent.classList.toggle('show-popover');
+        popoverContent.classList.toggle('show-popover')
     });
 
     const giveFeedback = document.getElementById('feedback-button')
