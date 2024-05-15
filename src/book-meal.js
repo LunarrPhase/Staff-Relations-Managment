@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
                     
                     const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
-                    console.log(mealOptionsSnapshot);
+                    //console.log(mealOptionsSnapshot);
                     
                     mealSelect.innerHTML = '';
     
