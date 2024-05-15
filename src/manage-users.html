@@ -14,7 +14,8 @@
         <h1>Manage users</h1>
 
         <nav>
-                    
+                  
+            <!--links-->
             <ul>
                 <li><a href="admin-main-page.html">Home</a></li>
                 <!--this is where the drop down stuff was-->
@@ -52,11 +53,13 @@
 
     <main class="main">
         
+        <!--back button-->
         <section>
             <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
 
         </section>
 
+    <!--Manage user table-->
     <article class="table-container">
         <div class="table-header">
             <h2>Manage users</h2>
@@ -66,7 +69,7 @@
 
         <table>
             <thead>
-                <input type="text" id="filterInput" placeholder="Filter by name, surname, or role...">
+                <input type="text" id="filterInput" placeholder="Filter by name, surname, or role..." class="filter">
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>
@@ -82,6 +85,8 @@
         </table>
     </div>
     </article>
+
+    <!--load more button-->
     
     <section class="load-more">
         <button id="load-more">Load Users</button>
@@ -103,7 +108,7 @@
     const popoverContent = notifications.querySelector('.popover-content')
     
     notifications.addEventListener('click', function(event) {
-        event.preventDefault()
+        /*event.preventDefault()*/
         popoverContent.classList.toggle('show-popover')
     })
 })
