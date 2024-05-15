@@ -125,6 +125,31 @@ h1{
     margin-right: auto;
 }
 
+#back-btn{
+    background-color: #132743;
+    margin-left: 30px;
+    margin-top: 20px;
+    border: 1px solid #407088;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 17px;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+#back-btn:hover{
+    background-color: #274353;
+    animation: shake 1s; 
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
 h3{
     color: black;
 }

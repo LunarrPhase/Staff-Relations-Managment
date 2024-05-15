@@ -21,21 +21,18 @@
             </li>
             <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
             <li id = "logout"><a href="index.html">Log Out</a></li>
-            <li class="notifications" id="notifications">
-                <i class="fa-solid fa-bell"></i>
-                <div id="popover-content" class="popover-content" aria-hidden="true">
-                    <h3>Notifications</h3>
-                    <p>You have no notifications.</p>
-                    <a href="all-notifs.html" class="see-all-link">See all</a>
-                </div>
-            </li>
         </ul>
 
     </nav>
     </header>
     <main class="main" >
 
-        <section class="table-container">
+        
+        <section>
+            <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+        </section>
+
+        <article class="table-container">
             <div class="table-header">
                 <h2>All Meal Bookings</h2>
             </div>
@@ -61,7 +58,8 @@
                 </tbody>
             </table>
         </div>
-        </section>
+        </article>
+
         <section class="load-more">
             <button id="load-more">Load All Bookings</button>
         </section>
