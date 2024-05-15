@@ -51,7 +51,7 @@ feedbackElement.addEventListener('click', async () => {
   }
 })
 
-const form = document.querySelector('#feedback-form')
+const form = document.querySelector('form')
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
