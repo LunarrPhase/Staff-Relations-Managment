@@ -3,11 +3,13 @@ import { ref,  update, get} from "https://www.gstatic.com/firebasejs/10.11.0/fir
 import { onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    event.preventDefault()
     const loading = document.getElementById('loading');
     loading.style.display = 'block'; // Show loading animation
 
+    
     //get the currently signed in user
     onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const popoverContent = document.getElementById('popover-content');
 
     notifications.addEventListener('click', function(event) {
-        //event.preventDefault(); 
+    //event.preventDefault(); 
         popoverContent.classList.toggle('show-popover');
     });
 
