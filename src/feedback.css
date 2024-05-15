@@ -7,26 +7,28 @@ body {
     display: flex;
 }
 
-.back-button {
-    margin: 20px;
-    width: 70px;
-    height: 35px;
-    cursor: pointer;
-    border-radius: 10px;
-    background-color: #68b5dc;
-    border: 2px solid #407088;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.back-icon{
-    width: 20px;
-    height: 30px;
+#back-btn{
+    background-color: #274353;
+    margin: 20px 30px;
+    border: 1px solid #407088;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 17px;
     color: #fff;
+    transition: transform 0.3s ease;
 }
 
+#back-btn:hover{
+    background-color: #132743;
+    animation: shake 1s; 
+}
 
-.back-button:hover{
-    background-color: #39647A;
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .feedback_background{

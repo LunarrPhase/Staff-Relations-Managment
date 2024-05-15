@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #F8F8FF;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -178,6 +178,7 @@ table tbody tr:nth-child(even) {
 
 table tbody tr:hover{
     background-color: #fdf4f4;
+    border: 1.5px dotted #bebebe;
 }
 
 .table-header{

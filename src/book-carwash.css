@@ -16,11 +16,13 @@ body{
     flex-direction: column;
     background-image:url(img/car.svg);
     background-color: #b7d1da;
-    margin: 0;
+    margin: auto;
     background-repeat: no-repeat;
     background-size: contain;
     font-family: sans-serif;
 }
+
+
 
 .header{
     width:100%;
@@ -35,17 +37,17 @@ body{
 }
 
 nav{
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 ul{
     display: flex;
     list-style-type: none;
-    margin-left: 50px;
+    margin-left: 30px;
 }
 
 ul li a{
-    padding: 0 30px;
+    padding: 0 20px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
@@ -140,14 +142,14 @@ ul li:hover .drop-down ul li:last-child{
     padding-left: 10px;
 }
 
-.notifications a:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
 h1{
     color: #ffb5b5;
     margin-bottom: 30px;
-    margin-left: 40px;
+    margin-left: 20px;
     margin-right: auto;
 }
 
@@ -213,6 +215,7 @@ h2{
     background-color: #407088;
     bottom: 0;
     text-align: center;
+    position: fixed;
 }
 
 p{

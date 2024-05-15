@@ -3,13 +3,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    height: 100%;
+    background-color: #F8F8FF;
+    
 }
 
 .main{
     flex:1;
     padding-top: 80px;
-    background-color: #f0f0f0; 
 }
 
 .main-article{
@@ -101,14 +102,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications a{
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
 
 }
 
-.notifications a:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
@@ -235,6 +236,7 @@ table tbody tr:nth-child(even) {
 
 table tbody tr:hover{
     background-color: #fdf4f4;
+    border: 1.5px dotted #bebebe;
 }
 
 .table-header{
@@ -262,6 +264,10 @@ h2{
     justify-content: space-around;  
 }*/
 
+.add-task{
+    text-align: center;
+}
+
 #add-task{
     background-color: #132743; /* Use fourth-color for submit button background */
     color: #fff; 
@@ -270,7 +276,6 @@ h2{
     width: 400px; 
     padding: 10px;
     margin: 10px auto; 
-    margin-left: 400px;
     border: 1px solid #385170; /* Use third-color for input borders */
     align-self: center;
     border-radius: 20px; 

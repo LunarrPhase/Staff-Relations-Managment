@@ -50,3 +50,89 @@ const makePDF = async () => {
 
 const makePDFButton = document.getElementById('makePdf');
 makePDFButton.addEventListener('click', makePDF);
+
+
+const generateScreenReport = document.getElementById('screenReport');
+
+generateScreenReport.addEventListener('click', async () => {
+    const user = auth.currentUser;
+    const userRef = ref(realtimeDb, 'users/' + user.uid);
+    let email = null;
+
+    try {
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        email = userData.email;
+    } catch (error) {
+        console.error("Error getting user email:", error);
+        return;
+    }
+
+    const feedbackRef = collection(db, 'feedback');
+    const querySnapshot = await getDocs(query(feedbackRef, where('recipient', '==', email)));
+
+    const existingTable = document.getElementById('existingTable');
+
+    // Clear existing rows in the table
+    const rowsToRemove = Array.from(existingTable.querySelectorAll('tr:not(:first-child)'));
+    rowsToRemove.forEach(row => row.remove());
+
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const from = data.sender;
+        const type = data.type;
+        const message = data.message;
+
+        // Create a new row
+        const newRow = existingTable.insertRow();
+
+        // Insert cells into the new row
+        const fromCell = newRow.insertCell();
+        const typeCell = newRow.insertCell();
+        const messageCell = newRow.insertCell();
+
+        // Set the cell content
+        fromCell.textContent = from;
+        typeCell.textContent = type;
+        messageCell.textContent = message;
+    });
+});
+
+
+
+const homebtn = document.getElementById('home');
+
+//home button functionality
+homebtn.addEventListener('click', async () => {
+
+    //getting current user
+    const user = auth.currentUser;
+    console.log("clicked!")
+
+    if (user) {
+        try {
+            const userRef = ref(realtimeDb, 'users/' + user.uid);
+
+            get(userRef).then((snapshot) => {
+                const userData = snapshot.val();
+                const role = userData.role;
+
+                if (role === "Manager") {
+                    window.location.href = 'manager-main-page.html'
+                }
+                else if (role === "HR") {
+                    window.location.href = 'admin-main-page.html'
+                }
+                else {
+                    window.location.href = 'main-page.html'
+                }
+            });
+        }
+        catch (error) {
+            console.error("Error getting user role:", error)
+        }
+    }
+    else {
+        window.location.href = 'index.html'
+    }
+})

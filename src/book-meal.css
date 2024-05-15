@@ -35,13 +35,13 @@ body{
 }
 
 nav{
-    margin-right: 10px;
+    margin-right: 40px;
 }
 
 ul{
     display: flex;
     list-style-type: none;
-    margin-left: 50px;
+    margin-left: 30px;
 }
 
 ul li a{
@@ -137,10 +137,9 @@ ul li:hover .drop-down ul li:last-child{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
-    padding-left: 10px;
 }
 
-.notifications a:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
@@ -294,4 +293,13 @@ label{
 #submit-btn:hover{
     background-color: #385170
 }
+
+#warning{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
 
