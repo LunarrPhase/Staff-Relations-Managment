@@ -51,13 +51,3 @@ signUp.addEventListener('click', (e) =>{
     }
 });
 
-const signUpEvent = new CustomEvent('signup', {
-    detail: {
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      role: role
-    }
-  });
-  document.dispatchEvent(signUpEvent);
-  
