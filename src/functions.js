@@ -170,4 +170,6 @@ function getDayName(year, month, day) {
 
 
 
+
+
 export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep};
