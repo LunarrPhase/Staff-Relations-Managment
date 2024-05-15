@@ -1,7 +1,6 @@
 import { database, auth } from "./firebaseInit.js"
 import { ref,  update, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import {sleep } from "./functions.js";
 
 
 
