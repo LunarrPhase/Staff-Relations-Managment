@@ -144,4 +144,26 @@ input[type="submit"]:hover {
     text-decoration: none;
     cursor: pointer;
   }
+
+.back-button {
+    margin: 20px;
+    width: 70px;
+    height: 35px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #68b5dc;
+    border: 2px solid #407088;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-icon{
+    width: 20px;
+    height: 30px;
+    color: #fff;
+}
+
+
+.back-button:hover{
+    background-color: #39647A;
+}
   
