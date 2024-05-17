@@ -3,21 +3,20 @@
 <head>
     <title>Feedback Form</title>
     <link rel="stylesheet" type="text/css" href="feedback.css">
-    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
     
     <header>
-        <a href="#"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+        <button class="back-button" id = 'feedbackButton'><img src="./img/reply-solid.svg" alt="back-icon" class="back-icon"></button>
         <img src="./img/feedback_background.svg" alt="background" class="feedback_background">
     </header>
 
     <main>
         <article class="container">
             <h2>Feedback Form</h2>
-            <form action="#" method="post">
+            <form action="#" id = "feedback-form">
                 <label for="recipient">Recipient's Email address </label>
-                <input type="email" id="recipient" name="recipient" required>
+                <input type="text" id="recipient" name="recipient" required>
     
                 <label for="type">Type of Feedback:</label>
                 <select id="type" name="type" required>
