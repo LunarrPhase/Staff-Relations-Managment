@@ -39,7 +39,7 @@ document.getElementById('signUp').addEventListener('click', (e) => {
                     lastName: lastName,
                     role: role,
                 }).then(() => {
-                    setDoc(doc(db, "accounts", email), {
+                    addDoc(doc(db, "accounts"), {
                         email: email,
                         firstName: firstName,
                         lastName: lastName,
