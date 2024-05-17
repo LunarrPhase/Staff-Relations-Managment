@@ -1,11 +1,9 @@
-import { collection } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import {doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
 /* INDEX */
-
-
 async function FirebaseLogin(auth, database, db, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -16,16 +14,19 @@ async function FirebaseLogin(auth, database, db, email, password) {
             last_login: dt,
         });
 
+        // Check the Realtime Database for user data
         const userRef = ref(database, 'users/' + user.uid);
         const snapshot = await get(userRef);
         let userData = snapshot.val();
         let role, firstName, lastName;
 
         if (userData) {
+            // User data found in Realtime Database
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
         } else {
+            // User data not found in Realtime Database, check Firestore
             const docRef = doc(db, 'accounts', email);
             const docSnap = await getDoc(docRef);
 
@@ -40,8 +41,6 @@ async function FirebaseLogin(auth, database, db, email, password) {
         }
 
         console.log(userData);
-
-        // Display greeting
         document.getElementById('greeting').textContent = `Hello ${role} ${firstName} ${lastName}`;
 
         ChangeWindow(role);
@@ -54,6 +53,8 @@ async function FirebaseLogin(auth, database, db, email, password) {
         document.getElementById('loading-message').style.display = 'none';
     }
 }
+
+
 
 
 function sleep(ms) {
@@ -192,3 +193,11 @@ function getDayName(year, month, day) {
 
 
 export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep};
+        
+
+   
+  
+
+
+
+
