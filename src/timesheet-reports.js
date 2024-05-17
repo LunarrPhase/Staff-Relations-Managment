@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
        
-        //get the timesheets by project
+        //get the timesheets by project code
         const projectbtn = document.getElementById('GenerateByProject');
 
         projectbtn.addEventListener("click", function() {
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const userId = user.uid;
                     if (userId) {
                         try {
-
+                            //fetch timesheets from the users collection in firestore
                             const timesheetsRef = collection(db, `users/${userId}/timesheets`);
                             const querySnapshot = await getDocs(timesheetsRef);
                             const timesheetsByProject = {}; // Object to store timesheets grouped by project
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 timesheetReport.innerHTML += projectHeading + timesheetTableHeading;
                                 const timesheetTableBody = document.getElementById(`timesheetTable${projectCode}`);
                                 timesheetsByProject[projectCode].forEach((timesheetData) => {
-
+                                    //the truncate text function makes sure that long text gets shortened so as to not break css formatting.
                             	    const truncatedTaskDescription = truncateText(timesheetData.taskDescription, 20);
                                     const timesheetRow = `
                                         <tr>
@@ -235,16 +235,17 @@ document.addEventListener("DOMContentLoaded", function() {
             return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
         }
 
-        // <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
-        // <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
+
 
         //generateing pdf and csv of current display
+
+        //generate pdf
         const GeneratePDF = document.getElementById('GeneratePDF');
 
         GeneratePDF.addEventListener("click", function() {
             (async () => {
                 try {
-  
+                    //get current user
                     const user = auth.currentUser;
                     if (!user) {
                         console.error("User not authenticated");
@@ -256,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.error("User ID not available");
                         return;
                     }
-
+                    //get the timesheets by project code
                     const timesheetsRef = collection(db, `users/${userId}/timesheets`);
                     const querySnapshot = await getDocs(timesheetsRef);
                     const timesheetsByProject = {};
@@ -274,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Generate PDF from timesheetsByProject
                     const doc = new jsPDF();
                     let yOffset = 10;
-
+                    //formatting
                     for (const projectCode in timesheetsByProject) {
 
                         doc.setFontSize(16);
@@ -316,6 +317,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
             (async () => {
                 try {
+                    //get current user
                     const user = auth.currentUser;
                     if (!user) {
                         console.error("User not authenticated");
@@ -327,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.error("User ID not available");
                         return;
                     }
-
+                    //fetch the timesheets by project
                     const timesheetsRef = collection(db, `users/${userId}/timesheets`);
                     const querySnapshot = await getDocs(timesheetsRef);
                     const allTimesheets = [];
@@ -352,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }).join('\n');
 
                     // Download CSV file
-                    downloadCSV(csvData, `all_timesheets.csv`);
+                    downloadCSV(csvData, `timesheets.csv`);
                     console.log("CSV file generated successfully");
                 }
                 catch (error) {
@@ -362,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
 	    //end csv generation
         });
-    
+        //function to download the csv file
         function downloadCSV(csvData, filename) {
     
             const blob = new Blob([csvData], { type: 'text/csv' });

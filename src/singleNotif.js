@@ -5,9 +5,10 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/f
 document.addEventListener("DOMContentLoaded", function() {
 
     
-
+    //function to display a single notification in the bell button popup
     const displaySingleNotification = async () => {
         try {
+            //get current user credentials
             const user = auth.currentUser;
 
             if (!user) {
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error("User ID not available");
                 return;
             }
-
+            //get todays date
             const today = new Date();
             const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
 
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 carWashBookings.push(doc.data());
             });
 
-            // Determine the notification text
+            // Determine the notification text -> it will only display one of these in the popup
             let notificationText = "";
             if (mealBookings.length > 0) {
                 const mealBooking = mealBookings[0]; // Get the first meal booking for the day

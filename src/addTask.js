@@ -5,7 +5,7 @@ import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-da
 
 
 document.addEventListener("DOMContentLoaded", function() {
-
+    //getting the current user
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             try {
@@ -19,10 +19,13 @@ document.addEventListener("DOMContentLoaded", function() {
         else {
             console.log("User is signed out");
         }
+
+        //when you click the submit button it will add the new timesheet data to the db on firestore 
         document.getElementById("timesheetForm").addEventListener("submit", async function(event) {
+            //prevent default options when submit
             event.preventDefault(); 
             
-            //Get input 
+            //Get input from the form
             var fullName = document.getElementById("fullName").value;
             var email = document.getElementById("email").value;
             var date = document.getElementById("date").value;
@@ -30,24 +33,23 @@ document.addEventListener("DOMContentLoaded", function() {
             var endTime = document.getElementById("endTime").value;
             var totalHours = document.getElementById("totalHours").value;
             
-            if (totalHours.length > 4) { // Limit to 4 characters
+            if (totalHours.length > 4) { // Limit total time to  4 characters just incase a user goes crazy
         		totalHours = totalHours.substring(0, 4);
     		}
 
             var projectCode = document.getElementById("projectCode").value;
             var taskName = document.getElementById("taskName").value;
             var taskDescription = document.getElementById("taskDescription").value;
-
+            //adds the data collected to the users timesheets in firestore
             try {
-
+                
                 const user = auth.currentUser;
                 if (user) {
                     const userId = user.uid;
                     if (userId) {
                         //Adding the timesheet to the user's timesheets subcollection with auto-generated ID
                         const timesheetsRef = collection(db, `users/${userId}/timesheets`);
-                        //console.log(timesheetsRef)
-
+                       //structure the json
                         await addDoc(timesheetsRef, {
                             fullName: fullName,
                             email: email,
@@ -61,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         });
 
                         console.log("Timesheet added successfully");
+                        //takes user back to the timesheet page.
                         window.location.href = "timesheet.html";
                     }
                     else {

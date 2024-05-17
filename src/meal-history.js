@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.error("User ID not available");
                         return;
                     }
-
+                    //reference the users meal orders in the db firestore
                     const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
                     const querySnapshot = await getDocs(mealOrdersRef);
                     const mealOrdersByDiet = {};
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })();
         });
 
-        //get meals by date 
+        //get meals by date (so the same as earlier just by date not diet)
         const dateBtn = document.getElementById('GenerateByDate');
         dateBtn.addEventListener("click", function() {
 
@@ -226,7 +226,7 @@ GeneratePDF.addEventListener("click", async function() {
             console.error("User ID not available");
             return;
         }
-
+        //refrence the meal orders in the users database
         const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
         const querySnapshot = await getDocs(mealOrdersRef);
         // Initialize data object for meal orders grouped by date
@@ -241,10 +241,10 @@ GeneratePDF.addEventListener("click", async function() {
             mealOrdersByDate[date].push(mealOrderData);
         });
 
-        // Generate PDF
+        // Generate PDF using jsPDF
         const doc = new jsPDF();
         doc.text("Meal Order History", 10, 10);
-        
+        //formatting 
         let startY = 20;
         for (const date in mealOrdersByDate) {
             doc.text(`Date: ${date}`, 10, startY);
@@ -282,7 +282,7 @@ GenerateCSV.addEventListener("click", async function() {
             console.error("User ID not available");
             return;
         }
-
+        //fetch data
         const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
         const querySnapshot = await getDocs(mealOrdersRef);
 

@@ -2,7 +2,7 @@ import { database as realtimeDb, auth } from './firebaseInit.js';
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { ChangeWindow } from './functions.js';
 
-
+//code to send the user to the right home page for the back and home button
 const goHome = document.getElementById('home')
 const backButton = document.getElementById('back-btn')
 
@@ -11,14 +11,14 @@ goHome.addEventListener('click', async () => {
   
     //getting current user
     const user = auth.currentUser;
-    console.log("clicked!")
+    
 
     if (user) {
         try {
             const userRef = ref(realtimeDb, 'users/' + user.uid)
 
             get(userRef).then((snapshot) => {
-                
+                //depending on the users role we will send them to the right home page
                 const userData = snapshot.val();
                 const role = userData.role;
                 ChangeWindow(role);
@@ -38,7 +38,7 @@ backButton.addEventListener('click', async () => {
    
     //getting current user
     const user = auth.currentUser;
-    console.log("clicked!")
+   
 
     if (user) {
         try {
