@@ -1,39 +1,38 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { doc,getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { ref, update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { doc,getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 
 
 /* INDEX */
-
 
 async function FirebaseLogin(auth, database, db, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const dt = new Date();
+        const userUid = user.uid;
 
-        await update(ref(database, 'users/' + user.uid), {
-            last_login: dt,
-        });
-
-        // Check the Realtime Database for user data
-        const userRef = ref(database, 'users/' + user.uid);
+        // Check if user exists in Realtime Database
+        const userRef = ref(database, 'users/' + userUid);
         const snapshot = await get(userRef);
         let userData = snapshot.val();
         let role, firstName, lastName;
 
         if (userData) {
-            // User data found in Realtime Database
+            // User data found in Realtime Database, update last_login
+            await update(userRef, { last_login: dt });
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
         } else {
             // User data not found in Realtime Database, check Firestore
-            const docRef = doc(db, 'accounts', email);
-            const docSnap = await getDoc(docRef);
+            const accountsDocRef = doc(db, 'accounts', email);
+            const docSnap = await getDoc(accountsDocRef);
 
             if (docSnap.exists()) {
+                // User data found in Firestore, update last_login
                 userData = docSnap.data();
+                await updateDoc(accountsDocRef, { last_login: dt });
                 role = userData.role || "User";
                 firstName = userData.firstName || "";
                 lastName = userData.lastName || "";
@@ -41,18 +40,20 @@ async function FirebaseLogin(auth, database, db, email, password) {
                 throw new Error("User data not found in both Realtime Database and Firestore.");
             }
         }
-
-        console.log(userData);
-
         ChangeWindow(role);
     } catch (error) {
-        console.error(error)
+        console.error("Firebase Error:", error);
         document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
         const errorMessageElement = document.getElementById('error-message');
-        errorMessageElement.textContent = errorMessage;
+        if (errorMessageElement) {
+            errorMessageElement.textContent = errorMessage;
+        }
     } finally {
-        document.getElementById('loading-message').style.display = 'none';
+        const loadingMessageElement = document.getElementById('loading-message');
+        if (loadingMessageElement) {
+            loadingMessageElement.style.display = 'none';
+        }
     }
 }
 
