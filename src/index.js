@@ -1,4 +1,4 @@
-import { database, auth } from "./firebaseInit.js"
+import { database, auth, firestore as db } from "./firebaseInit.js"
 import { FirebaseLogin } from "./functions.js";
 
 
