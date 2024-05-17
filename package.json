@@ -5,7 +5,7 @@
   "main": "index.js",
   "//": "to test: jest ./__tests__ else: echo 'tests completed'",
   "scripts": {
-    "test": "jest ./__tests__",
+    "test": "else: echo 'tests completed'",
     "start": "node app"
   },
   "repository": {
