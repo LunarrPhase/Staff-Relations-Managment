@@ -1,7 +1,7 @@
-import { database, auth, firestore as db} from "./firebaseInit.js"
+import { database, auth } from "./firebaseInit.js"
 import { ref,  update, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { doc,updateDoc, getDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -49,42 +49,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //i added logout time-might help with timesheets.
     const logout = document.getElementById("logout");
     const logoutTab = async (e) => {
+
         e.preventDefault();
         try {
             const dt = new Date();
-            const user = auth.currentUser;
-            const userUid = user.uid;
-            const email = user.email;
-    
-            
-            const userRef = ref(database, 'users/' + userUid);
-            const snapshot = await get(userRef);
-    
-            if (snapshot.exists()) {
-                
-                await update(userRef, {
-                    last_logout: dt,
-                });
-            } else {
-                
-                const accountDocRef = doc(db, 'accounts', email);
-                const docSnap = await getDoc(accountDocRef);
-    
-                if (docSnap.exists()) {
-    
-                    await updateDoc(accountDocRef, {
-                        last_logout: dt,
-                    });
-                } else {
-                    throw new Error("User data not found in both Realtime Database and Firestore.");
-                }
-            }
-    
+            await update(ref(database, 'users/' + auth.currentUser.uid), {
+                last_logout: dt,
+            });
+
             await signOut(auth);
-    
             window.location.href = 'index.html';
-        } catch (error) {
-            console.error("Logout Error:", error);
+        }
+        catch (error) {
+            console.log(error.code);
         }
     };
     logout.addEventListener("click", logoutTab);
