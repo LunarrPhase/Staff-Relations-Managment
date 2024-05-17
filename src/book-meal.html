@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book meal</title>
+    <title>Book Meal</title>
     <link rel="stylesheet" href="book-meal.css">
 
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
                     <div id="popover-content" class="popover-content" aria-hidden="true">
                         <h3>Notifications</h3>
                         <p>You have no notifications.</p>
-                        <a href="#" class="see-all-link">See all</a>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
                     </div>
                 </li>
             </ul>
@@ -50,6 +50,7 @@
 
             <section>
                 <h4>Book Your Meal!</h4>
+                <span id="warning"></span>
             </section>
 
             <form id = "mealForm">
@@ -59,7 +60,8 @@
                 </div>
                 
                 <div>
-                    <label for="date">Date:</label><br>
+                    <label class="dateLabel" for="date">Date:</label><br>
+                    
                     <input type="date" id="date" name="date" required><br><br>
                 </div>
                 <div>
@@ -91,6 +93,7 @@
 
 
     <script type="module" src="book-meal.js"></script>
+    <script type="module" src="singleNotif.js"></script>
 </body>
 </html>
 <script>

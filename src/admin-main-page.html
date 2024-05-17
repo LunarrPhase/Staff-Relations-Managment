@@ -40,7 +40,7 @@
             100% { transform: rotate(360deg); }
         }
     </style>
-    <title>Document</title>
+    <title>Admin Main Page</title>
 </head>
 <body>
     <div id="loading">
@@ -70,14 +70,14 @@
                             </div>
                         
                         </li>
-                        <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
+                        <li id = "meals"><a href="create-meal.html">Meals</a></li>
                         <li id = "logout"><a href="index.html">Log Out</a></li>
                         <li class="notifications" id="notifications">
                             <i class="fa-solid fa-bell"></i>
-                            <div id="popover-content" class="popover-content" aria-hidden="true">
+                            <div id="popover-content" class="popover-content" aria-hidden="false">
                                 <h3>Notifications</h3>
-                                <p>You have no notifications.</p>
-                                <a href="#" class="see-all-link">See all</a>
+                                <p id = "">You have no notifications.</p>
+                                <a href="all-notifs.html" class="see-all-link">See all</a>
                             </div>
                         </li>
                     </ul>
@@ -99,6 +99,7 @@
 
                         <h3>“Start by doing what's necessary, then what's possible; and suddenly you are doing the impossible.”</h3>
                         <h4>- St. Francis of Assisi</h4>
+                        
                         <div id="feedback-button">
                          <span id="feedback-icon"><i class="fa-regular fa-pen-to-square"></i></span>
             
@@ -139,6 +140,7 @@
                         <img src="img/undraw_report_re_f5n5.svg" alt="report-pic">
                     </section>
                 </article>
+            
 
             </main>
 
@@ -151,6 +153,7 @@
 
 <script type="module" src="main-page.js"></script>
 <script type="module" src="manage-user.js"></script>
-<script type="module" src ="admin-main-page.js"></script>
+<script type="module" src="admin-main-page.js"></script>
+<script type="module" src="singleNotif.js"></script>
 
 </html>

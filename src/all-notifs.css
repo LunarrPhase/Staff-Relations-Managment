@@ -1,0 +1,217 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin: auto;
+    font-family: sans-serif;
+    background-color: #F8F8FF;
+}
+
+main{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+.header{
+    width:100%;
+    height: 80px;
+    position: fixed;
+    background-color: #407088;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 40px;
+}
+
+ul li a{
+    padding: 0 30px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings{
+    position: relative;
+}
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    left: 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+
+h2 {
+    color: #132743;
+    padding: 5px 10px;
+    margin:10px auto 0 auto;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    transition: color 0.5s ease;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(224, 160, 208, 0), rgba(201, 65, 153, 0.5)); /* Ripple gradient */
+    transition: transform 0.5s ease-out;
+    pointer-events: none; /* Ensures the pseudo-element doesn't interfere with mouse events */
+    z-index: 1;  
+    transform: translateX(-100%); /* Start the pseudo-element off-screen to the left */
+    border-radius: 20px;
+}
+
+h2:hover::before {
+    transform: translateX(0); /* Move the pseudo-element to the right to reveal the gradient */
+}
+
+
+
+.notifications{
+    transition: all 0.5s;
+    color: #ffb5b5;
+    transform-origin: center;
+
+}
+
+.notifications .fa-bell:hover{
+    color: white;
+ }
+
+ /* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.see-all-link:hover {
+    text-decoration: underline;
+}
+
+
+.show-popover {
+    display: block !important;
+}
+
+.table-container{
+    height: 100%;
+    margin:10px;
+    border: 2px inset #C0C0C0;
+
+}
+
+.table-header{
+    background-color: #FAE7E9;
+}
+
+
+#NotificationContainer{
+    margin: 10px;
+}
+
+.footer{
+    width: 100%;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    position: fixed;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+}

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
                     
                     const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
-                    console.log(mealOptionsSnapshot);
+                    //console.log(mealOptionsSnapshot);
                     
                     mealSelect.innerHTML = '';
     
@@ -81,6 +81,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const name = document.getElementById('name').value;                        
                         const selectedDate = dateInput.value;
+
+                        const currentDate = new Date();
+            const currentDateString = currentDate.toISOString().split('T')[0];
+
+
+
+                        if(selectedDate >= currentDateString){
+
+                        
                         const selectedDiet = dietSelect.value;
                         const selectedMeal = mealSelect.value;
 
@@ -107,10 +116,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             meal: selectedMeal
                         })
 
-                        document.querySelector('.mealForm').reset();
+                        form.reset();
+
+                    }
+                    else{
+                        const warning = document.getElementById("warning");
+                        warning.innerText= "Cannot book meals for previous days."
+                    }
                     }
                     else {
-                        console.log("Please select both date and diet.");
+                        const warning = document.getElementById("warning");
+                        warning.innerText="Please select both date and diet.";
                     }
                 });
             }

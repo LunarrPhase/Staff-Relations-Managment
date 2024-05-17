@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #F8F8FF;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 700px;
@@ -107,14 +107,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
 
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
@@ -141,6 +141,32 @@ h3{
 
 h2{
     margin:10px auto;
+}
+
+
+#back-btn{
+    background-color: #132743;
+    margin-left: 30px;
+    margin-top: 20px;
+    border: 1px solid #407088;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 17px;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+#back-btn:hover{
+    background-color: #274353;
+    animation: shake 1s; 
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .table-container {
@@ -193,7 +219,7 @@ table tbody tr:hover{
     color: #fff; 
     font-weight: bold; 
     cursor: pointer;
-    width: calc(50% - 40px); 
+    width: calc(50% - 100px); 
     padding: 10px;
     margin: 10px auto; 
     border: 1px solid #385170; /* Use third-color for input borders */

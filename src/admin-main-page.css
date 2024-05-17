@@ -89,14 +89,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
 
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
@@ -116,6 +116,7 @@ h1{
 h2{
     color: #132743;
     padding: 10px;
+    margin-left: 20px;
 }
 
 .footer{
@@ -279,6 +280,11 @@ h5{
 }
 
 
-#feedback-icon {
+#feedback-icon{
     font-size: 24px;
+}
+
+#feedback-button:hover{
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
 }

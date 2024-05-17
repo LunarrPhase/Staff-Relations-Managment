@@ -20,7 +20,18 @@
                 <!--this is where the drop down stuff was-->
                 </li>
                 <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
-                <li id = "feedback"><a href="#">Request Feedback</a></li>
+                <li id = "bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+                        <ul>
+                            <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
+                            <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
+                            <li id="carwash"><a href="#">View Car Wash Bookings</a></li>
+                            <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
+                        </ul>
+                    </div>
+                
+                </li>
                 <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
                 <li id = "logout"><a href="index.html">Log Out</a></li>
                 <li class="notifications" id="notifications">
@@ -40,7 +51,13 @@
 
 
     <main class="main">
-    <section class="table-container">
+        
+        <section>
+            <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+
+        </section>
+
+    <article class="table-container">
         <div class="table-header">
             <h2>Manage users</h2>
         </div>
@@ -64,7 +81,7 @@
             </tbody>
         </table>
     </div>
-    </section>
+    </article>
     
     <section class="load-more">
         <button id="load-more">Load Users</button>
@@ -77,6 +94,8 @@
 </html>
 
 <script src="manage-user.js" type="module"></script>
+<script type="module" src="singleNotif.js"></script>
+<script type="module" src="main-page.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

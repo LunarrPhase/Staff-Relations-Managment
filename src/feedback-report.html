@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body style="background: linear-gradient(45deg, #fff, #ffcbcb)">
 
   <header class="header">
 
@@ -40,12 +40,16 @@
 
     <a href="all-reports.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
 
+ 
+    
+
     <article>
     
     <section class="button">
       <h2>Download a report on all the feedback that you have received.</h2>
       <h3>What advice have your colleagues been giving you? </h3>
       <button id="makePdf">Generate PDF Report</button>
+      <button id="screenReport">Generate on screen report</button>
 
     </section>
 
@@ -54,6 +58,35 @@
     </section>
 
   </article>
+
+ 
+
+
+  
+  <article class="table-container">
+ 
+  <table id="existingTable">
+      <!-- Table content will be dynamically added by JavaScript -->
+      <thead>
+          <tr>
+              <th>From</th>
+              <th>Type</th>
+              <th>Message</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Existing rows will be dynamically replaced by JavaScript -->
+      </tbody>
+  </table>
+
+  <div id="feedback-report">
+      <!-- This is where the feedback report section will be dynamically updated -->
+  </div>
+
+
+
+
+</article>
 
   </main>
 
