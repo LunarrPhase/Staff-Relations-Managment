@@ -1,3 +1,4 @@
+import { collection } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
@@ -5,8 +6,7 @@ import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/fi
 /* INDEX */
 
 
-async function FirebaseLogin(auth, database, email, password){
-
+async function FirebaseLogin(auth, database, db, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -18,20 +18,39 @@ async function FirebaseLogin(auth, database, email, password){
 
         const userRef = ref(database, 'users/' + user.uid);
         const snapshot = await get(userRef);
-        const userData = snapshot.val();
-        const role = userData.role || "User"
-        console.log(userData)
+        let userData = snapshot.val();
+        let role, firstName, lastName;
+
+        if (userData) {
+            role = userData.role || "User";
+            firstName = userData.firstName || "";
+            lastName = userData.lastName || "";
+        } else {
+            const docRef = doc(db, 'accounts', email);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                userData = docSnap.data();
+                role = userData.role || "User";
+                firstName = userData.firstName || "";
+                lastName = userData.lastName || "";
+            } else {
+                throw new Error("User data not found in both Realtime Database and Firestore.");
+            }
+        }
+
+        console.log(userData);
+
+        // Display greeting
+        document.getElementById('greeting').textContent = `Hello ${role} ${firstName} ${lastName}`;
 
         ChangeWindow(role);
-    }
-    catch (error) {
-
+    } catch (error) {
         document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
         const errorMessageElement = document.getElementById('error-message');
         errorMessageElement.textContent = errorMessage;
-    }
-    finally {
+    } finally {
         document.getElementById('loading-message').style.display = 'none';
     }
 }
