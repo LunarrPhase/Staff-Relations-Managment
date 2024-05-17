@@ -257,26 +257,19 @@ h2{
 
 
 
-/*ul{
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    justify-content: space-around;  
-}*/
-
 .add-task{
     text-align: center;
 }
 
 #add-task{
-    background-color: #132743; /* Use fourth-color for submit button background */
+    background-color: #132743; 
     color: #fff; 
     font-weight: bold; 
     cursor: pointer;
     width: 400px; 
     padding: 10px;
     margin: 10px auto; 
-    border: 1px solid #385170; /* Use third-color for input borders */
+    border: 1px solid #385170; 
     align-self: center;
     border-radius: 20px; 
     outline: none; 

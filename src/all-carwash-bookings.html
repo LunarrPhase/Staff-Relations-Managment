@@ -9,36 +9,57 @@
 
 </head>
 <body>
-    <header class = "header">
-    <h1>All Carwash Bookings</h1>
-   
-    <nav>
-                
-        <ul>
-            <li><a href="admin-main-page.html">Home</a></li>
-            <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
-            <!--this is where the drop down stuff was-->
-            </li>
-            <li id = "feedback"><a href="#">Request Feedback</a></li>
-            <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
-            <li id = "logout"><a href="index.html">Log Out</a></li>
-            <li class="notifications" id="notifications">
-                <i class="fa-solid fa-bell"></i>
-                <div id="popover-content" class="popover-content" aria-hidden="true">
-                    <h3>Notifications</h3>
-                    <p>You have no notifications.</p>
-                    <a href="all-notifs.html" class="see-all-link">See all</a>
-                </div>
-            </li>
-        </ul>
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
 
-    </nav>
+        <!--links for navigation-->
+
+        <nav>
+            
+            <ul>
+                <li id = "home"><a href="admin-main-page.html">Home</a></li>
+                <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
+                </li>
+                <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id = "feedback"><a href="all-reports.html">Reports</a></li>
+                <li id = "bookings"><a href="#">Bookings</a>
+
+                    <div class="drop-down">
+                        <ul>
+                            <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
+                            <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
+                            <li id="carwash"><a href="all-carwash-bookings.html">View Car Wash Bookings</a></li>
+                            <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
+                        </ul>
+                    </div>
+                
+                </li>
+                <li id = "meals"><a href="create-meal.html">Meals</a></li>
+                <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                <li class="notifications" id="notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <div id="popover-content" class="popover-content" aria-hidden="false">
+                        <h3>Notifications</h3>
+                        <p id = "">You have no notifications.</p>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+    
     </header>
+
+
     <main class="main" >
+
+        <!--back button-->
 
         <section>
             <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
         </section>
+
+        <!--table of bookings-->
 
         <article class="table-container">
             <div class="table-header">
@@ -67,17 +88,38 @@
                     
                 </tbody>
             </table>
-        </div>
+            </div>
         </article>
-        <!--<section class="load-more">
-            <button id="load-more">Load All Bookings</button>
-        </section>-->
     
         </main>
+
+        <footer class="footer">
+            <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+        </footer>
     
 </body>
 
 <script src = "all-carwash-bookings.js" type = "module"></script>
 <script type="module" src="singleNotif.js"></script>
 <script src = "main-page.js" type = "module"></script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    const notifications = document.getElementById('notifications');
+
+    const popoverContent = notifications.querySelector('.popover-content');
+
+    notifications.addEventListener('click', function(event) {
+
+        //event.preventDefault(); 
+
+        popoverContent.classList.toggle('show-popover');
+
+    });
+
+});
+
+</script>
 </html>

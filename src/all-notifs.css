@@ -10,16 +10,16 @@ body{
 
 main{
     position: absolute;
-    height: 100%;
-    width: 100%;
-    padding-top: 100px;
-    padding-bottom: 80px;
+    height: 100%; /*full height*/
+    width: 100%; /*full width*/
+    padding-top: 100px; /*not blocked by header*/
+    padding-bottom: 80px; /*not blocked by footer*/
 }
 
 .header{
-    width:100%;
+    width:100%; /*full width of body*/
     height: 80px;
-    position: fixed;
+    position: fixed; /*stays in place*/
     background-color: #407088;
     display: flex;
     justify-content: space-around;
@@ -27,6 +27,8 @@ main{
     text-align: center;
     z-index: 1;
 }
+
+/*style nav bar*/
 
 ul{
     display: flex;
@@ -59,6 +61,8 @@ li#bookings{
     position: relative;
 }
 
+/*style drop down*/
+
 .drop-down{
     display: none;
     border-radius: 10px;
@@ -68,8 +72,8 @@ ul li:hover .drop-down{
     display: block;
     position: absolute;
     background-color: #4b788f;
-    z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1; /*stays on top*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*shadow on border*/
     margin-top: 0;
     left: 0;
 
@@ -100,6 +104,8 @@ h1{
     margin-left: 10px;
 }
 
+/*style h2 (Your notifications)*/
+
 h2 {
     color: #132743;
     padding: 5px 10px;
@@ -119,9 +125,9 @@ h2::before {
     height: 100%;
     background: linear-gradient(to right, rgba(224, 160, 208, 0), rgba(201, 65, 153, 0.5)); /* Ripple gradient */
     transition: transform 0.5s ease-out;
-    pointer-events: none; /* Ensures the pseudo-element doesn't interfere with mouse events */
+    pointer-events: none; 
     z-index: 1;  
-    transform: translateX(-100%); /* Start the pseudo-element off-screen to the left */
+    transform: translateX(-100%); /*moves left to right*/
     border-radius: 20px;
 }
 
@@ -129,63 +135,7 @@ h2:hover::before {
     transform: translateX(0); /* Move the pseudo-element to the right to reveal the gradient */
 }
 
-
-
-.notifications{
-    transition: all 0.5s;
-    color: #ffb5b5;
-    transform-origin: center;
-
-}
-
-.notifications .fa-bell:hover{
-    color: white;
- }
-
- /* Popover Styles */
-.popover-container {
-    position: relative;
-}
-
-.popover-content {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 40px;
-    width: fit-content;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    z-index: 1;
-}
-
-.popover-content h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 19px;
-}
-
-.popover-content p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #407088;
-}
-
-.see-all-link {
-    font-size: 12px;
-    color: #000000;
-    text-decoration: none;
-}
-
-.see-all-link:hover {
-    text-decoration: underline;
-}
-
-
-.show-popover {
-    display: block !important;
-}
+/*style table*/
 
 .table-container{
     height: 100%;
@@ -202,6 +152,8 @@ h2:hover::before {
 #NotificationContainer{
     margin: 10px;
 }
+
+/*style footer*/
 
 .footer{
     width: 100%;

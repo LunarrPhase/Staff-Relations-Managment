@@ -18,9 +18,6 @@
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 
 
-
-
-
     <script type = "module" src = "addTask.js"></script>
 
 </head>
@@ -29,98 +26,99 @@
 
 
 
-<main class="container">
+    <main class="container">
 
-
-    <article>
-        <img src="img/add-task1.svg" alt="add-task-image1" id="image1">
-    </article>
-    <article class="new-task-box">
-
-        <section class="form-header">
-            <a href="timesheet.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
-            <h2>Insert new task</h2>
-      </section>
-
-
-
-
-
-<form id="timesheetForm">
-
-    <label for="fullName">Full Name:</label>
-
-    <input type="text" id="fullName" name="fullName"  maxlength="100" required><br><br>
-
-
-
-    <label for="email">Email:</label>
-
-    <input type="text" id="email" name="email" maxlength="100" required><br><br>
-
-
-
-    <label for="date">Date:</label>
-
-    <input type="date" id="date" name="date" required><br><br>
-
-
-
-    <label for="startTime">Start Time:</label>
-
-    <input type="time" id="startTime" name="startTime" required><br><br>
-
-
-
-    <label for="endTime">End Time:</label>
-
-    <input type="time" id="endTime" name="endTime" required><br><br>
-
-
-
-    <label for="totalHours">Total Hours:</label>
-
-    <input type="number" id="totalHours" name="totalHours" maxlength="4" required><br><br>
-
-
-
-    <label for="projectCode">Project Code:</label>
-
-    <input type="text" id="projectCode" name="projectCode" maxlength="20" required><br><br>
-    
-    <label for="taskName">Task Name:</label>
-
-    <input type="text" id="taskName" name="taskName" maxlength="20" required><br><br>
-
-
-
-    <label for="taskDescription">Task Description:</label><br>
-
-    <textarea id="taskDescription" name="taskDescription" rows="4" maxlength="100" required></textarea><br><br>
-
-
-
-
-
-    <a href="timesheet.html"><button type="submit" class="submit">Submit</button></a>
-
-
-
-
-
-</form>
-
-
-
-
-    </article>
-
+        <!--image on the left-->
         <article>
-        <img src="img/add-task2.svg" alt="add-task-image2" id="image2">
+            <img src="img/add-task1.svg" alt="add-task-image1" id="image1">
+        </article>
+
+        
+
+        <article class="new-task-box">
+
+            <section class="form-header">
+                <a href="timesheet.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+                <h2>Insert new task</h2>
+            </section>
+
+
+            <!--form with inputs-->
+
+            <form id="timesheetForm">
+
+                <label for="fullName">Full Name:</label>
+
+                <input type="text" id="fullName" name="fullName"  maxlength="100" required><br><br>
+
+
+
+                <label for="email">Email:</label>
+
+                <input type="text" id="email" name="email" maxlength="100" required><br><br>
+
+
+
+                <label for="date">Date:</label>
+
+                <input type="date" id="date" name="date" required><br><br>
+
+
+
+                <label for="startTime">Start Time:</label>
+
+                <input type="time" id="startTime" name="startTime" required><br><br>
+
+
+
+                <label for="endTime">End Time:</label>
+
+                <input type="time" id="endTime" name="endTime" required><br><br>
+
+
+
+                <label for="totalHours">Total Hours:</label>
+
+                <input type="number" id="totalHours" name="totalHours" maxlength="4" required><br><br>
+
+
+
+                <label for="projectCode">Project Code:</label>
+
+                <input type="text" id="projectCode" name="projectCode" maxlength="20" required><br><br>
+            
+                <label for="taskName">Task Name:</label>
+
+                <input type="text" id="taskName" name="taskName" maxlength="20" required><br><br>
+
+
+
+                <label for="taskDescription">Task Description:</label><br>
+
+                <textarea id="taskDescription" name="taskDescription" rows="4" maxlength="100" required></textarea><br><br>
+                
+                
+                <a href="timesheet.html"><button type="submit" class="submit">Submit</button></a>
+
+
+
+
+
+            </form>
+
+
 
 
         </article>
-</main>
+
+        <!--image on right-->
+
+        <article>
+            <img src="img/add-task2.svg" alt="add-task-image2" id="image2">
+
+
+        </article>
+    </main>
 
 
 
