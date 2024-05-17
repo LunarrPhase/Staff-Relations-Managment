@@ -41,10 +41,10 @@ async function FirebaseLogin(auth, database, db, email, password) {
         }
 
         console.log(userData);
-        document.getElementById('greeting').textContent = `Hello ${role} ${firstName} ${lastName}`;
 
         ChangeWindow(role);
     } catch (error) {
+        console.error(error)
         document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
         const errorMessageElement = document.getElementById('error-message');
@@ -53,8 +53,6 @@ async function FirebaseLogin(auth, database, db, email, password) {
         document.getElementById('loading-message').style.display = 'none';
     }
 }
-
-
 
 
 function sleep(ms) {
