@@ -1,9 +1,11 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import {doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { doc,getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
 /* INDEX */
+
+
 async function FirebaseLogin(auth, database, db, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -41,10 +43,10 @@ async function FirebaseLogin(auth, database, db, email, password) {
         }
 
         console.log(userData);
-        document.getElementById('greeting').textContent = `Hello ${role} ${firstName} ${lastName}`;
 
         ChangeWindow(role);
     } catch (error) {
+        console.error(error)
         document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
         const errorMessageElement = document.getElementById('error-message');
@@ -53,8 +55,6 @@ async function FirebaseLogin(auth, database, db, email, password) {
         document.getElementById('loading-message').style.display = 'none';
     }
 }
-
-
 
 
 function sleep(ms) {
@@ -193,9 +193,12 @@ function getDayName(year, month, day) {
 
 
 export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep};
-        
 
-   
+
+
+
+
+
   
 
 
