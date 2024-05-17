@@ -106,4 +106,3 @@ form.addEventListener('submit', async (e) => {
         console.error('Error checking email existence:', error);
     }
 });
-
