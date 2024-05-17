@@ -1,5 +1,5 @@
 import { database, auth, firestore as db } from "./firebaseInit.js";
-import { collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, doc, setDoc,addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { set, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { isValidAccessKey, SetRole, SetSignUpError } from "./functions.js";
