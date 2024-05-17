@@ -5,7 +5,7 @@
   "main": "index.js",
   "//": "to test: jest ./__tests__ else: echo 'tests completed'",
   "scripts": {
-    "test": "echo 'tests completed'",
+    "test": "else: echo 'tests completed'",
     "start": "node app"
   },
   "repository": {
@@ -16,7 +16,8 @@
     "moduleNameMapper": {
       "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/dummy.js",
       "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/dummy.js"
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/dummy.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js": "<rootDir>/dummy.js"
     },
     "testEnvironment": "jsdom",
     "collectCoverage": true,
