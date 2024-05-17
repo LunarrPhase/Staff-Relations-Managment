@@ -6,7 +6,7 @@ import { ChangeWindow, truncateText } from './functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
-
+    //to get the current user
     onAuthStateChanged(auth, async (user) => {
 
         const homebtn = document.getElementById('home');
@@ -35,13 +35,13 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        //code for timesheets html
+        //code for fetching timesheets for timesheet.html
         if (user) {
             const userId = user.uid;
 
             if (user.uid) {
                 try {
-
+                    //fetch the timesheets from the current users firestore db
                     const timesheetsRef = collection(db, `users/${userId}/timesheets`);
                     const querySnapshot = await getDocs(timesheetsRef);
                     const timesheetsBody = document.getElementById("timeSheetBody");
@@ -63,9 +63,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <td>${timesheetData.totalHours}</td>
                             </tr>
                             `;
-
+                        //add it to the html
                           timesheetsBody.innerHTML += timesheetRow;
-                          //console.log(doc.id, " => ", doc.data());
+                          
                     });
                     console.log("Timesheets retrieved successfully");
                 }
@@ -83,13 +83,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         
         //code to go to the add task
-        //Get the button element by its ID
         const button = document.getElementById("add-task");
 
-        //event listener to the button
+        
         button.addEventListener("click", function() {
 
-            // Navigate the user to a new HTML page
+            //Navigate user to a add task html page
             window.location.href = "add-task.html";
         });
     });

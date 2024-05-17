@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-            console.log("User is signed in:", user.uid);
+            console.log("User is signed in");
         }
         else {
             // No user is signed in
