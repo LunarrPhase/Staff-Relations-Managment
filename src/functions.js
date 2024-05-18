@@ -207,7 +207,7 @@ function handleRoleChange(target) {
         if (!querySnapshot.empty) {
             querySnapshot.forEach((doc) => {
                 const userId = doc.id;
-                console.log(userId)
+                //console.log(userId)
                 updateRole(userId, row, 'firestore');
             });
         } else {
