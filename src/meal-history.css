@@ -27,6 +27,7 @@ body {
     justify-content: space-around;
     align-items: center; /*center items*/
     text-align: center;
+    z-index: 1;
 }
 
 nav{
