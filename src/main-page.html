@@ -42,48 +42,54 @@
     </style>
     <title>Staff Main Page</title>
 </head>
+
+
 <body>
     <div id="loading">
         <div class="spinner"></div>
     </div>
-            <header class="header">
-                <h1>Staff-Relations Management</h1>
+    
+    <header class="header">
+        <h1>Staff-Relations Management</h1>
 
-                <nav>
-                    
-                    <ul class="menu">
-                        <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
-                        <li id="bookings"><a href="#">Bookings</a>
-                            <div class="drop-down">
-                                <ul>
-                                    <li id="carwash"><a href="book-carwash.html">Book a Car Wash</a></li>
-                                    <li id="meal"><a href="book-meal.html">Book Your Meal</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id="reports"><a href="all-reports.html">Reports</a></li>
-                        <li id="logout"><a href="index.html">Log Out</a></li>
-                        <li class="notifications" id="notifications">
-                            <a href="#"><i class="fa-solid fa-bell"></i></a>
-                            <div id="popover-content" class="popover-content">
-                                <h3>Notifications</h3>
-                                <p>You have no notifications.</p>
-                                <a href="all-notifs.html" class="see-all-link">See all</a>
-                            </div>
-                        </li>
-                    </ul>
-                    
-                    
+        <nav>
 
-                </nav>
-
-                <hr>
+            <!--links in nav bar-->
             
-            </header>
+            <ul class="menu">
+                <li id = "home" type = "button"><a href="admin-main-page.html">Home</a></li>
+                <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
+                <li id="bookings"><a href="#">Bookings</a>
+                    <div class="drop-down">
+                        <ul>
+                            <li id="carwash"><a href="#">Book Car Wash</a></li>
+                            <li id="meals"><a href="book-meal.html">Book Meal</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                <li class="notifications" id="notifications">
+                    <a href="#"><i class="fa-solid fa-bell"></i></a>
+                    <div id="popover-content" class="popover-content" aria-hidden="true">
+                        <h3>Notifications</h3>
+                        <p>You have no notifications.</p>
+                        <a href="all-notifs.html" class="see-all-link">See all</a>
+                    </div>
+                </li>
+            </ul>
+            
+            
+
+        </nav>
+    
+    </header>
             
             <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
+                <!--greet user-->
                 <h2 id = "userInfo"></h2>
 
+                <!--main information-->
                 <article class="top-article">
                     <section>
 
@@ -103,7 +109,9 @@
 
                 </article>
 
+                <!--extra information-->
                 <article class="bottom-article">
+                    <!--information on timesheets-->
                     <section class="info" id="timesheet-info">
                         <h5>Timesheets made fun</h5>
                         <p>Enjoy a creative and fun way to track your tasks.</p>
@@ -112,14 +120,16 @@
 
                     <hr>
 
+                    <!--information on bookings-->
                     <section class="info" id="booking-info">
                         <h5>Bookings made easy</h5>
-                        <p>Make your car feel as polished as you do, while you grab your ready-to-go meal.</p>
+                        <p>Make your car feel as polished as you do, without wasting any of your time.</p>
                         <img src="img/booking.svg" alt="booking-pic">
                     </section>
 
                     <hr>
 
+                    <!--information on feedback-->
                     <section class="info" id="feedback-info">
                         <h5>Feedback</h5>
                         <p>Encourage and help your colleagues through uplifting words and insightful comments.</p>
@@ -128,9 +138,10 @@
 
                     <hr>
 
+                    <!--information on reports-->
                     <section class="info" id="report-info">
                         <h5>Reports</h5>
-                        <p>Get reports on your stuff.</p>
+                        <p>Have easy viewing access to your timesheets and all your bookings.</p>
                         <img src="img/undraw_report_re_f5n5.svg" alt="report-pic">
                     </section>
                 </article>

@@ -7,30 +7,38 @@ body{
 }
 
 .header{
-    width:100%;
-    height: 80px;
-    position: fixed;
-    background-color: #407088;
-    padding-left: 30px;
+    width:100%; /*width across entire screen*/
+    height: 80px; 
+    position: fixed; /*header doesnt move*/
+    background-color: #407088; 
+    padding-left: 10px;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: center; /*center items*/
     text-align: center;
 }
+
+nav{
+    margin-right: 30px;
+}
+
+/*style nav bar*/
 
 ul{
     display: flex;
     list-style-type: none;
-    margin-left: 50px;
+    margin-left: 0px;
 }
 
 ul li a{
-    padding: 0 30px;
+    padding: 3px 25px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
 
 }
+
+/*unerline transition*/
 
 li a::after{
     content: '';
@@ -49,6 +57,8 @@ li#bookings{
     position: relative;
 }
 
+/*style drop down*/
+
 .drop-down{
     display: none;
     border-radius: 10px;
@@ -59,7 +69,7 @@ ul li:hover .drop-down{
     position: absolute;
     background-color: #4b788f;
     z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
     margin-top: 0;
     left: 0;
 
@@ -74,7 +84,7 @@ ul li:hover .drop-down ul{
 ul li:hover .drop-down ul li{
     width: 150px;
     padding:10px;
-    border-bottom: 1px dotted #fff;
+    border-bottom: 1px dotted #fff; /*bottom has no border*/
     background: transparent;
     border-radius: 0px;
     text-align: left;
@@ -84,23 +94,49 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-h1{
-    color: #ffb5b5;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-}
+/*style notification bell*/
 
-.notifications{
+.notifications .fa-bell{
     transition: all 0.5s;
-    color: #ffb5b5;
+    color: #ffb5b5; /*same colour as words*/
     transform-origin: center;
-
 }
 
 .notifications .fa-bell:hover{
-    color: white;
- }
+   color: white;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 28px;
+    margin-left: 30px;
+    margin-right: 0;
+    margin-right: auto;
+}
+
+/*style home in nav bar*/
+
+#home{
+    background-color: #ffcbcb;
+    border-radius: 30px;
+    padding-top: 1px;
+    font-style:italic;
+    font-weight: 600;
+}
+
+#home a{
+    color: #4b788f;
+}
+
+#home a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #4b788f;
+    z-index: 1;
+}
  
 
 .main{
@@ -114,6 +150,8 @@ h2{
     color: #132743;
     padding: 10px;
 }
+
+/*style footer*/
 
 .footer{
     width: 100%;

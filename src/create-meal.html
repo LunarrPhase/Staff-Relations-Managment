@@ -12,6 +12,8 @@
     <header class="header">
         <h1>Staff-Relations Management</h1>
 
+        <!--links for navigation-->
+
         <nav>
             
             <ul>
@@ -27,48 +29,52 @@
                             <ul>
                                 <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
                                 <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
-                                <li id="carwash"><a href="#">View Car Wash Bookings</a></li>
+                                <li id="carwash"><a href="all-carwash-bookings.html">View Car Wash Bookings</a></li>
                                 <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
                             </ul>
                         </div>
                     
                     </li>
                     <li id = "meals"><a href="create-meal.html">Meals</a></li>
-                <li id = "logout"><a href="index.html">Log Out</a></li>
-                <li class="notifications" id="notifications">
-                    <i class="fa-solid fa-bell"></i>
-                    <div id="popover-content" class="popover-content" aria-hidden="true">
-                        <h3>Notifications</h3>
-                        <p>You have no notifications.</p>
-                        <a href="all-notifs.html" class="see-all-link">See all</a>
-                    </div>
-                </li>
-            </ul>
+                    <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    <li class="notifications" id="notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <div id="popover-content" class="popover-content" aria-hidden="false">
+                            <h3>Notifications</h3>
+                            <p id = "">You have no notifications.</p>
+                            <a href="all-notifs.html" class="see-all-link">See all</a>
+                        </div>
+                    </li>
+                </ul>
 
-        </nav>
-    
+            </nav>
+
+        
     </header>
 
     <main>
 
         <section class="top-sec">
             
-        <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
-        <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
+            <!--back button-->
+            <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+            <!--note-->
+            <p class="food-info">*Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
 
         </section>
 
-    <article class="flex-article">
-        <section>
-            <img src="img/tea.svg" alt="food" id="food-icon1">
-            <img src="img/dessert.svg" alt="food" id="food-icon2">
-            <img src="img/sushi.svg" alt="food" id="food-icon3">
-            <img src="img/pizza.svg" alt="food" id="food-icon2">
-            <img src="img/burger.svg" alt="food" id="food-icon1">
-        </section>
+        <article class="flex-article">
+            <!--moving images-->
+            <section>
+                <img src="img/tea.svg" alt="food" id="food-icon1">
+                <img src="img/dessert.svg" alt="food" id="food-icon2">
+                <img src="img/sushi.svg" alt="food" id="food-icon3">
+                <img src="img/pizza.svg" alt="food" id="food-icon2">
+                <img src="img/burger.svg" alt="food" id="food-icon1">
+            </section>
 
 
-        <section class="container">
+            <section class="container">
 
             <h2>Create a new meal</h2>
             
@@ -101,25 +107,26 @@
             <button  id="submit-btn">Submit </button>
           </form>
 
-          
+            
 
-        </section>
+            </section>
 
-        <section>
-            <img src="img/eggs.svg" alt="food" id="food-icon1">
-            <img src="img/roll.svg" alt="food" id="food-icon2">
-            <img src="img/soda.svg" alt="food" id="food-icon3">
-            <img src="img/fish.svg" alt="food" id="food-icon2">
-            <img src="img/wrap.svg" alt="food" id="food-icon1">
+            <!--moving images-->
+            <section>
+                <img src="img/eggs.svg" alt="food" id="food-icon1">
+                <img src="img/roll.svg" alt="food" id="food-icon2">
+                <img src="img/soda.svg" alt="food" id="food-icon3">
+                <img src="img/fish.svg" alt="food" id="food-icon2">
+                <img src="img/wrap.svg" alt="food" id="food-icon1">
 
-        </section>
+            </section>
 
         </article>
-        </main>
+    </main>
         
-        <footer class="footer">
-            <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-        </footer>
+    <footer class="footer">
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+    </footer>
 
 
 </body>

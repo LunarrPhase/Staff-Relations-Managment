@@ -3,15 +3,19 @@
 <head>
     <title>Feedback Form</title>
     <link rel="stylesheet" type="text/css" href="feedback.css">
+    <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
     
     <header>
+
+        <!--back button-->
         <button class="back-button" id = 'feedbackButton'><img src="./img/reply-solid.svg" alt="back-icon" class="back-icon"></button>
         <img src="./img/feedback_background.svg" alt="background" class="feedback_background">
     </header>
 
     <main>
+        <!--feedback form and inputs-->
         <article class="container">
             <h2>Feedback Form</h2>
             <form action="#" id = "feedback-form">
@@ -20,6 +24,7 @@
     
                 <label for="type">Type of Feedback:</label>
                 <select id="type" name="type" required>
+                    <!--options for feedback type-->
                     <option value="positive">Positive</option>
                     <option value="negative">Negative</option>
                     <option value="neutral">Neutral</option>
@@ -28,19 +33,22 @@
                 <label for="message">Feedback Message:</label>
                 <textarea id="message" name="message" required></textarea>
                 
-                <div>
+                <section class="submit-btn">
                     <input type="submit" value="Submit Feedback">
-                </div>
+                </section>
             </form>
         </article>
+
+        <!--display success of sent feedback-->
         <div id="myModal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
               <p>Feedback submitted successfully!</p>
             </div>
-          </div>
+        </div>
           
     </main>
 </body>
+
 <script type="module" src="feedback.js"></script>
 </html>

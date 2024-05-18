@@ -13,21 +13,23 @@
     <header class="header">
         <h1>Staff-Relations Management</h1>
 
+        <!--links in navigation bar-->
+
         <nav>
             
             <ul class="menu">
-                <li id = "home" type = "button">Home</li>
+                <li id = "home" type = "button"><a href="admin-main-page.html">Home</a></li>
                 <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
                 <li id="bookings"><a href="#">Bookings</a>
                     <div class="drop-down">
                         <ul>
-                            <li id="carwash"><a href="#">Book a Car Wash</a></li>
-                            <li id="meals"><a href="book-meal.html">Book Your Meal</a></li>
+                            <li id="carwash"><a href="#">Book Car Wash</a></li>
+                            <li id="meals"><a href="book-meal.html">Book Meal</a></li>
                         </ul>
                     </div>
                 </li>
-                <li id="reports"><a href="all-reports.html">Reports</a></li>
-                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
                 <li class="notifications" id="notifications">
                     <a href="#"><i class="fa-solid fa-bell"></i></a>
                     <div id="popover-content" class="popover-content" aria-hidden="true">
@@ -46,7 +48,7 @@
 
     <main class="main">
 
-
+        <!--form with inputs-->
         <article class="form-container" >
 
             <section>
@@ -68,7 +70,8 @@
                     <option value="Deluxe">Deluxe</option>
                     <option value="Premium">Premium</option>
                 </select><br><br>
-        
+    
+                <!--time slot options-->
                 <label for="timeSlot">Time Slot:</label><br>
                 <select id="timeSlot" name="timeSlot" required>
                     <option value="8AM">8:00 AM</option>
@@ -81,7 +84,8 @@
                     <option value="3PM">3:00 PM</option>
                     <option value="4PM">4:00 PM</option>
                 </select><br><br>
-        
+
+                <!--submit button-->
                 <button id="submit-btn">Submit</button>
             </form>
         </article>
