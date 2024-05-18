@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="48" lines-covered="42" line-rate="0.875" branches-valid="39" branches-covered="34" branch-rate="0.8717" timestamp="1716069076748" complexity="0" version="0.1">
+<coverage lines-valid="53" lines-covered="32" line-rate="0.6037" branches-valid="39" branches-covered="30" branch-rate="0.7692" timestamp="1716073603723" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\nashi\Desktop\Staff-Relations-Managment</source>
   </sources>
   <packages>
-    <package name="main" line-rate="0.875" branch-rate="0.8717">
+    <package name="main" line-rate="0.6037" branch-rate="0.7692">
       <classes>
-        <class name="functions.js" filename="src\functions.js" line-rate="0.875" branch-rate="0.8717">
+        <class name="functions.js" filename="src\functions.js" line-rate="0.6037" branch-rate="0.7692">
           <methods>
             <method name="ChangeWindow" hits="3" signature="()V">
               <lines>
@@ -39,14 +39,14 @@
                 <line number="89" hits="3"/>
               </lines>
             </method>
-            <method name="manageDate" hits="2" signature="()V">
+            <method name="manageDate" hits="0" signature="()V">
               <lines>
-                <line number="98" hits="2"/>
+                <line number="98" hits="0"/>
               </lines>
             </method>
-            <method name="(anonymous_7)" hits="2" signature="()V">
+            <method name="(anonymous_7)" hits="0" signature="()V">
               <lines>
-                <line number="100" hits="2"/>
+                <line number="100" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_8)" hits="0" signature="()V">
@@ -64,9 +64,19 @@
                 <line number="116" hits="0"/>
               </lines>
             </method>
-            <method name="getDayName" hits="2" signature="()V">
+            <method name="getDayName" hits="0" signature="()V">
               <lines>
-                <line number="127" hits="2"/>
+                <line number="127" hits="0"/>
+              </lines>
+            </method>
+            <method name="renderBookings" hits="0" signature="()V">
+              <lines>
+                <line number="134" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_13)" hits="0" signature="()V">
+              <lines>
+                <line number="136" hits="0"/>
               </lines>
             </method>
           </methods>
@@ -103,22 +113,27 @@
             <line number="80" hits="1" branch="false"/>
             <line number="82" hits="6" branch="false"/>
             <line number="90" hits="3" branch="true" condition-coverage="100% (2/2)"/>
-            <line number="100" hits="2" branch="false"/>
-            <line number="102" hits="2" branch="false"/>
-            <line number="103" hits="2" branch="true" condition-coverage="100% (4/4)"/>
-            <line number="104" hits="1" branch="false"/>
-            <line number="105" hits="1" branch="false"/>
-            <line number="108" hits="1" branch="false"/>
-            <line number="113" hits="2" branch="false"/>
+            <line number="100" hits="0" branch="false"/>
+            <line number="102" hits="0" branch="false"/>
+            <line number="103" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="104" hits="0" branch="false"/>
+            <line number="105" hits="0" branch="false"/>
+            <line number="108" hits="0" branch="false"/>
+            <line number="113" hits="0" branch="false"/>
             <line number="114" hits="0" branch="false"/>
             <line number="115" hits="0" branch="false"/>
             <line number="116" hits="0" branch="false"/>
             <line number="117" hits="0" branch="false"/>
             <line number="118" hits="0" branch="true" condition-coverage="0% (0/4)"/>
             <line number="119" hits="0" branch="false"/>
-            <line number="128" hits="2" branch="false"/>
-            <line number="129" hits="2" branch="false"/>
-            <line number="130" hits="2" branch="false"/>
+            <line number="128" hits="0" branch="false"/>
+            <line number="129" hits="0" branch="false"/>
+            <line number="130" hits="0" branch="false"/>
+            <line number="135" hits="0" branch="false"/>
+            <line number="136" hits="0" branch="false"/>
+            <line number="137" hits="0" branch="false"/>
+            <line number="138" hits="0" branch="false"/>
+            <line number="146" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>

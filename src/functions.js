@@ -131,7 +131,24 @@ function getDayName(year, month, day) {
 }
 
 
-export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName };
+function renderBookings(bookings, usersList) {
+    usersList.innerHTML = '';
+    bookings.forEach(booking => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${booking.name}</td>
+            <td>${booking.email}</td>
+            <td>${booking.type}</td>
+            <td>${booking.slot}</td>
+            <td>${booking.day}</td>
+
+        `
+        usersList.appendChild(row)
+    })
+}
+
+
+export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
 
 
 
