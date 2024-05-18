@@ -1,24 +1,18 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+/* LOGIN */
 
 
 function ChangeWindow(role){
     
     if (role === "Manager") {
-        sleep(5000)
         window.location.href = 'manager-main-page.html';
     }
     else if (role === "HR") {
-        sleep(5000)
         window.location.href = 'admin-main-page.html';
     }
     else {
-        sleep(5000)
         window.location.href = 'main-page.html';
     }
 }
-
 
 
 function SetLoginError(error){
@@ -98,6 +92,8 @@ function truncateText(text, maxLength) {
 
 
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
+
+
 //makes sure only fridays and mondays are bookable.
 function manageDate(){
     const dateInput = document.getElementById('date');
@@ -132,7 +128,7 @@ function getDayName(year, month, day) {
     return daysOfWeek[date.getDay()]
 }
 
-export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep };
+export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName };
 
 
 

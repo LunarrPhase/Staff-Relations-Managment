@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "//": "to test: jest ./__tests__ else: echo 'tests completed'",
+  "//": "to test locally: jest ./__tests__ else: sh node_modules/.bin/jest ./__tests__ ",
   "scripts": {
-    "test": "sh node_modules/.bin/jest ./__tests__ ",
+    "test": "sh node_modules/.bin/jest ./__tests__",
     "start": "node app"
   },
   "repository": {
