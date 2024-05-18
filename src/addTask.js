@@ -3,7 +3,7 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/f
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-
+//wait for the page to load
 document.addEventListener("DOMContentLoaded", function() {
     //getting the current user
     onAuthStateChanged(auth, async (user) => {
