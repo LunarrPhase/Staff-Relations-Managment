@@ -1,5 +1,5 @@
 import { database, auth, firestore as db } from "./firebaseInit.js"
-import { FirebaseLogin } from "./functions.js";
+import { FirebaseLogin } from "./firebase_functions.js";
 
 //listens for the correct login credentials
 login.addEventListener('click', async (e) => {
