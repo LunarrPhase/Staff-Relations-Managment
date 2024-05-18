@@ -15,27 +15,27 @@ async function FirebaseLogin(auth, database, db, email, password) {
         const dt = new Date();
         const userUid = user.uid;
 
+        let role, firstName, lastName;
+
         // Check if user exists in Realtime Database
         const userRef = ref(database, 'users/' + userUid);
         const snapshot = await get(userRef);
         let userData = snapshot.val();
-        let role, firstName, lastName;
 
         if (userData) {
-            // User data found in Realtime Database, update last_login
             await update(userRef, { last_login: dt });
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
         } else {
-            // User data not found in Realtime Database, check Firestore
-            const accountsDocRef = doc(db, 'accounts', email);
-            const docSnap = await getDoc(accountsDocRef);
+            // Query Firestore by email to get the document ID
+            const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
+            const querySnapshot = await getDocs(accountsQuery);
 
-            if (docSnap.exists()) {
-                // User data found in Firestore, update last_login
-                userData = docSnap.data();
-                await updateDoc(accountsDocRef, { last_login: dt });
+            if (!querySnapshot.empty) {
+                const doc = querySnapshot.docs[0];
+                userData = doc.data();
+                await updateDoc(doc.ref, { last_login: dt });
                 role = userData.role || "User";
                 firstName = userData.firstName || "";
                 lastName = userData.lastName || "";
@@ -59,6 +59,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
         }
     }
 }
+
 
 
 function sleep(ms) {
@@ -205,6 +206,7 @@ function handleRoleChange(target) {
     .then((querySnapshot) => {
         if (!querySnapshot.empty) {
             querySnapshot.forEach((doc) => {
+                console.log(userId)
                 const userId = doc.id;
                 updateRole(userId, row, 'firestore');
             });
