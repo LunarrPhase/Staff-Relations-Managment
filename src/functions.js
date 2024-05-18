@@ -29,7 +29,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
             lastName = userData.lastName || "";
         } else {
             // Query Firestore by email to get the document ID
-            const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
+           const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
             const querySnapshot = await getDocs(accountsQuery);
 
             if (!querySnapshot.empty) {
