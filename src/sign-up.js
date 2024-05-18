@@ -1,5 +1,5 @@
 import { database, auth, firestore as db } from "./firebaseInit.js";
-import { collection, doc, setDoc,addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { set, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { isValidAccessKey, SetRole, SetSignUpError } from "./functions.js";
@@ -39,14 +39,25 @@ document.getElementById('signUp').addEventListener('click', (e) => {
                     lastName: lastName,
                     role: role,
                 }).then(() => {
-                    addDoc(doc(db, "accounts"), {
+                    // Add user to Firestore 'accounts' collection
+                    setDoc(doc(db, "accounts", email), {
                         email: email,
                         firstName: firstName,
                         lastName: lastName,
                         role: role,
                     }).then(() => {
-                        document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
-                        window.location.href = 'index.html';
+                        // Add the document to Realtime Database under 'accounts' node
+                        set(ref(database, 'users/' + user.uid), {
+                            email: email,
+                            firstName: firstName,
+                            lastName: lastName,
+                            role: role,
+                        }).then(() => {
+                            document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
+                            window.location.href = 'index.html';
+                        }).catch((error) => {
+                            document.getElementById('error-message').textContent = "Error adding document to Realtime Database 'accounts' node: " + error.message;
+                        });
                     }).catch((error) => {
                         document.getElementById('error-message').textContent = "Error adding document to Firestore: " + error.message;
                     });
@@ -62,5 +73,8 @@ document.getElementById('signUp').addEventListener('click', (e) => {
         document.getElementById('error-message').textContent = "Invalid access key.";
     }
 });
+
+
+
 
 

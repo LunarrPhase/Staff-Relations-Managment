@@ -15,10 +15,11 @@
         <!--links for navigation-->
 
         <nav>
-                
-                <ul>
-                    <li id = "home"><a href="admin-main-page.html"><i class="fa-solid fa-house"></i></a></li>
-                    <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
+            
+            <ul>
+                <li><a href="admin-main-page.html">Home</a></li>
+                <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
+                    <!--this is where the drop down stuff was-->
                     </li>
                     <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
                     <li id = "feedback"><a href="all-reports.html">Reports</a></li>
@@ -75,33 +76,36 @@
 
             <section class="container">
 
-                <h2>Create a new meal</h2>
+            <h2>Create a new meal</h2>
+            
 
-                <!--form with inputs-->
-                <form class="add" id ="add">
-                    
-                    <label for="date">Day:</label><br>
-                    <input type="date" id="date" name="date"  required><br><br>
+        <form class="add" id ="add">
+            <p class ="warning" id="warning"></p>
+            
+            <label for="date">Day:</label><br>
+            <input type="date" id="date" name="date"  required><br><br>
 
-                    <!--options for diet-->
-                    <label for="diet">Dietary Restrictions:</label><br>
-                            <select id="diet" name="diet" required>
-                                <option value="">Select</option>
-                                <option value="None">None</option>
-                                <option value="Kosher">Kosher</option>
-                                <option value="Halal">Halal</option>
-                                <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
-                                <option value="Gluten-Free">Gluten-Free</option>
-                                <option value="Low-Carb/Keto">Low-Carb/Keto</option>
-                                <option value="Paleo">Paleo</option>
-                                <option value="Mediterranean">Mediterranean</option>
-                            </select><br><br>
-                
-                    <label for="meal">Meal:</label><br>
-                    <input type="text" id="mealValue" name="meal" required><br><br>
-                
-                    <input type="submit" value="Submit" id="submit-btn">
-                </form>
+          
+            <label for="diet">Dietary Restrictions:</label><br>
+                    <select id="diet" name="diet" required>
+                        <option value="">Select</option>
+                        <option value="None">None</option>
+                        <option value="Kosher">Kosher</option>
+                        <option value="Halal">Halal</option>
+                        <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
+                        <option value="Gluten-Free">Gluten-Free</option>
+                        <option value="Low-Carb/Keto">Low-Carb/Keto</option>
+                        <option value="Paleo">Paleo</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                    </select><br><br>
+          
+            <label for="meal">Meal:</label><br>
+            <input type="text" id="mealValue" name="meal" required><br><br>
+
+
+          
+            <button  id="submit-btn">Submit </button>
+          </form>
 
             
 

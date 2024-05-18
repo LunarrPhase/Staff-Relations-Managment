@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc , addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, doc,  addDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const dateInput = document.getElementById('date').value;
       const dietInput = document.getElementById('diet').value;
       const mealInput = document.getElementById('mealValue').value;
+
+      const currentDate = new Date();
+      const currentDateString = currentDate.toISOString().split('T')[0];
+
+      if(dateInput > currentDateString){
+
+
       const colRef = collection(db,'mealOptions');
 
       // Add a subcollection for each day
@@ -41,6 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
         diet: dietInput,
         meal: mealInput,
       });
+
+      document.querySelector('.add').reset();  
+      alert("Successfully created meal!");
+
+    } else{
+      const warning = document.getElementById("warning");
+      warning.innerText= "Cannot book meals for current and previous days."
+    }
 
     }); 
   }

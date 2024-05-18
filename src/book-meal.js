@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-                        if(selectedDate >= currentDateString){
+                        if(selectedDate > currentDateString){
 
                         
                         const selectedDiet = dietSelect.value;
@@ -114,14 +114,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             date: selectedDate,
                             diet: selectedDiet,
                             meal: selectedMeal
-                        })
+                        });
 
-                        form.reset();
+
+                        document.querySelector('.mealForm').reset();
+                        alert("Successfully booked meal!");
 
                     }
                     else{
                         const warning = document.getElementById("warning");
-                        warning.innerText= "Cannot book meals for previous days."
+                        warning.innerText= "Cannot book meals for current and previous days."
                     }
                     }
                     else {

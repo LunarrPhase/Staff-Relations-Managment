@@ -1,60 +1,3 @@
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref,  update, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import {doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-
-/* INDEX */
-async function FirebaseLogin(auth, database, db, email, password) {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        const dt = new Date();
-
-        await update(ref(database, 'users/' + user.uid), {
-            last_login: dt,
-        });
-
-        // Check the Realtime Database for user data
-        const userRef = ref(database, 'users/' + user.uid);
-        const snapshot = await get(userRef);
-        let userData = snapshot.val();
-        let role, firstName, lastName;
-
-        if (userData) {
-            // User data found in Realtime Database
-            role = userData.role || "User";
-            firstName = userData.firstName || "";
-            lastName = userData.lastName || "";
-        } else {
-            // User data not found in Realtime Database, check Firestore
-            const docRef = doc(db, 'accounts', email);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                userData = docSnap.data();
-                role = userData.role || "User";
-                firstName = userData.firstName || "";
-                lastName = userData.lastName || "";
-            } else {
-                throw new Error("User data not found in both Realtime Database and Firestore.");
-            }
-        }
-
-        console.log(userData);
-
-        ChangeWindow(role);
-    } catch (error) {
-        console.error(error)
-        document.getElementById("authenticating").style.display = "none";
-        const errorMessage = SetLoginError(error);
-        const errorMessageElement = document.getElementById('error-message');
-        errorMessageElement.textContent = errorMessage;
-    } finally {
-        document.getElementById('loading-message').style.display = 'none';
-    }
-}
-
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -87,6 +30,9 @@ function SetLoginError(error){
     }
     else if (error.code === "auth/invalid-credential"){
         errorMessage = "Wrong email or password. Please try again."
+    }
+    else if(error.code === "auth/user-not-found"){
+        errorMessage = "No account associated with this email address."
     }
     else {
         errorMessage = "An error occurred. Please try again later.";
@@ -152,21 +98,21 @@ function truncateText(text, maxLength) {
 
 
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
-
+//makes sure only fridays and mondays are bookable.
 function manageDate(){
     const dateInput = document.getElementById('date');
     
     dateInput.addEventListener('input', () => {
         const selectedDate = new Date(dateInput.value);
         if (selectedDate.getDay() !== 1 && selectedDate.getDay() !== 5) {
-            dateInput.value = ''; // Clear the input if an invalid date is selected
+            dateInput.value = ''; 
             dateInput.setCustomValidity('Please select a Monday or Friday.');
         } else {
             dateInput.setCustomValidity('');
         }
     });
 
-    // Disable dates that are not Fridays or Mondays
+    // disable dates that are not Fridays or Mondays
     document.addEventListener('DOMContentLoaded', () => {
         const dates = document.querySelectorAll('input[type="date"]');
         dates.forEach(date => {
@@ -186,15 +132,17 @@ function getDayName(year, month, day) {
     return daysOfWeek[date.getDay()]
 }
 
+export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep };
 
 
 
 
-export{FirebaseLogin, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep};
-        
 
-   
+
+
   
+
+
 
 
 
