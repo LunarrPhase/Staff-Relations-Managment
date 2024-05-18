@@ -28,19 +28,17 @@
 
         <nav>
 
-            
+            <!--links to pages-->
 
             <ul class="menu">
 
 
 
-                
-
                 <li id="home"><a href="#">Home</a></li>
 
-
-
                 <li id="timesheets"><a href="timesheet.html">Timesheets</a></li>
+
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
 
                 <li id="bookings"><a href="#">Bookings</a>
 
@@ -50,9 +48,7 @@
 
                             <li id="carwash"><a href="#">Car Wash Bookings</a></li>
 
-
                             <li id="meal"><a href="book-meal.html">Meal Bookings</a></li>
-
 
                         </ul>
 
@@ -60,11 +56,7 @@
 
                 </li>
 
-
-                <li id="reports"><a href="all-reports.html">Reports</a></li>
-
-
-                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li id="logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
                 <li class="notifications" id="notifications">
 
@@ -84,17 +76,11 @@
 
             </ul>
 
-            
-
-            
-
 
 
         </nav>
 
 
-
-    
 
     </header>
 
@@ -102,77 +88,70 @@
 
     <main class="main">
 
+        <!--table of timesheets-->
+        <article class="table-container">
+
+            <section class="table-header">
+
+                <h2>Your Timesheets</h2>
+
+            </section>
+
+            <section>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <!--table headings-->
+                            <th>Date</th>
+
+                            <th>Start Time</th>
+
+                            <th>End Time</th>
+
+                            <th>Project Code</th>
+                            <th>Task Name</th>
+
+                            <th>Task Description</th>
+
+                            <th>Total Hours</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="timeSheetBody">
+
+                    
+
+                    </tbody>
+
+                </table>
+
+            </section>
 
 
-    <article class="table-container">
 
-        <section class="table-header">
+        </article>
 
-            <h2>Your Timesheets</h2>
+        <!--add additional timesheet-->
+        <section class="add-task">
+
+            <a href="add-task.html"><button id="add-task">Add new task</button></a>
 
         </section>
 
-        <section>
+    </main>
 
 
+    <footer class="footer">
 
-            <table>
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
 
-                <thead>
-
-                    <tr>
-
-                        <th>Date</th>
-
-                        <th>Start Time</th>
-
-                        <th>End Time</th>
-
-                        <th>Project Code</th>
-                        <th>Task Name</th>
-
-                        <th>Task Description</th>
-
-                        <th>Total Hours</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="timeSheetBody">
-
-                  
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-
-
-    </article>
-
-    <section class="add-task">
-
-        <a href="add-task.html"><button id="add-task">Add new task</button></a>
-
-    </section>
-
-
-
-
-</main>
-
-
-
-<footer class="footer">
-
-    <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-
-</footer>
-
-
+    </footer>
 
 
 

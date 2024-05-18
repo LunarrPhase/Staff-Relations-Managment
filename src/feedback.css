@@ -2,33 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /*background-color: #f4f4f4;*/
     background-color: #FAE7E9;
     display: flex;
-}
-
-#back-btn{
-    background-color: #274353;
-    margin: 20px 30px;
-    border: 1px solid #407088;
-    border-radius: 30px;
-    padding: 10px 25px;
-    font-size: 17px;
-    color: #fff;
-    transition: transform 0.3s ease;
-}
-
-#back-btn:hover{
-    background-color: #132743;
-    animation: shake 1s; 
-}
-
-@keyframes shake {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-    75% { transform: rotate(-5deg); }
-    100% { transform: rotate(0deg); }
 }
 
 .feedback_background{
@@ -38,13 +13,37 @@ body {
     background-color: #FAE7E9;
 }
 
+/*back button styling*/
+.back-button {
+    margin: 20px;
+    width: 70px;
+    height: 35px;
+    cursor: pointer;
+    border-radius: 30px; /*rounded border*/
+    background-color: #68b5dc;
+    border: 2px solid #44abde;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-icon{
+    width: 20px;
+    height: 30px;
+    color: #fff;
+}
+
+
+.back-button:hover{
+    background-color: #5c90a8;
+}
+
+/*style form container*/
 .container {
     width: 550px;
     margin: 20px 10px;
     padding: 20px;
     background-color: #fff;
     border-radius: 7px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /*shadow around box*/
 }
 
 h2{
@@ -52,7 +51,7 @@ h2{
     margin-top: 0;
     text-align: center;
     font-size: 30px;
-    background-color: #90D26D;
+    background-color: #90D26D; /*background of words*/
     padding: 20px;
     border-radius: 7px;
 }
@@ -63,11 +62,12 @@ label {
     margin: 20px;
 }
 
+/*styling each input*/
 input[type="text"],
 select,
 textarea {
-    width: 100%;
-    padding: 8px;
+    width: 100%; /*full width of form*/
+    padding: 8px; /*padding for space*/
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -90,6 +90,7 @@ textarea {
     height: 100px;
 }
 
+/*style submit button*/
 input[type="submit"] {
     background-color: #90D26D;
     color: white;
@@ -104,17 +105,22 @@ div{
     text-align: center;
 }
 
+.submit-btn{
+    text-align: center;
+}
+
 input[type="submit"]:hover {
     background-color: #45a049;
 }
 
+/*style success message*/
 .modal {
     display: none; 
     position: fixed; 
-    z-index: 1;
+    z-index: 1; /*shows on top*/
     left: 0;
     top: 0;
-    width: 100%; 
+    width: 100%; /*fills entire page*/
     height: 100%; 
     overflow: auto;
     background-color: rgb(0,0,0); 
@@ -145,25 +151,4 @@ input[type="submit"]:hover {
     cursor: pointer;
   }
 
-.back-button {
-    margin: 20px;
-    width: 70px;
-    height: 35px;
-    cursor: pointer;
-    border-radius: 10px;
-    background-color: #68b5dc;
-    border: 2px solid #407088;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.back-icon{
-    width: 20px;
-    height: 30px;
-    color: #fff;
-}
-
-
-.back-button:hover{
-    background-color: #39647A;
-}
   

@@ -11,75 +11,42 @@ body {
 .main{
     flex:1;
     max-width: 100%;
-    padding-top: 100px;
-    /*background-color: #f0f0f0;*/
+    padding-top: 00px;
 }
 
 .header{
-    width:100%;
-    height: 80px;
-    background-color: #407088;
-    padding-left: 10px;
+    width:100%; /*width across entire screen*/
+    height: 80px; 
+    background-color: #407088; 
+    padding-left: 50px;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: center; /*center items*/
     text-align: center;
 }
 
 
 nav{
-    height: 80px;
-    justify-content: center;
-    text-align: center;
+    margin-right: 80px;
 }
 
+/*style nav bar*/
+
 ul{
-    height: 50px;
     display: flex;
     list-style-type: none;
-    margin-right: 20px;
-    margin-bottom: 0;
-    padding-right: 20px;
-    padding-top: 10px;
-    justify-content: center;
+    margin-left: 0px;
 }
 
 ul li a{
-    padding: 0 18px;
+    padding: 3px 30px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
 
 }
 
-#home{
-
-    padding: 0 30px;
-    text-decoration: none;
-    color: #ffb5b5;
-    display: inline-block;
-}
-
-#home::after {
-    content: '';
-    display: block;
-    height: 4px;
-    width: 0;
-    transition: 0.5s;
-    background: #ffcbcb;
-    
-}
-
-
-#home:hover::after {
-    width: 100%;
-}
-
-#home:hover{
-
-    cursor:pointer;
-
-}
+/*unerline transition*/
 
 li a::after{
     content: '';
@@ -91,12 +58,14 @@ li a::after{
 }
 
 li:not(.notifications) a:hover::after{
-    width: 100%;
+    width: 100%; /*full width of word*/
 }
 
-li#bookings, li#manage-users{
+li#bookings{
     position: relative;
 }
+
+/*style drop down*/
 
 .drop-down{
     display: none;
@@ -107,11 +76,10 @@ ul li:hover .drop-down{
     display: block;
     position: absolute;
     background-color: #4b788f;
-    z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1; /*stay on top*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*shadow on border*/
     margin-top: 0;
     left: 0;
-    padding: 10px 0;
 
 }
 
@@ -134,22 +102,50 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
-    transition: all 0.5s;
-    color: #ffb5b5;
-    transform-origin: center;
+/*style notification bell*/
 
+.notifications .fa-bell{
+    transition: all 0.5s;
+    color: #ffb5b5; /*same colour as words*/
+    transform-origin: center;
+    margin-top: 4px;
+    padding: 0 10px;
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
 h1{
     color: #ffb5b5;
-    margin-bottom: 30px;
-    margin-left: auto;
+    margin-bottom: 28px;
+    margin-left: 10px;
+    margin-right: 0;
     margin-right: auto;
+}
+
+/*style report in nav bar*/
+
+#feedback{
+    background-color: #ffcbcb;
+    border-radius: 30px;
+    padding-top: 1px;
+    font-style:italic; /*differrent styling*/
+    font-weight: 600;
+}
+
+#feedback a{
+    color: #4b788f;
+}
+
+#feedback a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #4b788f;
+    z-index: 1;
 }
 
 h3{
@@ -201,18 +197,22 @@ h3{
     display: block !important;
 }
 
+/*footer styling*/
+
 .footer{
-    width: 100%;
+    width: 100%; /*full width of body*/
     background-color: #407088;
-    bottom: 0;
+    bottom: 0; 
     text-align: center;
-    position: fixed;
+    position: fixed; /*stays in place*/
 }
 
 p{
     color: #ffb5b5;
     font-size: 12px;
 }
+
+/*back button styling*/
 
 #back-btn{
     background-color: #132743;
@@ -230,6 +230,8 @@ p{
     animation: shake 1s; 
 }
 
+/*shaking animation*/
+
 @keyframes shake {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-5deg); }
@@ -237,6 +239,8 @@ p{
     75% { transform: rotate(-5deg); }
     100% { transform: rotate(0deg); }
 }
+
+/*styling of images*/
 
 .image-container {
     display: grid;

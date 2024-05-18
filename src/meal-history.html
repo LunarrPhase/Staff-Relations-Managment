@@ -10,7 +10,7 @@
 
     <title>Meal History</title>
 
-    <link rel="stylesheet" href="timesheet.css">
+    <link rel="stylesheet" href="meal-history.css">
 
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
     
@@ -30,17 +30,17 @@
 
         <nav>
 
-            
+            <!--links to pages-->
 
             <ul class="menu">
 
 
 
-                
-
                 <li id="home"><a href="#">Home</a></li>
 
                 <li id="timesheets"><a href="timesheet.html">Timesheets</a></li>
+
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
 
                 <li id="bookings"><a href="#">Bookings</a>
 
@@ -58,9 +58,7 @@
 
                 </li>
 
-                <li id="reports"><a href="all-reports.html">Reports</a></li>
-
-                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li id="logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
                 <li class="notifications" id="notifications">
 
@@ -80,34 +78,33 @@
 
             </ul>
 
-            
-
-            
-
 
 
         </nav>
 
 
 
-    
-
     </header>
 
 
 
     <main class="main">
+
+        <!--back button-->
         <section class="back-sec">
             <a href="all-reports.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
         </section>
 
         <article class="main-article">
 
+            <!--meal history based on diet-->
             <a href="#"><button id="GenerateByDiet">Generate Meal history by Diet</button></a>
+
+            <!--meal history based on date-->
 
             <a href="#"><button id="GenerateByDate">Generate Meal history by Date</button></a>
             
-        
+            <!--table of meals-->
             <article class="table-container">
         
                 <section class="table-header">
@@ -119,13 +116,14 @@
                 <section id="mealOrdersReport">
         
         
-                </article>
+            </article>
 
-                <section class="pdf-csv">
-                    <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
+            <!--download options-->
+            <section class="pdf-csv">
+                <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
                 
-                    <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
-                </section>
+                <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
+            </section>
 
 
         </article>

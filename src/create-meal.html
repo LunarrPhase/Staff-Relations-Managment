@@ -12,11 +12,13 @@
     <header class="header">
         <h1>Staff-Relations Management</h1>
 
+        <!--links for navigation-->
+
         <nav>
-            
-            <ul>
-                <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
-                    <!--this is where the drop down stuff was-->
+                
+                <ul>
+                    <li id = "home"><a href="admin-main-page.html"><i class="fa-solid fa-house"></i></a></li>
+                    <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
                     </li>
                     <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
                     <li id = "feedback"><a href="all-reports.html">Reports</a></li>
@@ -26,97 +28,101 @@
                             <ul>
                                 <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
                                 <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
-                                <li id="carwash"><a href="#">View Car Wash Bookings</a></li>
+                                <li id="carwash"><a href="all-carwash-bookings.html">View Car Wash Bookings</a></li>
                                 <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
                             </ul>
                         </div>
                     
                     </li>
                     <li id = "meals"><a href="create-meal.html">Meals</a></li>
-                <li id = "logout"><a href="index.html">Log Out</a></li>
-                <li class="notifications" id="notifications">
-                    <i class="fa-solid fa-bell"></i>
-                    <div id="popover-content" class="popover-content" aria-hidden="true">
-                        <h3>Notifications</h3>
-                        <p>You have no notifications.</p>
-                        <a href="all-notifs.html" class="see-all-link">See all</a>
-                    </div>
-                </li>
-            </ul>
+                    <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    <li class="notifications" id="notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <div id="popover-content" class="popover-content" aria-hidden="false">
+                            <h3>Notifications</h3>
+                            <p id = "">You have no notifications.</p>
+                            <a href="all-notifs.html" class="see-all-link">See all</a>
+                        </div>
+                    </li>
+                </ul>
 
-        </nav>
-    
+            </nav>
+
+        
     </header>
 
     <main>
 
         <section class="top-sec">
             
-        <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
-        <p class="food-info">Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
+            <!--back button-->
+            <a href="admin-main-page.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
+            <!--note-->
+            <p class="food-info">*Remember to ensure that each day has Kosher Meals, Halal Meals, Vegetarian/Vegan Meals, Gluten-Free Meals, Low-Carb/Keto Meals, Paleo Meals, Mediterranean Meals as well for our diverse staff.</p>
 
         </section>
 
-    <article class="flex-article">
-        <section>
-            <img src="img/tea.svg" alt="food" id="food-icon1">
-            <img src="img/dessert.svg" alt="food" id="food-icon2">
-            <img src="img/sushi.svg" alt="food" id="food-icon3">
-            <img src="img/pizza.svg" alt="food" id="food-icon2">
-            <img src="img/burger.svg" alt="food" id="food-icon1">
-        </section>
+        <article class="flex-article">
+            <!--moving images-->
+            <section>
+                <img src="img/tea.svg" alt="food" id="food-icon1">
+                <img src="img/dessert.svg" alt="food" id="food-icon2">
+                <img src="img/sushi.svg" alt="food" id="food-icon3">
+                <img src="img/pizza.svg" alt="food" id="food-icon2">
+                <img src="img/burger.svg" alt="food" id="food-icon1">
+            </section>
 
 
-        <section class="container">
+            <section class="container">
 
-            <h2>Create a new meal</h2>
+                <h2>Create a new meal</h2>
 
-        <form class="add" id ="add">
+                <!--form with inputs-->
+                <form class="add" id ="add">
+                    
+                    <label for="date">Day:</label><br>
+                    <input type="date" id="date" name="date"  required><br><br>
+
+                    <!--options for diet-->
+                    <label for="diet">Dietary Restrictions:</label><br>
+                            <select id="diet" name="diet" required>
+                                <option value="">Select</option>
+                                <option value="None">None</option>
+                                <option value="Kosher">Kosher</option>
+                                <option value="Halal">Halal</option>
+                                <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
+                                <option value="Gluten-Free">Gluten-Free</option>
+                                <option value="Low-Carb/Keto">Low-Carb/Keto</option>
+                                <option value="Paleo">Paleo</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                            </select><br><br>
+                
+                    <label for="meal">Meal:</label><br>
+                    <input type="text" id="mealValue" name="meal" required><br><br>
+                
+                    <input type="submit" value="Submit" id="submit-btn">
+                </form>
+
             
-            <label for="date">Day:</label><br>
-            <input type="date" id="date" name="date"  required><br><br>
 
-          
-            <label for="diet">Dietary Restrictions:</label><br>
-                    <select id="diet" name="diet" required>
-                        <option value="">Select</option>
-                        <option value="None">None</option>
-                        <option value="Kosher">Kosher</option>
-                        <option value="Halal">Halal</option>
-                        <option value="Vegetarian/Vegan">Vegetarian/Vegan</option>
-                        <option value="Gluten-Free">Gluten-Free</option>
-                        <option value="Low-Carb/Keto">Low-Carb/Keto</option>
-                        <option value="Paleo">Paleo</option>
-                        <option value="Mediterranean">Mediterranean</option>
-                    </select><br><br>
-          
-            <label for="meal">Meal:</label><br>
-            <input type="text" id="mealValue" name="meal" required><br><br>
+            </section>
 
+            <!--moving images-->
+            <section>
+                <img src="img/eggs.svg" alt="food" id="food-icon1">
+                <img src="img/roll.svg" alt="food" id="food-icon2">
+                <img src="img/soda.svg" alt="food" id="food-icon3">
+                <img src="img/fish.svg" alt="food" id="food-icon2">
+                <img src="img/wrap.svg" alt="food" id="food-icon1">
 
-          
-            <input type="submit" value="Submit" id="submit-btn">
-          </form>
-
-          
-
-        </section>
-
-        <section>
-            <img src="img/eggs.svg" alt="food" id="food-icon1">
-            <img src="img/roll.svg" alt="food" id="food-icon2">
-            <img src="img/soda.svg" alt="food" id="food-icon3">
-            <img src="img/fish.svg" alt="food" id="food-icon2">
-            <img src="img/wrap.svg" alt="food" id="food-icon1">
-
-        </section>
+            </section>
 
         </article>
-        </main>
+    </main>
         
-        <footer class="footer">
-            <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-        </footer>
+    <footer class="footer">
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+    </footer>
 
 
 </body>

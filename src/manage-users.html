@@ -11,43 +11,45 @@
 <body>
 
     <header class="header">
-        <h1>Manage users</h1>
+        <h1>Staff-Relations Management</h1>
+
+        <!--links for navigation-->
 
         <nav>
-                  
-            <!--links-->
-            <ul>
-                <li><a href="admin-main-page.html">Home</a></li>
-                <!--this is where the drop down stuff was-->
-                </li>
-                <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
-                <li id = "bookings"><a href="#">Bookings</a>
-
-                    <div class="drop-down">
-                        <ul>
-                            <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
-                            <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
-                            <li id="carwash"><a href="#">View Car Wash Bookings</a></li>
-                            <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
-                        </ul>
-                    </div>
                 
-                </li>
-                <li id = "meals"><a href="create-meal.html">Meal Options</a></li>
-                <li id = "logout"><a href="index.html">Log Out</a></li>
-                <li class="notifications" id="notifications">
-                    <i class="fa-solid fa-bell"></i>
-                    <div id="popover-content" class="popover-content" aria-hidden="true">
-                        <h3>Notifications</h3>
-                        <p>You have no notifications.</p>
-                        <a href="all-notifs.html" class="see-all-link">See all</a>
-                    </div>
-                </li>
-            </ul>
+                <ul>
+                    <li id = "home"><a href="admin-main-page.html">Home</a></li>
+                    <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
+                    </li>
+                    <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                    <li id = "feedback"><a href="all-reports.html">Reports</a></li>
+                    <li id = "bookings"><a href="#">Bookings</a>
 
-        </nav>
+                        <div class="drop-down">
+                            <ul>
+                                <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
+                                <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
+                                <li id="carwash"><a href="all-carwash-bookings.html">View Car Wash Bookings</a></li>
+                                <li id="meal"><a href="all-meal-bookings.html">View Meal Bookings</a></li>
+                            </ul>
+                        </div>
+                    
+                    </li>
+                    <li id = "meals"><a href="create-meal.html">Meals</a></li>
+                    <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    <li class="notifications" id="notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <div id="popover-content" class="popover-content" aria-hidden="false">
+                            <h3>Notifications</h3>
+                            <p id = "">You have no notifications.</p>
+                            <a href="all-notifs.html" class="see-all-link">See all</a>
+                        </div>
+                    </li>
+                </ul>
 
-    
+            </nav>
+
+        
     </header>
 
 

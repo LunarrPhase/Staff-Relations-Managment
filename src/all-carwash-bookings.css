@@ -155,6 +155,7 @@ h1{
 #bookings > a{
     font-style:italic;
     font-weight: 600;
+    text-decoration: underline;
 }
 
 

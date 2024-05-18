@@ -14,20 +14,22 @@
         <h1>Staff-Relations Management</h1>
 
         <nav>
+
+            <!--links in nav bar-->
             
             <ul class="menu">
-                <li id = "home" type = "button">Home</li>
+                <li id = "home" type = "button"><a href="admin-main-page.html">Home</a></li>
                 <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
                 <li id="bookings"><a href="#">Bookings</a>
                     <div class="drop-down">
                         <ul>
-                            <li id="carwash"><a href="book-carwash.html">Book a Car Wash</a></li>
-                            <li id="meals"><a href="#">Book Your Meal</a></li>
+                            <li id="carwash"><a href="#">Book Car Wash</a></li>
+                            <li id="meals"><a href="book-meal.html">Book Meal</a></li>
                         </ul>
                     </div>
                 </li>
-                <li id="reports"><a href="all-reports.html">Reports</a></li>
-                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
                 <li class="notifications" id="notifications">
                     <a href="#"><i class="fa-solid fa-bell"></i></a>
                     <div id="popover-content" class="popover-content" aria-hidden="true">
@@ -46,6 +48,7 @@
 
     <main class="main">
 
+        <!--form with inputs-->
         <article class="form-container" >
 
             <section>
@@ -54,17 +57,19 @@
             </section>
 
             <form id = "mealForm">
-                <div>
+                <section>
                     <label for="name">Name:</label><br>
                     <input type="text" id="name" name="name" required><br><br>
-                </div>
+                </section>
                 
-                <div>
+                <section>
                     <label class="dateLabel" for="date">Date:</label><br>
                     
                     <input type="date" id="date" name="date" required><br><br>
-                </div>
-                <div>
+                </section>
+
+                <section>
+                    <!--options for diets-->
                     <label for="diet">Dietary Restrictions:</label><br>
                     <select id="diet" name="diet" required>
                         <option value="">Select</option>
@@ -77,25 +82,32 @@
                         <option value="Paleo">Paleo</option>
                         <option value="Mediterranean">Mediterranean</option>
                     </select><br><br>
-                </div>
-                <div>
+                </section>
+
+                <section>
                     <label for="meal">Preferred Meal:</label><br>
                     <select id="meal" name="meal" required></select><br><br>
-                </div>
-                <div>
+                </section>
+
+                <!--back button-->
+                <section>
                     <button id="submit-btn">Submit</button>
-                </div>
+                </section>
             </form>
 
         </article>
 
     </main>
 
+    <footer class="footer">
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+    </footer>
 
-    <script type="module" src="book-meal.js"></script>
-    <script type="module" src="singleNotif.js"></script>
 </body>
 </html>
+
+<script type="module" src="book-meal.js"></script>
+<script type="module" src="singleNotif.js"></script>
 <script>
 
     document.addEventListener("DOMContentLoaded", function() {
