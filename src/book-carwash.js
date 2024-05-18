@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const currentDate = new Date();
             const currentDateString = currentDate.toISOString().split('T')[0];
 
-            if(selectedDay >= currentDateString){
+            if(selectedDay > currentDateString){
     
                    //bookSlot(8AM)
                         await bookSlot(selectedTimeSlot);
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     else{
                         const warning = document.getElementById("warning");
-                        warning.innerText= "Cannot book carwash for previous days."
+                        warning.innerText= "Cannot book carwash for current and previous days."
                     }
 
                     }

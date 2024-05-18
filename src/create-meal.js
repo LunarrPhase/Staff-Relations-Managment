@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const currentDate = new Date();
       const currentDateString = currentDate.toISOString().split('T')[0];
 
-      if(dateInput >= currentDateString){
+      if(dateInput > currentDateString){
 
 
       const colRef = collection(db,'mealOptions');
@@ -50,10 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       document.querySelector('.add').reset();  
+      alert("Successfully created meal!");
 
     } else{
       const warning = document.getElementById("warning");
-      warning.innerText= "Cannot book meals for previous days."
+      warning.innerText= "Cannot book meals for current and previous days."
     }
 
     }); 
