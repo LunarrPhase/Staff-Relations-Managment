@@ -3,12 +3,12 @@ import { FirebaseLogin } from "./firebase_functions.js";
 
 
 
-/*auth.signOut().then(() => {
+auth.signOut().then(() => {
     console.log('User signed out successfully');
     // Optionally, you can do additional actions here if needed
 }).catch((error) => {
     console.error('Error signing out: ', error);
-});*/
+});
 
 
 
@@ -23,5 +23,5 @@ login.addEventListener('click', async (e) => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
-    await FirebaseLogin(auth, database, email, password);
+    await FirebaseLogin(auth, database, db, email, password);
 });
