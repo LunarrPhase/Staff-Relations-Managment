@@ -1,6 +1,6 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete } from "./functions.js";
+import { handleRoleChange,handleUserDelete } from "./firebase_functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {

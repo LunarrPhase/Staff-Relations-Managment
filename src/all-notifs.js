@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/f
 
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-import { ChangeWindow, truncateText } from './functions.js';
+import { ChangeWindow } from './functions.js';
 
 
 
