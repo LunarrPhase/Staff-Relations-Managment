@@ -114,9 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             date: selectedDate,
                             diet: selectedDiet,
                             meal: selectedMeal
-                        })
+                        });
 
-                        form.reset();
+                        document.querySelector('.mealForm').reset();
 
                     }
                     else{

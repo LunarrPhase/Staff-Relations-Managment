@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
         meal: mealInput,
       });
 
+      document.querySelector('.add').reset();
+
     }); 
   }
 });
