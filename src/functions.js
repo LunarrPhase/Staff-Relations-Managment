@@ -1,14 +1,14 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref, update, get,query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc,getDoc, updateDoc ,collection,where, getDocs, deleteDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
-import { database, auth, firestore as db } from "./firebaseInit.js";
+import { ref, update, get,query, orderByChild, equalTo , remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { doc,collection,where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { database, firestore as db } from "./firebaseInit.js";
 
 
 
 
 /* INDEX */
 
-async function FirebaseLogin(auth, database, db, email, password) {
+async function FirebaseLogin(auth, database, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -27,7 +27,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
-        } else {
+        } /*else {
             // Query Firestore by email to get the document ID
             const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
             const querySnapshot = await getDocs(accountsQuery);
@@ -42,7 +42,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
             } else {
                 throw new Error("User data not found in both Realtime Database and Firestore.");
             }
-        }
+        }*/
         ChangeWindow(role);
     } catch (error) {
         console.error("Firebase Error:", error);
@@ -94,6 +94,9 @@ function SetLoginError(error){
     }
     else if (error.code === "auth/invalid-credential"){
         errorMessage = "Wrong email or password. Please try again."
+    }
+    else if(error.code === "auth/user-not-found"){
+        errorMessage = "No account associated with this email address."
     }
     else {
         errorMessage = "An error occurred. Please try again later.";
@@ -159,21 +162,21 @@ function truncateText(text, maxLength) {
 
 
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
-
+//makes sure only fridays and mondays are bookable.
 function manageDate(){
     const dateInput = document.getElementById('date');
     
     dateInput.addEventListener('input', () => {
         const selectedDate = new Date(dateInput.value);
         if (selectedDate.getDay() !== 1 && selectedDate.getDay() !== 5) {
-            dateInput.value = ''; // Clear the input if an invalid date is selected
+            dateInput.value = ''; 
             dateInput.setCustomValidity('Please select a Monday or Friday.');
         } else {
             dateInput.setCustomValidity('');
         }
     });
 
-    // Disable dates that are not Fridays or Mondays
+    // disable dates that are not Fridays or Mondays
     document.addEventListener('DOMContentLoaded', () => {
         const dates = document.querySelectorAll('input[type="date"]');
         dates.forEach(date => {
@@ -196,160 +199,102 @@ function getDayName(year, month, day) {
 /* MANAGE-USERS */
 const usersRef = ref(database, 'users');
 function handleRoleChange(target) {
-    const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email');
 
-    const firestoreQuery = collection(db, 'accounts');
-    const firestoreUserQuery = query(firestoreQuery, where('email', '==', userEmail));
+    const row = target.closest('tr')
+    const userEmail = row.getAttribute('data-user-email')
 
-    getDocs(firestoreUserQuery)
-    .then((querySnapshot) => {
-        if (!querySnapshot.empty) {
-            querySnapshot.forEach((doc) => {
-                const userId = doc.id;
-                //console.log(userId)
-                updateRole(userId, row, 'firestore');
-            });
-        } else {
-            const realtimeQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-            get(realtimeQuery)
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    const userId = Object.keys(snapshot.val())[0];
-                    updateRole(userId, row, 'realtime');
-                } else {
-                    console.error('User not found');
-                }
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
+
+    get(usersQuery)
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            const userId = Object.keys(snapshot.val())[0]
+
+            document.getElementById('roleModal').style.display = 'block'
+
+            document.querySelector('.close').addEventListener('click', () => {
+                document.getElementById('roleModal').style.display = 'none'
             })
-            .catch((error) => {
-                console.error('Error fetching user data from Realtime Database:', error);
-            });
+
+            // Save changes
+            document.getElementById('updateRoleBtn').addEventListener('click', () => {
+                const selectedRole = document.getElementById('roleSelect').value
+
+                console.log(userId)
+                const updateObj = {}
+                updateObj['users/' + userId + '/role'] = selectedRole
+
+                update(ref(database), updateObj)
+                .then(() => {
+                    console.log('Role updated successfully');
+                    const roleCell = row.querySelector('.role')
+                    if (roleCell) {
+                        roleCell.textContent = selectedRole;
+                    }
+                    document.getElementById('roleModal').style.display = 'none'
+                })
+                .catch((error) => {
+                    console.error('Error updating role:', error)
+                })
+            })
+        }
+        else {
+            console.error('User not found')
         }
     })
     .catch((error) => {
-        console.error('Error fetching user data from Firestore:', error);
-    });
+        console.error('Error fetching user data:', error);
+    })
 }
-
-function updateRole(userId, row, databaseType) {
-    document.getElementById('roleModal').style.display = 'block';
-
-    document.querySelector('.close').addEventListener('click', () => {
-        document.getElementById('roleModal').style.display = 'none';
-    });
-
-    document.getElementById('updateRoleBtn').addEventListener('click', () => {
-        const selectedRole = document.getElementById('roleSelect').value;
-        const updateObj = {};
-        updateObj[`users/${userId}/role`] = selectedRole;
-
-        if (databaseType === 'firestore') {
-            // Update the role in Firestore
-            updateDoc(doc(db, 'accounts', userId), { role: selectedRole })
-            .then(() => {
-                console.log('Role updated successfully');
-                const roleCell = row.querySelector('.role');
-                if (roleCell) {
-                    roleCell.textContent = selectedRole;
-                }
-                document.getElementById('roleModal').style.display = 'none';
-            })
-            .catch((error) => {
-                console.error('Error updating role:', error);
-            });
-        } else if (databaseType === 'realtime') {
-            // Update the role in the Realtime Database
-            const updates = {};
-            updates[`users/${userId}/role`] = selectedRole;
-            update(ref(database), updates)
-            .then(() => {
-                console.log('Role updated successfully');
-                const roleCell = row.querySelector('.role');
-                if (roleCell) {
-                    roleCell.textContent = selectedRole;
-                }
-                document.getElementById('roleModal').style.display = 'none';
-            })
-            .catch((error) => {
-                console.error('Error updating role:', error);
-            });
-        }
-    });
-}
-
-
-function deleteUser(userId, row, databaseType) {
-    if (databaseType === 'firestore') {
-        // Delete user from Firestore
-        deleteDoc(doc(db, 'accounts', userId))
-        .then(() => {
-            console.log('User deleted successfully from Firestore');
-            row.remove();
-            document.getElementById('roleModal').style.display = 'none';
-            document.getElementById('confirmationModal').style.display = 'none';
-        })
-        .catch((error) => {
-            console.error('Error deleting user from Firestore:', error);
-        });
-    } else if (databaseType === 'realtime') {
-        // Delete user from Realtime Database
-        remove(ref(database, 'users/' + userId))
-        .then(() => {
-            console.log('User deleted successfully from Realtime Database');
-            row.remove();
-            document.getElementById('roleModal').style.display = 'none';
-            document.getElementById('confirmationModal').style.display = 'none';
-        })
-        .catch((error) => {
-            console.error('Error deleting user from Realtime Database:', error);
-        });
-    }
-}
-
-
 
 function handleUserDelete(target) {
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
 
-    document.getElementById('confirmationModal').style.display = 'block';
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
+    get(usersQuery)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const userId = Object.keys(snapshot.val())[0];
+               
 
-    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-        const firestoreQuery = collection(db, 'accounts');
-        const firestoreUserQuery = query(firestoreQuery, where('email', '==', userEmail));
+                document.getElementById('confirmationModal').style.display = 'block';
 
-        getDocs(firestoreUserQuery)
-        .then((querySnapshot) => {
-            if (!querySnapshot.empty) {
-                querySnapshot.forEach((doc) => {
-                    const userId = doc.id;
-                    deleteUser(userId, row, 'firestore');
+                document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+                    try {
+                        // Remove user from Realtime Database
+                        await remove(ref(database, 'users/' + userId));
+                        console.log('User deleted successfully from Realtime Database');
+
+                        // Remove user from Firestore
+                        const usersCollection = collection(db, 'accounts');
+                        const firestoreQuerySnapshot = await getDocs(firestoreQuery(usersCollection, where('email', '==', userEmail)));
+                        firestoreQuerySnapshot.forEach(async (firestoreDoc) => {
+                            await deleteDoc(doc(db, 'accounts', firestoreDoc.id));
+                            console.log('User deleted successfully from Firestore');
+                        });
+
+                        // Update UI
+                        row.remove();
+                        document.getElementById('roleModal').style.display = 'none';
+                        document.getElementById('confirmationModal').style.display = 'none';
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                    }
+                });
+
+                document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+                    document.getElementById('confirmationModal').style.display = 'none';
                 });
             } else {
-                const realtimeQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-                get(realtimeQuery)
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const userId = Object.keys(snapshot.val())[0];
-                        deleteUser(userId, row, 'realtime');
-                    } else {
-                        console.error('User not found');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error fetching user data from Realtime Database:', error);
-                });
+                console.error('User not found');
             }
         })
         .catch((error) => {
-            console.error('Error fetching user data from Firestore:', error);
+            console.error('Error fetching user data:', error);
         });
-    });
-
-    document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
-        document.getElementById('confirmationModal').style.display = 'none';
-    });
 }
+
 
 
 
