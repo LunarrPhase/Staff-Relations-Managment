@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const dateInput = document.getElementById('date').value;
       const dietInput = document.getElementById('diet').value;
       const mealInput = document.getElementById('mealValue').value;
+
+      const currentDate = new Date();
+      const currentDateString = currentDate.toISOString().split('T')[0];
+
+      if(dateInput >= currentDateString){
+
+
       const colRef = collection(db,'mealOptions');
 
       // Add a subcollection for each day
@@ -42,7 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
         meal: mealInput,
       });
 
-      document.querySelector('.add').reset();
+      document.querySelector('.add').reset();  
+
+    } else{
+      const warning = document.getElementById("warning");
+      warning.innerText= "Cannot book meals for previous days."
+    }
 
     }); 
   }
