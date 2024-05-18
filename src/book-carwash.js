@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
                     const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
                     const availableSlots = 5 - bookedSlotsSnapshot.size;
-                    console.log(`Available slots for ${slot}: ${availableSlots}`)
+                    //console.log(`Available slots for ${slot}: ${availableSlots}`)
                     const slotElement = document.getElementById(`${slot}-slots`)
                     if (slotElement) {
                         slotElement.innerText = availableSlots.toString();
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-            console.log("User is signed in:", user.uid);
+            console.log("User is signed in");
         } else {
             console.log("No user is signed in.");
         }
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 //getting current user
                 const user = auth.currentUser;
-                console.log("clicked!")
+                
 
                 if (user) {
                     try {

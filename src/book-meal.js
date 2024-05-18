@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 //getting current user
                 const user = auth.currentUser;
-                console.log("clicked!")
+               
 
                 if (user) {
                     try {
