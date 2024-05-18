@@ -3,12 +3,12 @@ import { FirebaseLogin } from "./firebase_functions.js";
 
 
 
-auth.signOut().then(() => {
+/*auth.signOut().then(() => {
     console.log('User signed out successfully');
     // Optionally, you can do additional actions here if needed
 }).catch((error) => {
     console.error('Error signing out: ', error);
-});
+});*/
 
 
 
