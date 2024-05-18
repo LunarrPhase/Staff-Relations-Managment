@@ -1,7 +1,7 @@
-import { database, auth } from "./firebaseInit.js"
+import { database, auth, firestore as db } from "./firebaseInit.js"
 import { FirebaseLogin } from "./functions.js";
 
-
+//listens for the correct login credentials
 login.addEventListener('click', async (e) => {
     
     e.preventDefault(); // Prevent the default form submission
@@ -9,5 +9,5 @@ login.addEventListener('click', async (e) => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
-    FirebaseLogin(auth, database, email, password);
+    await FirebaseLogin(auth, database, db, email, password);
 });

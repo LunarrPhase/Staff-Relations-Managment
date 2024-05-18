@@ -40,21 +40,26 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+
     <title>Admin Main Page</title>
 </head>
+
+
 <body>
     <div id="loading">
         <div class="spinner"></div>
     </div>
-            <header class="header">
-                <h1>Staff-Relations Management</h1>
+            
+        <header class="header">
+            <h1>Staff-Relations Management</h1>
 
-                <nav>
+            <!--links for navigation-->
+
+            <nav>
                     
                     <ul>
-                        
+                        <li id = "home"><a href="admin-main-page.html">Home</a></li>
                         <li id = "manage-users"><a href="manage-users.html">Manage Users</a>
-                        <!--this is where the drop down stuff was-->
                         </li>
                         <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
                         <li id = "feedback"><a href="all-reports.html">Reports</a></li>
@@ -71,7 +76,7 @@
                         
                         </li>
                         <li id = "meals"><a href="create-meal.html">Meals</a></li>
-                        <li id = "logout"><a href="index.html">Log Out</a></li>
+                        <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
                         <li class="notifications" id="notifications">
                             <i class="fa-solid fa-bell"></i>
                             <div id="popover-content" class="popover-content" aria-hidden="false">
@@ -83,17 +88,24 @@
                     </ul>
 
                 </nav>
-            
-            </header>
-            
-            <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
 
-                <article class="top-article">
+            
+        </header>
+
+
+            
+        <main class="main" style="background: linear-gradient(45deg, #fff, #ffcbcb)">
+
+            <!--main article-->
+
+            <article class="top-article">
                     <section>
                         <h2 id = "userInfo"></h2>
                         <img src="img/admin.svg" alt="background" id="main-pic">
 
                     </section>
+
+                    
 
                     <section class="main-info">
 
@@ -107,12 +119,15 @@
 
                     </section>
 
-                </article>
+            </article>
 
-                <article class="bottom-article">
+            
+            <!--Extra information-->
+
+            <article class="bottom-article">
                     <section class="info" id="manage-info">
                         <h5>Manage Users</h5>
-                        <p>Have total control of the site's users, all in your hands, at the tap of a button.</p>
+                        <p>Have total control over the site's users, all in your hands, at the tap of a button.</p>
                         <img src="img/time.svg" alt="time-pic">
                     </section>
 
@@ -120,7 +135,7 @@
 
                     <section class="info" id="feedback-info">
                         <h5>Request Feedback</h5>
-                        <p>Im not too sure how this works.</p>
+                        <p>Encourage interactions between your colleagues by requesting feedback.</p>
                         <img src="img/feedback.svg" alt="booking-pic">
                     </section>
 
@@ -139,14 +154,14 @@
                         <p>Let out your inner chef by offering innovative meal options.</p>
                         <img src="img/undraw_report_re_f5n5.svg" alt="report-pic">
                     </section>
-                </article>
+            </article>
             
 
-            </main>
+        </main>
 
-            <footer class="footer">
+        <footer class="footer">
                 <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-            </footer>
+        </footer>
    
     
 </body>

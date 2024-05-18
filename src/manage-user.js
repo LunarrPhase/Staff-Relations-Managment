@@ -1,6 +1,6 @@
-import { database } from "./firebaseInit.js";
-import { ref, get, update, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
+import { database} from "./firebaseInit.js";
+import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { handleRoleChange,handleUserDelete } from "./functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -85,6 +85,7 @@ document.getElementById('load-more').addEventListener('click', () => {
     loadUsers()
 })
 
+
 document.getElementById('usersList').addEventListener('click', (event) => {
     
     const target = event.target
@@ -97,97 +98,6 @@ document.getElementById('usersList').addEventListener('click', (event) => {
         handleUserDelete(target)
     }
 })
-
-
-function handleRoleChange(target) {
-
-    const row = target.closest('tr')
-    const userEmail = row.getAttribute('data-user-email')
-
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
-
-    get(usersQuery)
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-            const userId = Object.keys(snapshot.val())[0]
-            console.log('User ID:', userId);
-
-            document.getElementById('roleModal').style.display = 'block'
-
-            document.querySelector('.close').addEventListener('click', () => {
-                document.getElementById('roleModal').style.display = 'none'
-            })
-
-            // Save changes
-            document.getElementById('updateRoleBtn').addEventListener('click', () => {
-                const selectedRole = document.getElementById('roleSelect').value
-
-                console.log(userId)
-                const updateObj = {}
-                updateObj['users/' + userId + '/role'] = selectedRole
-
-                update(ref(database), updateObj)
-                .then(() => {
-                    console.log('Role updated successfully');
-                    const roleCell = row.querySelector('.role')
-                    if (roleCell) {
-                        roleCell.textContent = selectedRole;
-                    }
-                    document.getElementById('roleModal').style.display = 'none'
-                })
-                .catch((error) => {
-                    console.error('Error updating role:', error)
-                })
-            })
-        }
-        else {
-            console.error('User not found')
-        }
-    })
-    .catch((error) => {
-        console.error('Error fetching user data:', error);
-    })
-}
-
-function handleUserDelete(target) {
-    const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email')
-
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
-    get(usersQuery)
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-            const userId = Object.keys(snapshot.val())[0]
-            console.log('User ID:', userId)
-
-            document.getElementById('confirmationModal').style.display = 'block'
-
-            document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-                remove(ref(database, 'users/' + userId))
-                    .then(() => {
-                        console.log('User deleted successfully')
-                        row.remove()
-                        document.getElementById('roleModal').style.display = 'none'
-                        document.getElementById('confirmationModal').style.display = 'none'
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting user:', error)
-                    });
-            });
-
-            document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
-                document.getElementById('confirmationModal').style.display = 'none'
-            });
-        }
-        else {
-            console.error('User not found')
-        }
-    })
-    .catch((error) => {
-        console.error('Error fetching user data:', error)
-    })
-}
-
 
 
 

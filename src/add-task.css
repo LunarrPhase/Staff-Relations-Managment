@@ -22,6 +22,8 @@ h2{
 
 }
 
+/*style back button*/
+
 #back-btn{
     background-color: #385170;
     color: white;
@@ -29,7 +31,7 @@ h2{
     margin-right: 30px;
     border: 1px solid #385170;
     padding: 5px 10px;
-    border-radius: 20px;
+    border-radius: 20px; /*rounded border*/
 }
 
 #back-btn:hover{
@@ -38,13 +40,8 @@ h2{
 }
 
 .container{
-    height: 100%;
-    width: 100%;
-    /*background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(img/background.svg);*/
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
+    height: 100%; /*full height*/
+    width: 100%; /*full width*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,7 +53,6 @@ h2{
     width: 360px; 
     margin:auto; 
     background-color: #fff; 
-    backdrop-filter: blur(30px);
     padding: 20px; 
     border: 1px #132743 solid;
     border-radius: 10px; 
@@ -95,6 +91,8 @@ article{
     border-radius: 10px;
     border-left: none;
 }
+
+/*styling on each input form*/
 
 #timesheetForm{
     margin-left: 43px;
@@ -150,8 +148,10 @@ article{
 
 }
 
+/*submit button*/
+
 .submit{
-    background-color: #132743; /* Use fourth-color for submit button background */
+    background-color: #132743; 
     color: #fff; 
     font-weight: bold; 
     cursor: pointer;
@@ -159,7 +159,7 @@ article{
     padding: 10px;
     margin: 0px auto; 
     margin-left: 15px;
-    border: 1px solid #385170; /* Use third-color for input borders */
+    border: 1px solid #385170; 
     align-self: center;
     border-radius: 20px; 
     outline: none; 

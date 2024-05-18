@@ -12,47 +12,45 @@ body {
 
 .main{
     flex:1;
-    padding-top: 80px;
-    /*background-color: #f0f0f0;*/
+    padding-top: 80px; /*not coveredd by header*/
+    padding-bottom: 50px; /*not covered by footer*/
     
 }
 
 .header{
-    width:100%;
-    height: 80px;
-    position: fixed;
-    background-color: #407088;
+    width:100%; /*width across entire screen*/
+    height: 80px; 
+    position: fixed; /*header doesnt move*/
+    background-color: #407088; 
     padding-left: 10px;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: center; /*center items*/
     text-align: center;
 }
+
 
 nav{
-    height: 80px;
-    justify-content: center;
-    text-align: center;
+    margin-right: 30px;
 }
 
+/*style nav bar*/
+
 ul{
-    height: 50px;
     display: flex;
     list-style-type: none;
-    margin-right: 20px;
-    margin-bottom: 0;
-    padding-right: 20px;
-    padding-top: 10px;
-    justify-content: center;
+    margin-left: 0px;
 }
 
 ul li a{
-    padding: 0 18px;
+    padding: 3px 17px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
 
 }
+
+/*unerline transition*/
 
 li a::after{
     content: '';
@@ -67,9 +65,11 @@ li:not(.notifications) a:hover::after{
     width: 100%;
 }
 
-li#bookings, li#manage-users{
+li#bookings{
     position: relative;
 }
+
+/*style drop down*/
 
 .drop-down{
     display: none;
@@ -84,7 +84,6 @@ ul li:hover .drop-down{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-top: 0;
     left: 0;
-    padding: 10px 0;
 
 }
 
@@ -107,11 +106,14 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
+/*style notification bell*/
+
 .notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
-
+    margin-top: 4px;
+    padding: 0 10px;
 }
 
 .notifications .fa-bell:hover{
@@ -120,9 +122,40 @@ ul li:hover .drop-down ul li:last-child{
 
 h1{
     color: #ffb5b5;
-    margin-bottom: 30px;
-    margin-left: auto;
+    margin-bottom: 28px;
+    margin-left: 10px;
+    margin-right: 0;
     margin-right: auto;
+}
+
+/*style meal viewings in nav bar*/
+
+#meal{
+    background-color: #ffcbcb;
+    font-style:italic;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+#meal a{
+    color: #4b788f;
+}
+
+#meal a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #4b788f;
+    z-index: 1;
+    position: relative;
+    top: 5px;
+}
+
+#bookings > a{
+    font-style:italic;
+    font-weight: 600;
 }
 
 h3{
@@ -143,13 +176,14 @@ h2{
     margin:10px auto;
 }
 
+/*style back button*/
 
 #back-btn{
     background-color: #132743;
     margin-left: 30px;
     margin-top: 20px;
-    border: 1px solid #407088;
-    border-radius: 30px;
+    border: 1px solid #407088; /*bordering styles*/
+    border-radius: 30px; /*rounded border*/
     padding: 10px 25px;
     font-size: 17px;
     color: #fff;
@@ -161,6 +195,8 @@ h2{
     animation: shake 1s; 
 }
 
+/*button animation*/
+
 @keyframes shake {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-5deg); }
@@ -168,6 +204,8 @@ h2{
     75% { transform: rotate(-5deg); }
     100% { transform: rotate(0deg); }
 }
+
+/*table styling*/
 
 .table-container {
     max-width: 800px;
@@ -196,17 +234,20 @@ table th {
 }
 
 table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /*every other row different colour*/
 }
 
 table tbody tr:hover{
-    background-color: #fdf4f4;
+    background-color: #fdf4f4; /*colour change when hover*/
+    border: 1.5px dotted #bebebe;
 }
 
 .fas, .fa-solid {
     padding-left: 5px; 
     padding-right: 5px;
 }
+
+/*load more button styling*/
 
 .load-more{
     align-items: center;
@@ -215,14 +256,14 @@ table tbody tr:hover{
 }
 
 #load-more{
-    background-color: #132743; /* Use fourth-color for submit button background */
+    background-color: #132743; 
     color: #fff; 
     font-weight: bold; 
     cursor: pointer;
-    width: calc(50% - 100px); 
+    width: calc(50% - 100px); /*specific width*/
     padding: 10px;
     margin: 10px auto; 
-    border: 1px solid #385170; /* Use third-color for input borders */
+    border: 1px solid #385170; 
     align-self: center;
     border-radius: 20px; 
     outline: none; 
@@ -233,7 +274,7 @@ table tbody tr:hover{
 }
 
 /* Popover Styles */
-.popover-container {
+.popover-container{
     position: relative;
 }
 
@@ -247,7 +288,7 @@ table tbody tr:hover{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    z-index: 1;
+    z-index: 1; /*stays on top*/
 }
 
 .popover-content h3 {
@@ -259,6 +300,7 @@ table tbody tr:hover{
 .popover-content p {
     margin-top: 0;
     margin-bottom: 10px;
+    font-size: 14px;
     color: #407088;
 }
 
@@ -277,14 +319,17 @@ table tbody tr:hover{
     display: block !important;
 }
 
+/*footer styles*/
+
 .footer{
-    width: 100%;
+    width: 100%; /*fills width of main*/
     height: 35px;
     background-color: #407088;
     bottom: 0;
     text-align: center;
     justify-content: center;
     padding-top: 0;
+    position: fixed; /*stays in place*/
     margin: 0;
 }
 
@@ -297,15 +342,15 @@ footer p{
 }
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none; 
+    position: fixed; /*stay in place*/
+    z-index: 1; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    width: 100%; 
+    height: 100%; 
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.4); 
 }
 
 .modal-content {
@@ -331,7 +376,7 @@ footer p{
     cursor: pointer;
 }
 
-p {
+/*p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
+}*/
 
