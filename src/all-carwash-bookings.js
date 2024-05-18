@@ -1,11 +1,13 @@
-import {firestore as db } from './firebaseInit.js';
+import { firestore as db } from './firebaseInit.js';
 import { collection, getDocs} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { manageDate, getDayName} from './functions.js';
 
 
 const usersList = document.getElementById('usersList');
 
+
 async function getCarwashBookings(date) {
+
     const [year, month, day] = date.split('-')
     const dateString = `${year}-${month}-${day}`
     const dayName = getDayName(year, month, day)
@@ -64,8 +66,8 @@ function renderBookings(bookings) {
 }
 
 
-
-manageDate()
+const dateInput = document.getElementById('date');
+manageDate(dateInput);
 getDayName()
 
 document.getElementById('date').addEventListener('change', async () => {

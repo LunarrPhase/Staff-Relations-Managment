@@ -95,15 +95,16 @@ function truncateText(text, maxLength) {
 
 
 //makes sure only fridays and mondays are bookable.
-function manageDate(){
-    const dateInput = document.getElementById('date');
-    
+function manageDate(dateInput){
+
     dateInput.addEventListener('input', () => {
+
         const selectedDate = new Date(dateInput.value);
         if (selectedDate.getDay() !== 1 && selectedDate.getDay() !== 5) {
             dateInput.value = ''; 
             dateInput.setCustomValidity('Please select a Monday or Friday.');
-        } else {
+        }
+        else {
             dateInput.setCustomValidity('');
         }
     });
@@ -122,13 +123,15 @@ function manageDate(){
     });
 }
 
+
 function getDayName(year, month, day) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const date = new Date(year, month - 1, day);
     return daysOfWeek[date.getDay()]
 }
 
-export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName };
+
+export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName };
 
 
 
