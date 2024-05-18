@@ -1,9 +1,10 @@
+import assert from 'assert';
+import * as firebase from '@firebase/testing'
+import pkg from '../src/firebase_functions.js';
+const { FirebaseLogin } = pkg;
 
-
-const assert = require('assert');
-const firebase = require('@firebase/testing');
 const myProjectId = "staff-relations-management";
-const firebase_functions = require("../../src/functions")
+
 
 
 describe("Test", () => {
