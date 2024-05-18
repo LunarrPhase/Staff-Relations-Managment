@@ -235,6 +235,9 @@ const populateNotifications = async () => {
 
 });
 
+document.getElementById('heading').addEventListener('mouseover', function() {
+    this.classList.add('permanent');
+});
 
 
 
