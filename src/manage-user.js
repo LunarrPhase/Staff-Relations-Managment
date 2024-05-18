@@ -15,7 +15,7 @@ function loadUsers(filter) {
                 }
             });
 
-            // Filter users based on the provided filter
+            //filters users based on the provided filter
             if (filter) {
                 const filterLower = filter.toLowerCase();
                 users = users.filter(user =>
@@ -25,7 +25,6 @@ function loadUsers(filter) {
                 );
             }
 
-            // Sort the filtered users array alphabetically by firstName
             users.sort((a, b) => (a.firstName > b.firstName) ? 1 : -1);
 
             let html = '';

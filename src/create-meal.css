@@ -16,7 +16,9 @@
   #submit-btn:hover {
     background-color: #fb9191;
   }
-  
+  .warning{
+    color: red;
+  }
 main{
     padding-top: 100px;
 }

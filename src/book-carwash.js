@@ -102,10 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (areInputsSelected()) {
                         const name = document.getElementById('name').value;
                         const selectedDay = day.value;
+
                         const selectedType = typeCarwash.value;
                         const selectedTimeSlot = timeSlot.value;
 
-                        //bookSlot(8AM)
+                        
+                        const currentDate = new Date();
+            const currentDateString = currentDate.toISOString().split('T')[0];
+
+            if(selectedDay > currentDateString){
+    
+                   //bookSlot(8AM)
                         await bookSlot(selectedTimeSlot);
 
                         const userId = user.uid;
@@ -132,7 +139,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         })*/
 
                         document.querySelector('.carForm').reset();
-                    } else {
+                        document.getElementById("warning").innerText="";
+                    }
+                    else{
+                        const warning = document.getElementById("warning");
+                        warning.innerText= "Cannot book carwash for current and previous days."
+                    }
+
+                    }
+                
+                    
+                    else {
                         alert("Please select both date and time slot.");
                     }
                 });

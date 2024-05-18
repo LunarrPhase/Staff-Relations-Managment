@@ -31,6 +31,9 @@ function SetLoginError(error){
     else if (error.code === "auth/invalid-credential"){
         errorMessage = "Wrong email or password. Please try again."
     }
+    else if(error.code === "auth/user-not-found"){
+        errorMessage = "No account associated with this email address."
+    }
     else {
         errorMessage = "An error occurred. Please try again later.";
     }
@@ -95,21 +98,21 @@ function truncateText(text, maxLength) {
 
 
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
-
+//makes sure only fridays and mondays are bookable.
 function manageDate(){
     const dateInput = document.getElementById('date');
     
     dateInput.addEventListener('input', () => {
         const selectedDate = new Date(dateInput.value);
         if (selectedDate.getDay() !== 1 && selectedDate.getDay() !== 5) {
-            dateInput.value = ''; // Clear the input if an invalid date is selected
+            dateInput.value = ''; 
             dateInput.setCustomValidity('Please select a Monday or Friday.');
         } else {
             dateInput.setCustomValidity('');
         }
     });
 
-    // Disable dates that are not Fridays or Mondays
+    // disable dates that are not Fridays or Mondays
     document.addEventListener('DOMContentLoaded', () => {
         const dates = document.querySelectorAll('input[type="date"]');
         dates.forEach(date => {
@@ -130,6 +133,7 @@ function getDayName(year, month, day) {
 }
 
 export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep };
+
 
 
 
