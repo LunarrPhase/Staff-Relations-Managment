@@ -89,7 +89,7 @@ const getCurrentUserMealBookings = async () => {
         //get todays date and convert it to string
         const today = new Date();
         const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
-	
+        console.log("getting date");
         //the refrence to their meal bookings in firestore
         const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
 
@@ -224,7 +224,7 @@ const populateNotifications = async () => {
 // Call the populateNotifications function when the page loads
 
 
-
+    console.log("populate below")
     populateNotifications();
 
 
