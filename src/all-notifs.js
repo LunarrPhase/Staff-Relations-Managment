@@ -232,7 +232,7 @@ const populateNotifications = async () => {
       
 
     });
-    
+    //some code to make the notifications heading highligt when the mouse hovers over it
     document.getElementById('heading').addEventListener('mouseover', function() {
     this.classList.add('permanent');
 });
