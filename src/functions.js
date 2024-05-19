@@ -93,7 +93,7 @@ function CheckUserAuthenticated(auth){
         return user;
     }
     catch(error){
-        console.error("Error fetching meal bookings: ", error);
+        console.error("Error fetching data: ", error);
         return null;
     }
 }
@@ -133,6 +133,14 @@ function PopulateNotifications(notificationContainer, combinedNotificationElemen
     combinedNotificationElements.forEach((element) => {
         notificationContainer.appendChild(element);
     });
+}
+
+
+/* BOOK CAR WASH */
+
+
+function areInputsSelected(day, typeCarwash) {
+    return day.value !== "" && typeCarwash.value !== "";
 }
 
 
@@ -229,4 +237,4 @@ function truncateText(text, maxLength) {
 }
 
 
-export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
+export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications, areInputsSelected, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
