@@ -21,19 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Get a Firestore instance
   const db = getFirestore();
 
-  const addMealForm = document.getElementById('submit-btn');
+  //the submit button for the form
 
+  const addMealForm = document.getElementById('submit-btn');
+//meal form is filled and submit is clicked
   if(addMealForm){
     addMealForm.addEventListener('click', async (e) => {
       e.preventDefault();
-
+//form elements
       const dateInput = document.getElementById('date').value;
       const dietInput = document.getElementById('diet').value;
       const mealInput = document.getElementById('mealValue').value;
-
+//current date
       const currentDate = new Date();
       const currentDateString = currentDate.toISOString().split('T')[0];
-
+//only creates meals for future dates
       if(dateInput > currentDateString){
 
 
@@ -49,12 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
         meal: mealInput,
       });
 
+      //clears the form and error upon submission and alerts user that meal has been booked
+
       document.querySelector('.add').reset();  
       alert("Successfully created meal!");
       const warning = document.getElementById("warning");
       warning.innerText= "";
 
     } else{
+
+      //if the person selects a day that has passed, they get a warning
       const warning = document.getElementById("warning");
       warning.innerText= "Cannot book meals for current and previous days."
     }
