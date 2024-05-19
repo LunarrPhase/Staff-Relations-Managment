@@ -375,9 +375,10 @@ footer p{
     cursor: pointer;
 }
 
-/*p {
+p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}*/
+    text-align: center;
+}
 
 #load-more-wrapper {
     position: relative;

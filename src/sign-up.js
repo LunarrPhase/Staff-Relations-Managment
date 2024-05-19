@@ -29,9 +29,9 @@ document.getElementById('signUp').addEventListener('click', (e) => {
     if (isValidAccessKey(accessKey)) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                document.getElementById("signingUp").style.display = "block";
                 const user = userCredential.user;
                 const role = SetRole(accessKey);
-
                 // Add user to Realtime Database
                 set(ref(database, 'users/' + user.uid), {
                     email: email,
@@ -46,17 +46,18 @@ document.getElementById('signUp').addEventListener('click', (e) => {
                         lastName: lastName,
                         role: role,
                     }).then(() => {
-                        // Add the document to Realtime Database under 'accounts' node
+                        // Add the document to Realtime Database under users.
                         set(ref(database, 'users/' + user.uid), {
                             email: email,
                             firstName: firstName,
                             lastName: lastName,
                             role: role,
                         }).then(() => {
+                            document.getElementById("signingUp").style.display = "none";
                             document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
                             window.location.href = 'index.html';
                         }).catch((error) => {
-                            document.getElementById('error-message').textContent = "Error adding document to Realtime Database 'accounts' node: " + error.message;
+                            document.getElementById('error-message').textContent = "Error adding document to Realtime Database 'users' node: " + error.message;
                         });
                     }).catch((error) => {
                         document.getElementById('error-message').textContent = "Error adding document to Firestore: " + error.message;
