@@ -128,13 +128,13 @@ function CreateCarWashNotificationElement(carWashBookings){
     return notificationElements;
 }
 
-function CreateFeedbackNotificationElement(sendFeedback){
-    const notificationElements = sendFeedback.map((sendFeedback) =>{
+function CreateFeedbackNotificationElement(userEmailInput){
+    const notificationElements = userEmailInput.map((userEmailInput) =>{
 
         const notificationElement = document.createElement('div');
         notificationElement.classList.add('notification');
 
-        const notificationText = `Please write a feedback report to the member with the email ${sendFeedback.type}.`;
+        const notificationText = `Please write a feedback report to the member with the email ${sendFeedback.text}.`;
         notificationElement.innerText = notificationText;
 
         return notificationElement;

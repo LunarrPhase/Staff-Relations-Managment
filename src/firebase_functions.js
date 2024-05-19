@@ -527,7 +527,7 @@ function handleUserDelete(target) {
 
 function HandleFeedback (target) {
 
-    const userEmailInput = clickedIcon.getAttribute('data-user-email');
+    const userEmailInput = target.getAttribute('data-user-email');
 
     // Check if an email is entered
     if (userEmailInput) {
