@@ -1,5 +1,8 @@
 import { firestore as db } from './firebaseInit.js';
 import { collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { database} from "./firebaseInit.js";
+import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { handleRoleChange,handleUserDelete } from "./firebase_functions.js";
 
 // Function to send a notification to a user
 const sendNotification = async (userId, message) => {
@@ -33,29 +36,55 @@ const sendNotification = async (userId, message) => {
     }
 };
 
-// Function to get all users from the database
-const getAllUsers = async () => {
-    try {
-        const usersCollection = collection(db, 'users');
-        const usersSnapshot = await getDocs(usersCollection);
-        const users = [];
+const usersRef = ref(database, 'users');
+function loadUsers(filter) {
+    get(usersRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            let users = [];
 
-        usersSnapshot.forEach((doc) => {
-            const userData = doc.data();
-            users.push({
-                id: doc.id,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: userData.email
+            snapshot.forEach((childSnapshot) => {
+                const user = childSnapshot.val();
+                if (user.firstName && user.lastName && user.role) {
+                    users.push(user);
+                }
             });
-        });
 
-        return users;
-    } catch (error) {
-        console.error('Error getting users:', error);
-        return [];
+            //filters users based on the provided filter
+            if (filter) {
+                const filterLower = filter.toLowerCase();
+                users = users.filter(user =>
+                    user.firstName.toLowerCase().includes(filterLower) ||
+                    user.lastName.toLowerCase().includes(filterLower) ||
+                    user.role.toLowerCase().includes(filterLower) 
+                );
+            }
+
+            users.sort((a, b) => (a.firstName > b.firstName) ? 1 : -1);
+
+            let html = '';
+            users.forEach((user) => {
+                html += `
+                    <tr data-user-email="${user.email}">
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td class="role">${user.role}</td>
+                        <td>${user.email}</td>
+                        <td>
+                        </td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('usersList').innerHTML = html;
+            }
+            else {
+                console.log('No data available');
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
-};
+    
 
 // Function to load users into the table
 const loadUsers = async () => {

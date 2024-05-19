@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get,query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc ,collection,where, getDocs, deleteDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep} from "./functions.js";
+import { ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep, sendNotification} from "./functions.js";
 
 
 
@@ -218,7 +218,22 @@ function handleUserDelete(target) {
     });
 }
 
+function HandleFeedback () {
+    const selectElement = document.getElementById('userSelect');
+    const selectedUserEmail = selectElement.value;
+
+    const message = `Please write feedback on ${selectedUserEmail}.`; // Message to be sent in the notification
+
+    // Check if a user is selected
+    if (selectedUserEmail) {
+        sendNotification(selectedUserEmail, message); // Send the notification
+        // You can add any additional logic here, such as displaying a success message or closing the modal
+        console.log('Feedback notification sent successfully!');
+    } else {
+        // Handle case where no user is selected
+        console.error('No user selected for feedback.');
+    }
+}
 
 
-
-export{FirebaseLogin, handleRoleChange, handleUserDelete}
+export{FirebaseLogin, handleRoleChange, handleUserDelete, HandleFeedback}
