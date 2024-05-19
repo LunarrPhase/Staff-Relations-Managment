@@ -1,9 +1,11 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: auto;
     padding: 0;
     background-color: #FAE7E9;
     display: flex;
+    justify-content: space-between;
+    align-content: center;
 }
 
 .feedback_background{
