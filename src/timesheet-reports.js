@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             //getting current user
             const user = auth.currentUser;
-            console.log("clicked!")
+            //console.log("clicked!")
 
             if (user) {
                 try {
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Download CSV file
                     downloadCSV(csvData, `timesheets.csv`);
-                    console.log("CSV file generated successfully");
+                    //console.log("CSV file generated successfully");
                 }
                 catch (error) {
                     console.error("Error generating CSV file: ", error);
