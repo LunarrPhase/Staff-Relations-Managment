@@ -51,10 +51,11 @@ function loadUsers(filter) {
                                         <p>Update User Role</p>
                                         <span class="close">&times;</span>
                                         <select id="roleSelect" class="form-select">
-                                            <option selected>Select a role...</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Staff">Staff</option>
-                                            <option value="Manager">Manager</option>
+                                        <option selected disabled hidden>Select a role...</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Staff">Staff</option>
+                                        <option value="Manager">Manager</option>
+                                        
                                         </select>
                                         <button id="updateRoleBtn">Save changes</button>
                                     </div>
