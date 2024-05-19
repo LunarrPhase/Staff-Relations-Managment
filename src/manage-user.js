@@ -1,6 +1,6 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete } from "./functions.js";
+import { handleRoleChange,handleUserDelete } from "./firebase_functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -15,7 +15,7 @@ function loadUsers(filter) {
                 }
             });
 
-            // Filter users based on the provided filter
+            //filters users based on the provided filter
             if (filter) {
                 const filterLower = filter.toLowerCase();
                 users = users.filter(user =>
@@ -25,7 +25,6 @@ function loadUsers(filter) {
                 );
             }
 
-            // Sort the filtered users array alphabetically by firstName
             users.sort((a, b) => (a.firstName > b.firstName) ? 1 : -1);
 
             let html = '';

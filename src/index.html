@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="indexstyle.css">
     <title>Login</title>
 </head>
+
+
 <body>
     <header>
         <img src="./img/background.svg" alt="" class="login-img">
@@ -13,7 +15,8 @@
         <hr>
     </header>
     
-    <main class=>
+    <main>
+        <!--login form-->
         <article class="login-box">
 
             <input type="text" id ="email" name = "email" placeholder="E-mail">
@@ -21,7 +24,8 @@
             <input type="button" id = "login" name = "login" value = "Login">
             <p id = "authenticating"  style="display: none;">Authenticating...</p>
             <p id = "error-message"></p>
-            <p>New user?</p>
+            <h2>New user?</h2>
+            <!--send to sign up if new user-->
             <p><a href="sign-up.html">Create new account</a></p>
           
         </article>  
@@ -30,5 +34,12 @@
     </main>    
 </body>
 
+
 <script type="module" src = "index.js"></script>
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+</script> 
 </html>

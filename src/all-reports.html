@@ -9,57 +9,82 @@
 </head>
 <body>
     <header class="header">
-        <h1>Staff-Relations Management Reports</h1>
+        <h1>Staff-Relations Management</h1>
+
+        <!--links for navigation-->
 
         <nav>
-                    
-            <ul>
-                <li id ="home">Home</li>
-                <!--this is where the drop down stuff was-->
-                </li>
-                <li id = "logout"><a href="index.html">Log Out</a></li>
-                <li class="notifications" id="notifications">
-                    <i class="fa-solid fa-bell"></i>
-                    <div id="popover-content" class="popover-content" aria-hidden="true">
-                        <h3>Notifications</h3>
-                        <p>You have no notifications.</p>
-                        <a href="all-notifs.html" class="see-all-link">See all</a>
-                    </div>
-                </li>
-            </ul>
+                
+                <ul>
+                    <li id = "home" type = "button"><a href="#">Home</a></li>
+                    <li id = "timesheets"><a href="timesheet.html">Timesheets</a></li>
+                    <li id = "feedback"><a href="all-reports.html">Reports</a></li>
+                    <li id = "bookings"><a href="#">Bookings</a>
 
-        </nav>
+                        <div class="drop-down">
+                            <ul>
+                                <li id = makeCarBooking> <a href="book-carwash.html">Book Carwash</a></li>
+                                <li id = makeMealBooking> <a href="book-meal.html">Book Meal</a></li>
+                            </ul>
+                        </div>
+                    
+                    </li>
+                    <li id = "logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    <li class="notifications" id="notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <div id="popover-content" class="popover-content" aria-hidden="false">
+                            <h3>Notifications</h3>
+                            <p id = "">You have no notifications.</p>
+                            <a href="all-notifs.html" class="see-all-link">See all</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </nav>
+
+        
     </header>
+
 
     <main>
 
-    <section>
-        <button id="back-btn"><i class="fa-solid fa-reply"></i></button>
-    </section>
-    
+        <!--back button-->
+        <section>
+            <button id="back-btn"><i class="fa-solid fa-reply"></i></button>
+        </section>
+
+        <!--links to reports-->
         <article class="image-container">
+
+            <!--link to feedback report-->
             <a  id = 'hoverMakePdf' href="feedback-report.html">
-                <img src="./img/undraw_feedback_re_urmj.svg" alt="">
+                <img src="./img/undraw_feedback_re_urmj.svg" alt="feedbakc">
                 <span class="overlay-text">Feedback Report</span>
             </a>
 
+            <!--link to timesheet report-->
             <a id='hoverTimeSheetReport' href="timesheet-report.html">
 
-                <img src="./img/undraw_screen_time_vkev.svg" alt="">
+                <img src="./img/undraw_screen_time_vkev.svg" alt="screentime">
                 <span class="overlay-text">Timesheets Report</span>
             </a>
+
+            <!--link to meal report-->
             <a href="meal-history.html">
-                <img src="./img/undraw_online_groceries_a02y.svg" alt="">
+                <img src="./img/undraw_online_groceries_a02y.svg" alt="meal-history">
                 <span class="overlay-text">Meals Booked Report</span>
             </a>
         </article>
 
     </main>
 
-         <footer class="footer">
-            <p>&copy 2024 by Group 1 Staff-Relations Management</p>
-        </footer>
+
+    <footer class="footer">
+        <p>&copy 2024 by Group 1 Staff-Relations Management</p>
+    </footer>
+    
 </body>
+
 
 <script src = "all-reports.js" type="module"></script>
 <script type="module" src="singleNotif.js"></script>

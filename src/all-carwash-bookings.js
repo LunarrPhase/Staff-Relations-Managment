@@ -25,6 +25,7 @@ async function getCarwashBookings(date) {
     return bookings
 }
 
+
 /*async function getAllCarwashBookings() {
     const bookings = []
 

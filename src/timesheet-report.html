@@ -12,17 +12,13 @@
     <title>Timesheet Report</title>
 
 
-    <link rel="stylesheet" href="timesheet.css">
+    <link rel="stylesheet" href="meal-history.css">
 
     <script src="https://kit.fontawesome.com/4ddbe3e3b9.js" crossorigin="anonymous"></script>
     
 
-
-    
-
-
-
 </head>
+
 
 <body>
 
@@ -34,18 +30,17 @@
 
         <nav>
 
-            
+            <!--links to pages-->
 
             <ul class="menu">
 
 
 
-                
-
                 <li id="home"><a href="#">Home</a></li>
 
-
                 <li id="timesheets"><a href="timesheet.html">Timesheets</a></li>
+
+                <li id="reports"><a href="all-reports.html">Reports</a></li>
 
                 <li id="bookings"><a href="#">Bookings</a>
 
@@ -53,7 +48,7 @@
 
                         <ul>
 
-                            <li id="carwash"><a href="#">Car Wash Bookings</a></li>
+                            <li id="carwash"><a href="book-carwash.html">Car Wash Bookings</a></li>
 
                             <li id="meal"><a href="book-meal.html">Meal Bookings</a></li>
 
@@ -63,9 +58,7 @@
 
                 </li>
 
-                <li id="reports"><a href="all-reports.html">Reports</a></li>
-
-                <li id="logout"><a href="index.html">Log Out</a></li>
+                <li id="logout"><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
                 <li class="notifications" id="notifications">
 
@@ -85,35 +78,31 @@
 
             </ul>
 
-            
-
-            
-
 
 
         </nav>
 
 
 
-    
-
     </header>
 
 
 
     <main class="main">
+
+        <!--back button-->
         <section class="back-sec">
             <a href="all-reports.html"><button id="back-btn"><i class="fa-solid fa-reply"></i></button></a>
         </section>
 
         <article class="main-article">
-
+            <!--timesheets sorted by project-->
             <a href="#"><button id="GenerateByProject">Generate Timesheets by Project</button></a>
-
+            <!--timesheets sorted by task-->
             <a href="#"><button id="GenerateByTask">Generate Timesheets by Task</button></a>
         
             
-            
+            <!--table of timesheets-->
             <article class="table-container">
         
                 <section class="table-header">
@@ -135,14 +124,12 @@
 
         </article>
 
+        <!--download timesheet report options-->
         <section class="pdf-csv">
             <a href="#"><button id="GeneratePDF">Generate PDF</button></a>
         
             <a href="#"><button id="GenerateCSV">Generate CSV</button></a>
         </section>
-
-
-    
 
 
 

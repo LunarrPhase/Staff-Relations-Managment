@@ -1,0 +1,385 @@
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%; /*full height*/
+    background-color: #F8F8FF;
+    
+}
+
+.main{
+    flex:1;
+    padding-top: 80px; /*not hidden by header*/
+}
+
+.main-article{
+    text-align: center;
+}
+
+.header{
+    width:100%; /*width across entire screen*/
+    height: 80px; 
+    position: fixed; /*header doesnt move*/
+    background-color: #407088; 
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /*center items*/
+    text-align: center;
+    z-index: 1;
+}
+
+nav{
+    margin-right: 30px;
+}
+
+/*style nav bar*/
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+ul li a{
+    padding: 3px 25px;
+    text-decoration: none;
+    color: #ffb5b5;
+    display: inline-block;
+
+}
+
+/*unerline transition*/
+
+li a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #ffcbcb;
+}
+
+li:not(.notifications) a:hover::after{
+    width: 100%;
+}
+
+li#bookings{
+    position: relative;
+}
+
+/*style drop down*/
+
+.drop-down{
+    display: none;
+    border-radius: 10px;
+}
+
+ul li:hover .drop-down{
+    display: block;
+    position: absolute;
+    background-color: #4b788f;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*shadow around box*/
+    margin-top: 0;
+    left: 0;
+
+}
+
+ul li:hover .drop-down ul{
+    display: block; 
+    margin: 0;
+    padding: 0;
+}
+
+ul li:hover .drop-down ul li{
+    width: 150px;
+    padding:10px;
+    border-bottom: 1px dotted #fff; /*bottom has no border*/
+    background: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+ul li:hover .drop-down ul li:last-child{
+    border-bottom: none;
+}
+
+/*style notification bell*/
+
+.notifications .fa-bell{
+    transition: all 0.5s;
+    color: #ffb5b5; /*same colour as words*/
+    transform-origin: center;
+}
+
+.notifications .fa-bell:hover{
+   color: white;
+}
+
+h1{
+    color: #ffb5b5;
+    margin-bottom: 28px;
+    margin-left: 30px;
+    margin-right: 0;
+    margin-right: auto;
+}
+
+/*style reports in nav bar*/
+
+#reports a{
+    font-style:italic;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Popover Styles */
+.popover-container {
+    position: relative;
+}
+
+.popover-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: fit-content;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; /*rounded corners*/
+    z-index: 1;
+}
+
+.popover-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.popover-content p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #407088;
+}
+
+.see-all-link {
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none; /*no permanent underline*/
+}
+
+.see-all-link:hover {
+    text-decoration: underline; 
+}
+
+
+.show-popover {
+    display: block !important;
+}
+
+/*style table*/
+
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    padding-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px #9ec7d5;
+    align-items: center;
+}
+
+table {
+    width: 100%; /*full width of container*/
+    border-collapse: collapse; 
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+table th:last-child, table td:last-child{
+    border-right: none; /*end has no border*/
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover{
+    background-color: #fdf4f4;
+    border: 1.5px dotted #bebebe; /*border when hovering*/
+}
+
+.table-header{
+    width: 100%;
+    margin-top: 10px;
+    height: 50px;
+    border-radius: 5px; /*rounded border*/
+    background-color: #FAE7E9;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+h2{
+    margin:10px auto;
+}
+
+/*styling button*/
+.add-task{
+    text-align: center; /*center of page*/
+}
+
+#add-task{
+    background-color: #132743; 
+    color: #fff; 
+    font-weight: bold; 
+    cursor: pointer;
+    width: 400px; 
+    padding: 10px;
+    margin: 10px auto; 
+    border: 1px solid #385170; 
+    align-self: center;
+    border-radius: 20px; 
+    outline: none; 
+}
+
+#add-task:hover{
+    background-color: #1d3c67;
+}
+
+
+/*css for the report*/
+
+/*style back button*/
+.back-sec{
+    margin-bottom: 0;
+    margin-right: 100px;
+}
+
+
+#back-btn{
+    background-color: #132743;
+    margin: 20px 30px;
+    border: 1px solid #407088;
+    border-radius: 30px; /*rounded border*/
+    padding: 10px 25px;
+    font-size: 17px;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+#back-btn:hover{
+    background-color: #274353;
+    animation: shake 1s; 
+}
+
+/*animation*/
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/*buttons for specific generation*/
+#GenerateByProject, #GenerateByTask, #GenerateByDiet, #GenerateByDate{
+    margin: 10px 40px;
+    border: 1px solid #9ec7d5;
+    border-radius: 10px;
+    background-color: #9ec7d5;
+    padding: 10px;
+    font-size: 15px;
+    transition: 1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#GenerateByProject:hover, #GenerateByTask:hover, #GenerateByDiet:hover, #GenerateByDate:hover{
+    transform: scale(1.1);
+    border-color: #000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/*buttons for downloading*/
+#GeneratePDF, #GenerateCSV{
+    margin: 10px;
+    margin-bottom: 70px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #132743;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+#GeneratePDF:hover, #GenerateCSV:hover{
+    color: #ffcbcb;
+    background-color: #1d3c67;
+}
+
+/*style footer*/
+.footer{
+    width: 100%;
+    height: 35px;
+    background-color: #407088;
+    bottom: 0;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0;
+    margin: 0;
+    position: fixed;
+}
+
+p{
+    color: #ffb5b5;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px;
+    bottom: 0;
+}
+
+/*truncate if sentence too long*/
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

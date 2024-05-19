@@ -1,129 +1,40 @@
-#submit-btn {
-    background-color: #ff9f9f;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 20px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition-duration: 0.1s;
-  }
-  
-  #submit-btn:hover {
-    background-color: #fb9191;
-  }
-  
 main{
     padding-top: 100px;
-}
-
-.top-sec{
-    display: flex;
-}
-
-#back-btn{
-    margin:0px 30px;
-    background-color: #fb9191;
-    border: 1px solid #000;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 15px;
-    transition: transform 0.5s ease;
-}
-
-#back-btn:hover{
-    box-shadow: 1px 3px 3px #132743; 
-    animation: shake 1s; 
-}
-
-@keyframes shake {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-    75% { transform: rotate(-5deg); }
-    100% { transform: rotate(0deg); }
-}
-
-.flex-article{
-    display: flex;
-    justify-content: space-around;
-}
-
-section{
-    flex: 1;
-}
-
-#food-icon1{
-    width: 100px;
-    height: 90px;
-    margin: 20px 100px;
-    transition: 0.3s;
-    background-color: #c2d0d5;
-    border-radius: 40px;
-    box-shadow: 2px 4px 6px #132743; 
-}
-
-#food-icon2{
-    width: 90px;
-    height: 100px;
-    margin: 30px 100px;
-    transition: 0.3s;
-    background-color: #b0cdd7;
-    border-radius: 50px;
-    box-shadow: 2px 4px 6px #132743; 
-}
-
-#food-icon3{
-    width: 100px;
-    height: 100px;
-    margin: 30px 230px;
-    transition: 0.3s;
-    background-color: #b0cdd7;
-    border-radius: 50px;
-    box-shadow: 2px 4px 6px #132743; 
-}
-
-#food-icon1:hover, #food-icon2:hover, #food-icon3:hover{
-    transform: rotate(40deg);
-}
-
-#day, #diet, #mealValue{
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 5px;
 }
 
 
 body{
     min-height: 100vh;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     margin: auto;
     background-color: #fbdada;
-    background: radial-gradient(50% 50%, #fff, #fdd5d5);
+    background: radial-gradient(50% 50%, #fff, #fdd5d5); /*background colouring*/
     font-family: sans-serif;
 }
 
-.header{
-    width:100%;
-    height: 80px;
-    position: fixed;
-    background-color: #407088;
-    padding-left: 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    z-index: 1;
+main{
+    padding-top: 100px;
 }
 
-nav{
-    margin-right: 50px;
+.header{
+    width:100%; /*width across entire screen*/
+    height: 80px; 
+    position: fixed; /*header doesnt move*/
+    background-color: #407088; 
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /*center items*/
+    text-align: center;
 }
+
+
+nav{
+    margin-right: 30px;
+}
+
+/*style nav bar*/
 
 ul{
     display: flex;
@@ -132,12 +43,14 @@ ul{
 }
 
 ul li a{
-    padding: 0 20px;
+    padding: 3px 17px;
     text-decoration: none;
     color: #ffb5b5;
     display: inline-block;
 
 }
+
+/*unerline transition*/
 
 li a::after{
     content: '';
@@ -152,9 +65,11 @@ li:not(.notifications) a:hover::after{
     width: 100%;
 }
 
-li#bookings, li#manage-users{
+li#bookings{
     position: relative;
 }
+
+/*style drop down*/
 
 .drop-down{
     display: none;
@@ -166,7 +81,7 @@ ul li:hover .drop-down{
     position: absolute;
     background-color: #4b788f;
     z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*shadow around box*/
     margin-top: 0;
     left: 0;
 
@@ -191,23 +106,142 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-.notifications{
+/*style notification bell*/
+
+.notifications .fa-bell{
     transition: all 0.5s;
     color: #ffb5b5;
     transform-origin: center;
-    padding-left: 10px;
+    margin-top: 4px;
+    padding: 0 10px;
 }
 
-.notifications:hover{
+.notifications .fa-bell:hover{
    color: white;
 }
 
 h1{
     color: #ffb5b5;
-    margin-bottom: 30px;
-    margin-left: 5px;
+    margin-bottom: 28px;
+    margin-left: 10px;
+    margin-right: 0;
     margin-right: auto;
 }
+
+/*style meals in nav bar*/
+
+#meals{
+    background-color: #ffcbcb;
+    border-radius: 30px;
+    padding-top: 1px;
+    font-style:italic;
+    font-weight: 600;
+}
+
+#meals a{
+    color: #4b788f;
+}
+
+#meals a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0;
+    transition: 0.5s;
+    background: #4b788f;
+    z-index: 1;
+}
+
+  
+
+.top-sec{
+    display: flex;
+}
+
+/*style back button*/
+
+#back-btn{
+    margin:0px 30px;
+    background-color: #fb9191;
+    border: 1px solid #000; /*button border*/
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    transition: transform 0.5s ease;
+}
+
+#back-btn:hover{
+    box-shadow: 1px 3px 3px #132743; 
+    animation: shake 1s; 
+}
+
+/*shaking animation*/
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.flex-article{
+    display: flex;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+}
+
+section{
+    flex: 1;
+}
+
+/*styling of food images*/
+
+#food-icon1{
+    width: 100px; /*specific width*/
+    height: 90px; /*specific height*/
+    margin: 20px 100px;
+    transition: 0.3s;
+    background-color: #c2d0d5;
+    border-radius: 40px;
+    box-shadow: 2px 4px 6px #132743; /*shadow*/
+}
+
+#food-icon2{
+    width: 90px;
+    height: 100px;
+    margin: 30px 100px;
+    transition: 0.3s;
+    background-color: #b0cdd7;
+    border-radius: 50px;
+    box-shadow: 2px 4px 6px #132743; 
+}
+
+#food-icon3{
+    width: 100px;
+    height: 100px;
+    margin: 30px 230px;
+    transition: 0.3s;
+    background-color: #b0cdd7;
+    border-radius: 50px;
+    box-shadow: 2px 4px 6px #132743; 
+}
+
+/*warning*/
+.warning{
+    color: red;
+}
+
+#food-icon1:hover, #food-icon2:hover, #food-icon3:hover{
+    transform: rotate(40deg);
+}
+
+#day, #diet, #mealValue{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 
 
 h2{
@@ -221,14 +255,36 @@ h2{
     text-align: center;
 }
 
+/*footer styling*/
+
+#submit-btn {
+    background-color: #ff9f9f;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.1s;
+  }
+  
+  #submit-btn:hover {
+    background-color: #fb9191;
+  }
+
 .footer{
-    width: 100%;
+    width: 100%; /*full width of body*/
     height: 35px;
     background-color: #407088;
     bottom: 0;
     text-align: center;
     padding-top: 0;
     margin: 30px  0 0 0;
+    position: static;
 }
 
 p{
@@ -243,7 +299,24 @@ p{
 }
 
 
-
+#submit-btn {
+    background-color: #ff9f9f;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.1s;
+  }
+  
+#submit-btn:hover {
+    background-color: #fb9191;
+}
 
 
 

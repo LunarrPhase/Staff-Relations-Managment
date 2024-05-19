@@ -1,5 +1,5 @@
 import { firestore as db } from './firebaseInit.js';
-import { collection } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, getDocs , doc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
 // Function to send a notification to a user

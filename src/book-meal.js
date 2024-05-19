@@ -8,6 +8,34 @@ document.addEventListener('DOMContentLoaded', function() {
     auth.onAuthStateChanged(user => {
         if (user) {
 
+            const goHome = document.getElementById('home');
+
+            goHome.addEventListener('click', async () => {
+
+                //getting current user
+                const user = auth.currentUser;
+               
+
+                if (user) {
+                    try {
+                        const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+                        get(userRef).then((snapshot) => {
+                            
+                            const userData = snapshot.val();
+                            const role = userData.role;
+                            ChangeWindow(role);
+                        });
+                    }
+                    catch (error) {
+                        console.error("Error getting user role:", error)
+                    }
+                }
+                else {
+                    window.location.href = 'index.html'
+                }
+            })
+
             const submit = document.getElementById('submit-btn');
             const dietSelect = document.getElementById('diet');
             const mealSelect = document.getElementById('meal');
@@ -46,33 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add event listeners
             dietSelect.addEventListener('change', populateMeals);
             dateInput.addEventListener('change', populateMeals);
-            const goHome = document.getElementById('home');
-
-            goHome.addEventListener('click', async () => {
-
-                //getting current user
-                const user = auth.currentUser;
-                console.log("clicked!")
-
-                if (user) {
-                    try {
-                        const userRef = ref(realtimeDb, 'users/' + user.uid)
-
-                        get(userRef).then((snapshot) => {
-                            
-                            const userData = snapshot.val();
-                            const role = userData.role;
-                            ChangeWindow(role);
-                        });
-                    }
-                    catch (error) {
-                        console.error("Error getting user role:", error)
-                    }
-                }
-                else {
-                    window.location.href = 'index.html'
-                }
-            })
+            
 
             if (submit) {
                 submit.addEventListener('click', async (e) => {
@@ -87,14 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-                        if(selectedDate >= currentDateString){
+                        if(selectedDate > currentDateString){
 
                         
                         const selectedDiet = dietSelect.value;
                         const selectedMeal = mealSelect.value;
 
                         const userId = user.uid;
-                        console.log(userId);
+                     
                         const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
                         const userEmail = user.email;
 
@@ -114,14 +116,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             date: selectedDate,
                             diet: selectedDiet,
                             meal: selectedMeal
-                        })
+                        });
 
-                        form.reset();
+
+                        document.querySelector('.mealForm').reset();
+                        alert("Successfully booked meal!");
 
                     }
                     else{
                         const warning = document.getElementById("warning");
-                        warning.innerText= "Cannot book meals for previous days."
+                        warning.innerText= "Cannot book meals for current and previous days."
                     }
                     }
                     else {

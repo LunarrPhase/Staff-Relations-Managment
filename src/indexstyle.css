@@ -1,20 +1,22 @@
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #9ec7d5; /* Use first-color for body background */
+    background-color: #9ec7d5; 
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: center; /*center all items*/
     align-items: center;
     height: 100vh;
 }
+
 a{
     text-decoration: none;
     color: #132743;
 }
+
 a:hover{
     text-decoration: underline;
-    cursor: pointer;
+    cursor: pointer; /*change to pointer*/
     size: 10px;
 }
 
@@ -23,36 +25,45 @@ h1{
     font-weight: 900;
     color: #132743;
 }
+
+
 p{
     font-size: 18px;
+    margin-top: 0;
 }
+
+/*style log in form*/
 .login-box {
-    background-color: #fff; /* Use white for login box background */
+    background-color: #fff; /*white for login box background */
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /*shadow around box*/
     display: block;
     margin: 0 auto;
 }
 
 .login-box h2 {
-    color: #132743; /* Use fourth-color for headings */
-    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 100;
+    color: #132743; 
+    margin-bottom: 0;
 }
 
+/*style each input*/
 .login-box input[type="text"],
 .login-box input[type="password"],
 .login-box input[type="button"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #132743; /* Use fourth-color for input borders */
+    border: 1px solid #132743; /*border colour*/
     border-radius: 20px;
     box-sizing: border-box;
 }
 
+/*style login button*/
 .login-box input[type="button"] {
-    background-color: #132743; /* Use fourth-color for submit button background */
+    background-color: #132743; 
     color: #fff;
     font-weight: bold;
     cursor: pointer;
@@ -60,15 +71,16 @@ p{
 }
 
 .login-box input[type="button"]:hover {
-    background-color: #132743; /* Use third-color for submit button hover background */
+    background-color: #407088; 
+    border-color: #fff;
 }
 
 .login-box .new-user {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .login-box .new-user a {
-    color: #132743; /* Use fourth-color for links */
+    color: #132743; 
     text-decoration: none;
 }
 

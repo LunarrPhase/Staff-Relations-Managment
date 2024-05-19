@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
             
             
-                    alert(`Slot booked for ${hour}`)
+                    alert(`Successfully booked slot for ${hour}!`)
                     updateAvailableSlots(selectedDay)
                 } else {
                     alert(`No available slots today for ${hour}`)
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
                     const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
                     const availableSlots = 5 - bookedSlotsSnapshot.size;
-                    console.log(`Available slots for ${slot}: ${availableSlots}`)
+                    //console.log(`Available slots for ${slot}: ${availableSlots}`)
                     const slotElement = document.getElementById(`${slot}-slots`)
                     if (slotElement) {
                         slotElement.innerText = availableSlots.toString();
@@ -102,10 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (areInputsSelected()) {
                         const name = document.getElementById('name').value;
                         const selectedDay = day.value;
+
                         const selectedType = typeCarwash.value;
                         const selectedTimeSlot = timeSlot.value;
 
-                        //bookSlot(8AM)
+                        
+                        const currentDate = new Date();
+            const currentDateString = currentDate.toISOString().split('T')[0];
+
+            if(selectedDay > currentDateString){
+    
+                   //bookSlot(8AM)
                         await bookSlot(selectedTimeSlot);
 
                         const userId = user.uid;
@@ -132,12 +139,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         })*/
 
                         document.querySelector('.carForm').reset();
-                    } else {
+                        document.getElementById("warning").innerText="";
+                    }
+                    else{
+                        const warning = document.getElementById("warning");
+                        warning.innerText= "Cannot book carwash for current and previous days."
+                    }
+
+                    }
+                
+                    
+                    else {
                         alert("Please select both date and time slot.");
                     }
                 });
             }
-            console.log("User is signed in:", user.uid);
+            console.log("User is signed in");
         } else {
             console.log("No user is signed in.");
         }
@@ -148,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 //getting current user
                 const user = auth.currentUser;
-                console.log("clicked!")
+                
 
                 if (user) {
                     try {
@@ -174,5 +191,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //this is to make sure only monday and friday are selectable.
 manageDate()
+
+const goHome = document.getElementById('home');
+
+goHome.addEventListener('click', async () => {
+
+    //getting current user
+    const user = auth.currentUser;
+   
+
+    if (user) {
+        try {
+            const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+            get(userRef).then((snapshot) => {
+                
+                const userData = snapshot.val();
+                const role = userData.role;
+                ChangeWindow(role);
+            });
+        }
+        catch (error) {
+            console.error("Error getting user role:", error)
+        }
+    }
+    else {
+        window.location.href = 'index.html'
+    }
+})
 
 
