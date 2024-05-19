@@ -1,6 +1,6 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete, HandleFeedback } from "./firebase_functions.js";
+import { handleRoleChange,handleUserDelete, HandleFeedback} from "./firebase_functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -55,7 +55,6 @@ function loadUsers(filter) {
                                         <option value="HR">HR</option>
                                         <option value="Staff">Staff</option>
                                         <option value="Manager">Manager</option>
-                                        
                                         </select>
                                         <button id="updateRoleBtn">Save changes</button>
                                     </div>
@@ -106,7 +105,7 @@ document.getElementById('usersList').addEventListener('click', (event) => {
         handleUserDelete(target)
     }
     if (target.classList.contains('fa-bell')) {
-       // HandleFeedback(target)
+        HandleFeedback(target)
    
     }
 });

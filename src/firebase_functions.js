@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc, collection, where, addDoc, getDoc, getDocs, setDoc, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected, CreateFeedbackNotificationElement} from "./functions.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -550,21 +550,20 @@ async function getCarwashBookings(date) {
 }
 
 function HandleFeedback () {
-    const selectElement = document.getElementById('userSelect');
-    const selectedUserEmail = selectElement.value;
 
-    const message = `Please write feedback on ${selectedUserEmail}.`; // Message to be sent in the notification
+    const userEmailInput = document.getElementById('userEmailInput').value;
 
-    // Check if a user is selected
-    if (selectedUserEmail) {
-        sendNotification(selectedUserEmail, message); // Send the notification
-        // You can add any additional logic here, such as displaying a success message or closing the modal
+    // Check if an email is entered
+    if (userEmailInput) {
+        CreateFeedbackNotificationElement(userEmailInput); // Send the notification
         console.log('Feedback notification sent successfully!');
+        modal.style.display = 'none';
     } else {
-        // Handle case where no user is selected
-        console.error('No user selected for feedback.');
+        // Handle case where no email is entered
+        console.error('No user email entered.');
     }
 }
+ 
 
 
 export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
