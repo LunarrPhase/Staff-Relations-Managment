@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             //getting current user
             const user = auth.currentUser;
-            console.log("clicked!")
+            //console.log("clicked!")
 
             if (user) {
                 try {
@@ -310,7 +310,7 @@ GenerateCSV.addEventListener("click", async function() {
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', 'meal_order_history_by_date.csv');
+        link.setAttribute('download', 'meal_order_history.csv');
         document.body.appendChild(link);
         link.click();
 
