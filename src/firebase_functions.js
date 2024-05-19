@@ -311,5 +311,5 @@ function HandleFeedback () {
 }
 
 
-export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
+export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
 
