@@ -45,12 +45,15 @@ h2{
     width: 100%; /*full width*/
     display: flex;
     justify-content: space-evenly;
-    align-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    column-gap: 30px;
     align-items: center;
     display: flex;
     margin: auto;
 }
 
+/*style input form*/
 .new-task-box {
     flex: 0 0 auto;
     width: 360px; 
@@ -70,26 +73,20 @@ article{
     
 }
 
-.image-article {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-}
-
 
 #image1{
     width: 380px;
     height: 500px;
     margin-left: 20px;
     border:2px solid #132743;
-    border-radius: 10px;
-    border-right: none;
+    border-radius: 10px; /*rounded border*/ 
+    border-right: none; 
 }
 
 #image2{
     width: 380px;
     height: 500px;
-    margin-left: 30px;
+    margin-left: 20px;
     border:2px solid #132743;
     border-radius: 10px;
     border-left: none;

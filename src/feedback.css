@@ -1,9 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: auto;
     padding: 0;
     background-color: #FAE7E9;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    column-gap: 30px;
 }
 
 .feedback_background{
@@ -26,6 +30,8 @@ p.message {
     background-color: #68b5dc;
     border: 2px solid #44abde;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    top: 0;
+    position: fixed;
 }
 
 .back-icon{

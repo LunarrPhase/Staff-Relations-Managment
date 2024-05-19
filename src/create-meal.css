@@ -156,6 +156,7 @@ h1{
 
 .top-sec{
     display: flex;
+    text-align: center;
 }
 
 /*style back button*/
@@ -187,8 +188,8 @@ h1{
 
 .flex-article{
     display: flex;
-    justify-content: space-evenly;
-    align-content: space-evenly;
+    justify-content: center;
+    align-content: center;
 }
 
 section{
