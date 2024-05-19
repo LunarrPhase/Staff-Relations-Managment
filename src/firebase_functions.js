@@ -2,9 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get,query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc, collection, where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-
 import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
-
 
 
 /* ALL MEAL BOOKINGS */
@@ -312,4 +310,3 @@ function HandleFeedback () {
 
 
 export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
-

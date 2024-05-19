@@ -41,22 +41,4 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('heading').addEventListener('mouseover', function() {
         this.classList.add('permanent');
     });
-});
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
+});  
