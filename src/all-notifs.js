@@ -1,7 +1,7 @@
 import { auth } from './firebaseInit.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { GetCurrentUserCarWashBookings, GetCurrentUserMealBookings, SendHome } from './firebase_functions.js';
-import { CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications } from './functions.js';
+import { CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications, CreateFeedbackNotificationElement } from './functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Create HTML elements dynamically for each car wash booking notification
         const carWashNotificationElements = CreateCarWashNotificationElement(currentUserCarWashBookings);
+
+        const feedbackNotification = await CreateFeedbackNotificationElement(user);
+
+        const feedbackNotificationElements = CreateFeedbackNotificationElement(feedbackNotification);
 
         const notificationContainer = document.getElementById('NotificationContainer');
 

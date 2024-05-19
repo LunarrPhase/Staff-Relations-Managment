@@ -7,10 +7,13 @@ import { doc,updateDoc, getDoc} from "https://www.gstatic.com/firebasejs/10.11.0
 document.addEventListener('DOMContentLoaded', (event) => {
     event.preventDefault()
     const loading = document.getElementById('loading');
-    if(loading){
     loading.style.display = 'block'; // Show loading animation
-    }
-    
+    const element = document.getElementById('your-element-id');
+if (element) {
+  element.style.property = 'value';
+} else {
+  console.error('Element not found!');
+}
     //get the currently signed in user
     onAuthStateChanged(auth, async (user) => {
         if (user) {
