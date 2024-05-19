@@ -525,23 +525,42 @@ function handleUserDelete(target) {
         });
 }
 
-function HandleFeedback (target) {
-
+function HandleFeedback(target) {
     const userEmailInput = target.getAttribute('data-user-email');
+    const modal = document.getElementById('feedbackModal');
+    const sendFeedbackBtn = modal.querySelector('#sendFeedbackBtn');
+    const cancelFeedbackBtn = modal.querySelector('#cancelFeedbackBtn');
 
-    // Check if an email is entered
-    if (userEmailInput) {
-        CreateFeedbackNotificationElement(userEmailInput); // Send the notification
-        console.log('Feedback notification sent successfully!');
-        // Assuming `modal` is defined elsewhere in your code
+    // Handle the send feedback button click
+    sendFeedbackBtn.addEventListener('click', () => {
+        const feedbackUserEmail = userEmailInput.trim();
+
+        if (feedbackUserEmail) {
+            CreateFeedbackNotificationElement(feedbackUserEmail); // Send the notification
+            console.log('Feedback notification sent successfully!');
+
+            // Close the feedback modal
+            modal.style.display = 'none';
+
+            // Return to the manage user page
+            window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
+        } else {
+            console.error('No user email entered.');
+        }
+    });
+
+    // Handle the cancel feedback button click
+    cancelFeedbackBtn.addEventListener('click', () => {
+        // Close the feedback modal
         modal.style.display = 'none';
-    } else {
-        // Handle case where no email is entered
-        console.error('No user email entered.');
-    }
+
+        // Return to the manage user page
+        window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
+    });
+
+    // Show the feedback modal
+    modal.style.display = 'block';
 }
-
-
 /* ALL CARWASH BOOKINGS */
 
 
