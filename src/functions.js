@@ -1,24 +1,18 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+/* LOGIN */
 
 
 function ChangeWindow(role){
     
     if (role === "Manager") {
-        sleep(5000)
         window.location.href = 'manager-main-page.html';
     }
     else if (role === "HR") {
-        sleep(5000)
         window.location.href = 'admin-main-page.html';
     }
     else {
-        sleep(5000)
         window.location.href = 'main-page.html';
     }
 }
-
 
 
 function SetLoginError(error){
@@ -98,16 +92,19 @@ function truncateText(text, maxLength) {
 
 
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
+
+
 //makes sure only fridays and mondays are bookable.
-function manageDate(){
-    const dateInput = document.getElementById('date');
-    
+function manageDate(dateInput){
+
     dateInput.addEventListener('input', () => {
+
         const selectedDate = new Date(dateInput.value);
         if (selectedDate.getDay() !== 1 && selectedDate.getDay() !== 5) {
             dateInput.value = ''; 
             dateInput.setCustomValidity('Please select a Monday or Friday.');
-        } else {
+        }
+        else {
             dateInput.setCustomValidity('');
         }
     });
@@ -126,13 +123,32 @@ function manageDate(){
     });
 }
 
+
 function getDayName(year, month, day) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const date = new Date(year, month - 1, day);
     return daysOfWeek[date.getDay()]
 }
 
-export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep };
+
+function renderBookings(bookings, usersList) {
+    usersList.innerHTML = '';
+    bookings.forEach(booking => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${booking.name}</td>
+            <td>${booking.email}</td>
+            <td>${booking.type}</td>
+            <td>${booking.slot}</td>
+            <td>${booking.day}</td>
+
+        `
+        usersList.appendChild(row)
+    })
+}
+
+
+export{ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
 
 
 

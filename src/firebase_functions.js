@@ -2,9 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get,query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc ,collection,where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep} from "./functions.js";
-
-
+import { ChangeWindow, SetLoginError, getDayName } from "./functions.js";
 
 
 /* INDEX */
@@ -63,6 +61,8 @@ async function FirebaseLogin(auth, database, db, email, password) {
 
 
 /* MANAGE-USERS */
+
+
 const usersRef = ref(database, 'users');
 function handleRoleChange(target) {
 
@@ -161,8 +161,37 @@ function handleUserDelete(target) {
         .catch((error) => {
             console.error('Error fetching user data:', error);
         });
-} 
+    });
+
+    document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+        document.getElementById('confirmationModal').style.display = 'none';
+    });
+}
 
 
+/* ALL CARWASH BOOKINGS */
 
-export{FirebaseLogin, handleRoleChange, handleUserDelete}
+
+async function getCarwashBookings(date) {
+
+    const [year, month, day] = date.split('-')
+    const dateString = `${year}-${month}-${day}`
+    const dayName = getDayName(year, month, day)
+    const fullDateString = `${dateString}-${dayName}`
+    console.log('Querying for date:', fullDateString)
+
+    const bookings = []
+    const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
+    const bookingSnapshot = await getDocs(bookingRef)
+    for (const bookingDoc of bookingSnapshot.docs) {
+        const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
+        const slotSnapshot = await getDocs(slotRef)
+        slotSnapshot.forEach(slotDoc => {
+            bookings.push(slotDoc.data())
+        });
+    }
+    return bookings
+}
+
+
+export{FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
