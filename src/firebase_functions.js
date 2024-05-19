@@ -525,6 +525,23 @@ function handleUserDelete(target) {
         });
 }
 
+function HandleFeedback (target) {
+
+    const userEmailInput = clickedIcon.getAttribute('data-user-email');
+
+    // Check if an email is entered
+    if (userEmailInput) {
+        CreateFeedbackNotificationElement(userEmailInput); // Send the notification
+        console.log('Feedback notification sent successfully!');
+        // Assuming `modal` is defined elsewhere in your code
+        modal.style.display = 'none';
+    } else {
+        // Handle case where no email is entered
+        console.error('No user email entered.');
+    }
+}
+
+
 /* ALL CARWASH BOOKINGS */
 
 
@@ -549,20 +566,7 @@ async function getCarwashBookings(date) {
     return bookings
 }
 
-function HandleFeedback () {
 
-    const userEmailInput = document.getElementById('userEmailInput').value;
-
-    // Check if an email is entered
-    if (userEmailInput) {
-        CreateFeedbackNotificationElement(userEmailInput); // Send the notification
-        console.log('Feedback notification sent successfully!');
-        modal.style.display = 'none';
-    } else {
-        // Handle case where no email is entered
-        console.error('No user email entered.');
-    }
-}
  
 
 
