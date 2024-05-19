@@ -12,6 +12,9 @@ body {
     margin-top: 20px;
     background-color: #FAE7E9;
 }
+p.message {
+    color :#4b9c4f;
+}
 
 /*back button styling*/
 .back-button {
