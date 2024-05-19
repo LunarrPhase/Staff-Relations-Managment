@@ -1,6 +1,21 @@
-import { database as realtimeDb, auth } from './firebaseInit.js';
+import { database as realtimeDb, auth, onAuthStateChanged } from './firebaseInit.js';
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { ChangeWindow } from './functions.js';
+
+document.addEventListener("DOMContentLoaded", function() {
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        try {
+            const userRef = ref(realtimeDb, 'users/' + user.uid);
+            const snapshot = await get(userRef);
+        }
+        catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    }
+    else {
+        console.log("User is signed out");
+    }
 
 //code to send the user to the right home page for the back and home button
 const goHome = document.getElementById('home')
@@ -67,4 +82,5 @@ backButton.addEventListener('click', async () => {
         window.location.href = 'index.html'
     }
 })
-
+});
+});
