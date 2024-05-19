@@ -192,4 +192,32 @@ document.addEventListener('DOMContentLoaded', function() {
 //this is to make sure only monday and friday are selectable.
 manageDate()
 
+const goHome = document.getElementById('home');
+
+goHome.addEventListener('click', async () => {
+
+    //getting current user
+    const user = auth.currentUser;
+   
+
+    if (user) {
+        try {
+            const userRef = ref(realtimeDb, 'users/' + user.uid)
+
+            get(userRef).then((snapshot) => {
+                
+                const userData = snapshot.val();
+                const role = userData.role;
+                ChangeWindow(role);
+            });
+        }
+        catch (error) {
+            console.error("Error getting user role:", error)
+        }
+    }
+    else {
+        window.location.href = 'index.html'
+    }
+})
+
 
