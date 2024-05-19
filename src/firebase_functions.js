@@ -142,7 +142,7 @@ function handleUserDelete(target) {
                             console.log('User deleted successfully from Firestore');
                         });
 
-                        // Update table visually immediately
+                        // Update UI
                         row.remove();
                         document.getElementById('roleModal').style.display = 'none';
                         document.getElementById('confirmationModal').style.display = 'none';
@@ -161,13 +161,7 @@ function handleUserDelete(target) {
         .catch((error) => {
             console.error('Error fetching user data:', error);
         });
-    });
-
-    document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
-        document.getElementById('confirmationModal').style.display = 'none';
-    });
 }
-
 
 /* ALL CARWASH BOOKINGS */
 
