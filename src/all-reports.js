@@ -1,6 +1,6 @@
 import { database as realtimeDb, auth, onAuthStateChanged } from './firebaseInit.js';
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { ChangeWindow } from './functions.js';
+import { ChangeWindow} from './functions.js';
 
 document.addEventListener("DOMContentLoaded", function() {
 onAuthStateChanged(auth, async (user) => {
@@ -63,15 +63,7 @@ backButton.addEventListener('click', async () => {
                 const userData = snapshot.val();
                 const role = userData.role;
                 
-                if (role === "Manager") {
-                    window.location.href = 'manager-main-page.html'
-                }
-                else if (role === "HR") {
-                    window.location.href = 'admin-main-page.html'
-                } 
-                else {
-                    window.location.href = 'main-page.html'
-                }
+               ChangeWindow(role)
             });
         }
         catch (error) {

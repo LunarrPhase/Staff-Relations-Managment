@@ -16,6 +16,20 @@ describe("Error handling", () => {
         const errorMessage = SetLoginError(mockError);
         expect(errorMessage).toBe("Wrong email or password. Please try again.");
     });
+
+    it('Displays correct error message for user DNE', () => {
+
+        const mockError = {code: "auth/user-not-found"};
+        const errorMessage = SetLoginError(mockError);
+        expect(errorMessage).toBe("No account associated with this email address.");
+    });
+
+    it('Displays correct error message for undefined error', () => {
+
+        const mockError = {code: undefined};
+        const errorMessage = SetLoginError(mockError);
+        expect(errorMessage).toBe("An error occurred. Please try again later.");
+    })
 });
 
 
