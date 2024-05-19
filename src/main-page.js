@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const firstName = userData.firstName || "Unknown";
                 const role = userData.role || "User";
               
-                if (role === "Manager") {
-                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (Manager)`;
-                }
-                else if (role === "HR") {
-                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (HR)`;
-                }
-                else {
-                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (Staff member)`;
-                }
+                const waveImagePath = "wave.svg";  // Ensure this path is correct
+
+if (role === "Manager") {
+    document.getElementById('userInfo').innerHTML = `Hello, ${firstName} (Manager) <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">`;
+} else if (role === "HR") {
+    document.getElementById('userInfo').innerHTML = `Hello, ${firstName} (HR) <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">`;
+} else {
+    document.getElementById('userInfo').innerHTML = `Hello, ${firstName} (Employee) <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">`;
+}
           
                 loading.style.display = 'none'
             }
