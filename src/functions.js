@@ -236,11 +236,43 @@ export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, Crea
 
 
 
+async function sendNotification(userId, message) {
+    try {
+        // Get the user's FCM token from the database
+        const userDoc = doc(db, 'users', userId);
+        const userSnapshot = await getDoc(userDoc);
+        const userData = userSnapshot.data();
+        const userToken = userData.fcmToken;
 
-  
+        // Construct the payload for the notification
+        const payload = {
+            to: userToken,
+            data: {
+                message: message
+            },
+            notification: {
+                title: 'Feedback Request',
+                body: message,
+                click_action: 'YOUR_ACTION_URL'
+            }
+        };
 
+        // Send the notification using Firebase Cloud Messaging (FCM)
+        const response = await fetch('https://fcm.googleapis.com/fcm/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_SERVER_KEY'
+            },
+            body: JSON.stringify(payload)
+        });
 
+        // Log success message if notification is sent successfully
+        console.log('Notification sent successfully!');
+    } catch (error) {
+        // Log error if there's an issue sending the notification
+        console.error('Error sending notification:', error);
+    }
+}
 
-
-
-
+export { sendNotification };
