@@ -129,18 +129,18 @@ function CreateCarWashNotificationElement(carWashBookings){
 }
 
 function CreateFeedbackNotificationElement(userEmailInput){
-    const notificationElements = userEmailInput.map((userEmailInput) =>{
+    
 
         const notificationElement = document.createElement('div');
         notificationElement.classList.add('notification');
-
-        const notificationText = `Please write a feedback report to the member with the email ${sendFeedback.text}.`;
+        const notificationText = `Please write a feedback report to the member with the email ${userEmailInput.text}.`;
         notificationElement.innerText = notificationText;
+        document.getElementById('notifications').appendChild(notificationElement);
 
         return notificationElement;
 
 
-    });
+    
 }
 
 function PopulateNotifications(notificationContainer, combinedNotificationElements){
