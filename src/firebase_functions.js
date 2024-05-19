@@ -1,8 +1,112 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { ref, update, get,query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc, updateDoc ,collection,where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { doc, updateDoc, collection, where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+
+
+/* ALL MEAL BOOKINGS */
+
+
+//access firebase, then document for the day...
+async function displayBookings(selectedDate) {
+   
+    const bookingsRef = collection(db, 'mealOrders')
+    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+    const usersList = document.getElementById('usersList')
+
+    renderMeals(querySnapshot, usersList);
+}
+
+
+//i made this to be able to view all users without filtering by date.
+async function displayAllBookings() {
+
+    const bookingsRef = collection(db, 'mealOrders')
+    const querySnapshot = await getDocs(query(bookingsRef))
+    const usersList = document.getElementById('usersList');
+
+    renderMeals(querySnapshot, usersList);
+}
+
+
+/* ALL NOTIFS */
+
+
+async function SendHome(user){
+
+    if (user) {
+        try {
+            //goes to their database in users
+            const userRef = ref(database, 'users/' + user.uid)
+            get(userRef).then((snapshot) => {
+
+                const userData = snapshot.val();
+                const role = userData.role;
+                // baisically this makes sure they go to the correct home screen
+                ChangeWindow(role);
+            });
+        }
+        catch (error) {
+            console.error("Error getting user role:", error);
+        }
+    }
+    else {
+        window.location.href = 'index.html'
+    }
+}
+
+
+async function GetCurrentUserMealBookings(user){
+
+        //get current user id
+        const userId = user.uid;
+
+        if (!userId) {
+            console.error("User ID not available");
+            SendHome(user);
+
+        }
+
+        //get todays date and convert it to string
+        const today = new Date();
+        const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+        console.log("getting date");
+        //the refrence to their meal bookings in firestore
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+
+        //get the meal bookings that match todays date    
+        const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
+
+        const mealBookings = [];
+        querySnapshot.forEach((doc) => {
+            mealBookings.push(doc.data());
+        });
+
+        //return the data on todays meal bookings
+        return mealBookings;
+}
+
+
+async function GetCurrentUserCarWashBookings(user){
+
+    const userId = user.uid;
+        
+    //gry todays date
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+    
+    //fetch the users car wash bookings
+    const carWashBookingsRef = collection(db, `users/${userId}/carwashBookings`);
+    
+    //compare the datas 
+    const querySnapshot = await getDocs(query(carWashBookingsRef, where('date', '==', todayString)));
+    const carWashBookings = [];
+    querySnapshot.forEach((doc) => {
+        carWashBookings.push(doc.data());
+    });
+    return carWashBookings;
+}
 
 
 /* INDEX */
@@ -188,4 +292,4 @@ async function getCarwashBookings(date) {
 }
 
 
-export{FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
+export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
