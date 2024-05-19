@@ -79,6 +79,63 @@ function renderMeals(querySnapshot, usersList){
 }
 
 
+/* ALL NOTIFS */
+
+
+function CheckUserAuthenticated(auth){
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return null;
+        }
+        return user;
+    }
+    catch(error){
+        console.error("Error fetching meal bookings: ", error);
+        return null;
+    }
+}
+
+
+function CreateMealNotificationElements(mealBookings){
+
+    const notificationElements = mealBookings.map((mealBooking) => {
+
+        const notificationElement = document.createElement('div');
+        notificationElement.classList.add('notification');
+        const mealText = `Today you booked a ${mealBooking.diet} meal of: ${mealBooking.meal}.`;
+        notificationElement.innerText = mealText;
+        return notificationElement;
+    });
+    return notificationElements;
+}
+
+
+function CreateCarWashNotificationElement(carWashBookings){
+
+    const notificationElements = carWashBookings.map((carWashBooking) => {
+        
+        const notificationElement = document.createElement('div');
+        notificationElement.classList.add('notification');
+
+        const notificationText = `Today you booked a ${carWashBooking.type} car wash for today's ${carWashBooking.slot} slot.`;
+        notificationElement.innerText = notificationText;
+
+        return notificationElement;
+    });
+    return notificationElements;
+}
+
+
+function PopulateNotifications(notificationContainer, combinedNotificationElements){
+    combinedNotificationElements.forEach((element) => {
+        notificationContainer.appendChild(element);
+    });
+}
+
+
 /* LOGIN */
 
 
@@ -172,7 +229,7 @@ function truncateText(text, maxLength) {
 }
 
 
-export{renderMeals, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
+export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
 
 
 

@@ -30,6 +30,85 @@ async function displayAllBookings() {
 }
 
 
+/* ALL NOTIFS */
+
+
+async function SendHome(user){
+
+    if (user) {
+        try {
+            //goes to their database in users
+            const userRef = ref(database, 'users/' + user.uid)
+            get(userRef).then((snapshot) => {
+
+                const userData = snapshot.val();
+                const role = userData.role;
+                // baisically this makes sure they go to the correct home screen
+                ChangeWindow(role);
+            });
+        }
+        catch (error) {
+            console.error("Error getting user role:", error);
+        }
+    }
+    else {
+        window.location.href = 'index.html'
+    }
+}
+
+
+async function GetCurrentUserMealBookings(user){
+
+        //get current user id
+        const userId = user.uid;
+
+        if (!userId) {
+            console.error("User ID not available");
+            SendHome(user);
+
+        }
+
+        //get todays date and convert it to string
+        const today = new Date();
+        const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+        console.log("getting date");
+        //the refrence to their meal bookings in firestore
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+
+        //get the meal bookings that match todays date    
+        const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
+
+        const mealBookings = [];
+        querySnapshot.forEach((doc) => {
+            mealBookings.push(doc.data());
+        });
+
+        //return the data on todays meal bookings
+        return mealBookings;
+}
+
+
+async function GetCurrentUserCarWashBookings(user){
+
+    const userId = user.uid;
+        
+    //gry todays date
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+    
+    //fetch the users car wash bookings
+    const carWashBookingsRef = collection(db, `users/${userId}/carwashBookings`);
+    
+    //compare the datas 
+    const querySnapshot = await getDocs(query(carWashBookingsRef, where('date', '==', todayString)));
+    const carWashBookings = [];
+    querySnapshot.forEach((doc) => {
+        carWashBookings.push(doc.data());
+    });
+    return carWashBookings;
+}
+
+
 /* INDEX */
 
 async function FirebaseLogin(auth, database, db, email, password) {
@@ -271,4 +350,4 @@ async function getCarwashBookings(date) {
 }
 
 
-export{displayBookings, displayAllBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
+export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
