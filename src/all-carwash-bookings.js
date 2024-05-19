@@ -1,29 +1,21 @@
-import {firestore as db } from './firebaseInit.js';
-import { collection, getDocs} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { manageDate, getDayName} from './functions.js';
+import { getCarwashBookings } from './firebase_functions.js';
+import { manageDate, getDayName, renderBookings } from './functions.js';
 
 
 const usersList = document.getElementById('usersList');
+const dateInput = document.getElementById('date');
+manageDate(dateInput);
+getDayName()
 
-async function getCarwashBookings(date) {
-    const [year, month, day] = date.split('-')
-    const dateString = `${year}-${month}-${day}`
-    const dayName = getDayName(year, month, day)
-    const fullDateString = `${dateString}-${dayName}`
-    console.log('Querying for date:', fullDateString)
 
-    const bookings = []
-    const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
-    const bookingSnapshot = await getDocs(bookingRef)
-    for (const bookingDoc of bookingSnapshot.docs) {
-        const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
-        const slotSnapshot = await getDocs(slotRef)
-        slotSnapshot.forEach(slotDoc => {
-            bookings.push(slotDoc.data())
-        });
-    }
-    return bookings
-}
+document.getElementById('date').addEventListener('change', async () => {
+    const selectedDate = document.getElementById('date').value;
+    const bookings = await getCarwashBookings(selectedDate);
+    renderBookings(bookings, usersList);
+})
+
+
+//document.getElementById('load-more').addEventListener('click', getAllCarwashBookings)
 
 
 /*async function getAllCarwashBookings() {
@@ -46,33 +38,3 @@ async function getCarwashBookings(date) {
     console.log(bookings)
     return bookings;
 }*/
-
-
-function renderBookings(bookings) {
-    usersList.innerHTML = '';
-    bookings.forEach(booking => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${booking.name}</td>
-            <td>${booking.email}</td>
-            <td>${booking.type}</td>
-            <td>${booking.slot}</td>
-            <td>${booking.day}</td>
-
-        `
-        usersList.appendChild(row)
-    })
-}
-
-
-
-manageDate()
-getDayName()
-
-document.getElementById('date').addEventListener('change', async () => {
-    const selectedDate = document.getElementById('date').value;
-    const bookings = await getCarwashBookings(selectedDate);
-    renderBookings(bookings)
-})
-//document.getElementById('load-more').addEventListener('click', getAllCarwashBookings)
-

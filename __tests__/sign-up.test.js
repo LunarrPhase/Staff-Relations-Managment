@@ -32,7 +32,7 @@ describe("Sign up functionality", () => {
         expect(SetRole(userKey)).toBe("Staff");
     });
 
-    it('Displays correcg errors from error codes', () => {
+    it('Displays correct errors from error codes', () => {
 
         const email = "example@email.com";
         const password = "123456";

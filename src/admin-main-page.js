@@ -1,7 +1,7 @@
 const mealInfo = document.getElementById('meal-info');
 mealInfo.addEventListener('click', function(event) {
     window.location.href = 'create-meal.html'; 
-    console.log('Meal info clicked!');
+    //console.log('Meal info clicked!');
 });
 
 
