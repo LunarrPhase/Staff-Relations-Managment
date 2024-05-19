@@ -2,11 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get,query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc, collection, where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-<<<<<<< HEAD
-import { ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep, sendNotification} from "./functions.js";
-=======
 import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
->>>>>>> e9a75356f0feb094d89b20ab0cfcbf45241ee181
 
 
 /* ALL MEAL BOOKINGS */
@@ -312,9 +308,5 @@ function HandleFeedback () {
     }
 }
 
-<<<<<<< HEAD
 
-export{FirebaseLogin, handleRoleChange, handleUserDelete, HandleFeedback}
-=======
 export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
->>>>>>> e9a75356f0feb094d89b20ab0cfcbf45241ee181

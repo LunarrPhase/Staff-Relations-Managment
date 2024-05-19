@@ -2,17 +2,20 @@ import { getCarwashBookings } from './firebase_functions.js';
 import { manageDate, getDayName, renderBookings } from './functions.js';
 
 
-const usersList = document.getElementById('usersList');
-const dateInput = document.getElementById('date');
-manageDate(dateInput);
-getDayName()
+document.addEventListener("DOMContentLoaded", function(){
+
+    const usersList = document.getElementById('usersList');
+    const dateInput = document.getElementById('date');
+    manageDate(dateInput);
+    getDayName();
 
 
-document.getElementById('date').addEventListener('change', async () => {
-    const selectedDate = document.getElementById('date').value;
-    const bookings = await getCarwashBookings(selectedDate);
-    renderBookings(bookings, usersList);
-})
+    document.getElementById('date').addEventListener('change', async () => {
+        const selectedDate = document.getElementById('date').value;
+        const bookings = await getCarwashBookings(selectedDate);
+        renderBookings(bookings, usersList);
+    });
+});
 
 
 //document.getElementById('load-more').addEventListener('click', getAllCarwashBookings)
