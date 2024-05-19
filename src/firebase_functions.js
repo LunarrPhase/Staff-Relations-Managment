@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref, update, get,query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc, updateDoc, collection, where, getDocs, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { ref, update, get, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { doc, updateDoc, collection, where, addDoc, getDoc, getDocs, setDoc, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected, CreateFeedbackNotificationElement} from "./functions.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -12,7 +12,7 @@ import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./function
 async function displayBookings(selectedDate) {
    
     const bookingsRef = collection(db, 'mealOrders')
-    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)))
     const usersList = document.getElementById('usersList')
 
     renderMeals(querySnapshot, usersList);
@@ -106,6 +106,264 @@ async function GetCurrentUserCarWashBookings(user){
         carWashBookings.push(doc.data());
     });
     return carWashBookings;
+}
+
+
+/* BOOK CARWASH */
+
+
+async function canBookSlot(day, hour) {
+
+    const dayName = new Date(day).toLocaleDateString('en-US', { weekday: 'long' })
+    const bookingRef = doc(db, 'carWashBookings', `${day}-${dayName}`)
+    const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour)
+    const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots')
+    const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
+    //debugging
+    //console.log(`Booked Slots for ${hour}: ${bookedSlotsSnapshot.size}`)
+    return bookedSlotsSnapshot.size < 5;
+}
+
+
+  
+async function updateAvailableSlots(selectedDay) {
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const selectedDate = new Date(selectedDay);
+    const dayName = daysOfWeek[selectedDate.getDay()]
+
+    const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`)
+    // const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
+
+    const timeSlots = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM']
+
+    timeSlots.forEach(async (slot) => {
+
+        const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
+        const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
+        const availableSlots = 5 - bookedSlotsSnapshot.size;
+        //console.log(`Available slots for ${slot}: ${availableSlots}`)
+        const slotElement = document.getElementById(`${slot}-slots`)
+
+        if (slotElement) {
+            slotElement.innerText = availableSlots.toString();
+        }
+    });
+}
+
+
+async function bookSlot(hour, selectedDay, selectedType, user) {
+
+    const name = document.getElementById('name').value;
+    const userEmail = user.email;
+
+    if (await canBookSlot(selectedDay, hour)){
+
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        const selectedDate = new Date(selectedDay)
+        const dayName = daysOfWeek[selectedDate.getDay()]
+
+        const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
+        const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
+        const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
+
+        const slotSnapshot = await getDoc(slotBookingRef);
+
+        if (!slotSnapshot.exists()) {
+            await setDoc(slotBookingRef, {})
+        }
+
+        await setDoc(doc(bookedSlotsRef, `${userEmail}`), {
+            day: selectedDay,
+            name: name,
+            type: selectedType,
+            slot: hour,
+            email: userEmail,
+        });
+
+        alert(`Successfully booked slot for ${hour}!`)
+        updateAvailableSlots(selectedDay)
+    }
+    else {
+        alert(`No available slots today for ${hour}`)
+    }
+}
+
+
+async function doBooking(typeCarwash, timeSlot, day, user){
+
+    const name = document.getElementById('name').value;
+
+    const selectedDay = day.value;
+    const selectedType = typeCarwash.value;
+    const selectedTimeSlot = timeSlot.value;
+
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0];
+
+    if(selectedDay > currentDateString){
+
+        //bookSlot(8AM)
+        await bookSlot(selectedTimeSlot, selectedDay, selectedType, user);
+
+        const userId = user.uid;
+        const carWashBookingsRef = collection(db, `users/${userId}/carwashBookings`)
+        const userEmail = user.email;
+
+        await addDoc(carWashBookingsRef, {
+            name: name,
+            email: userEmail,
+            date: selectedDay,
+            type: selectedType,
+            slot: selectedTimeSlot
+        })
+
+        //to view all car wash bookings easier you can create another collection that will store all bookings
+        //ever made then you can either view all, or view all by a selectable date.
+        /*const carwashCollectionRef = collection(db, 'carWashOrders')
+        await addDoc(carwashCollectionRef, {
+            name: name,
+            email: userEmail,
+            date: selectedDay,
+            type: selectedType,
+            slot: selectedSlot
+        })*/
+
+        document.querySelector('.carForm').reset();
+        document.getElementById("warning").innerText="";
+    }
+    else{
+        const warning = document.getElementById("warning");
+        warning.innerText= "Cannot book carwash for current and previous days."
+    }
+}
+
+
+/* BOOK MEALS */
+
+
+// Populate meals dropdown based on selected date and diet
+async function populateMeals(dateInput, dietSelect, mealSelect) {
+    console.log("hii");
+    const selectedDate = dateInput.value;
+    const selectedDiet = dietSelect.value;
+    const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
+    
+    const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
+
+
+    mealSelect.innerHTML = '';
+
+    mealOptionsSnapshot.forEach((mealDoc) => {
+        const mealData = mealDoc.data();
+
+        if (mealData.diet === selectedDiet) {
+            const option = document.createElement('option');
+            option.text = mealData.meal;
+            option.value = mealData.meal;
+            mealSelect.add(option);
+        }
+    });
+}
+
+
+async function doMealBooking(dateInput, dietSelect, mealSelect, user){
+
+    if (areInputsSelected(dateInput, dietSelect)) {
+
+        const name = document.getElementById('name').value;                        
+        const selectedDate = dateInput.value;
+        //gets todays date
+        const currentDate = new Date();
+        const currentDateString = currentDate.toISOString().split('T')[0];
+
+        //only submits the booking to the database is the date is after today
+        if(selectedDate > currentDateString){
+
+            const selectedDiet = dietSelect.value;
+            const selectedMeal = mealSelect.value;
+
+            const userId = user.uid;
+        
+            const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+            const userEmail = user.email;
+
+            //adds meal to users collection in firestore so each user can have their meals stored for reports, etc
+            await addDoc(userMealOrdersRef, {
+                name: name,
+                email: userEmail,
+                date: selectedDate,
+                diet: selectedDiet,
+                meal: selectedMeal
+            });
+
+            //i added this so we could have a seperate mealOrders collections
+            const mealOrdersCollectionRef = collection(db, 'mealOrders')
+            await addDoc(mealOrdersCollectionRef, {
+                name: name,
+                email: userEmail,
+                date: selectedDate,
+                diet: selectedDiet,
+                meal: selectedMeal
+            });
+
+            //clears the form and sends an alert that the meal has been booked successfully
+            document.querySelector('.mealForm').reset();
+            alert("Successfully booked meal!");
+            const warning = document.getElementById("warning");
+            warning.innerText= "";
+        }
+        
+        else{
+            //updates warning to let them know they selected a date that has already passed.
+            const warning = document.getElementById("warning");
+            warning.innerText= "Cannot book meals for current and previous days."
+        }
+    }
+    
+    //updates the warning to let them know they did not select both date and diet
+    else {
+        const warning = document.getElementById("warning");
+        warning.innerText="Please select both date and diet.";
+    }
+}
+
+
+/* CREATE MEAL */
+
+
+async function CreateMeal(dateInput, dietInput, mealInput){
+
+    //current date
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0];
+
+    //only creates meals for future dates
+    if(dateInput > currentDateString){
+        const colRef = collection(db,'mealOptions');
+
+        // Add a subcollection for each day
+        const dateDocRef = doc(colRef, dateInput);
+        const dateColRef = collection(dateDocRef, 'meals');
+        console.log(dateDocRef);
+
+        await addDoc(dateColRef, {
+          diet: dietInput,
+          meal: mealInput,
+        });
+
+        //clears the form and error upon submission and alerts user that meal has been booked
+        document.querySelector('.add').reset();  
+        alert("Successfully created meal!");
+        const warning = document.getElementById("warning");
+        warning.innerText= "";
+    }
+    else{
+
+      //if the person selects a day that has passed, they get a warning
+      const warning = document.getElementById("warning");
+      warning.innerText= "Cannot book meals for current and previous days."
+    }
 }
 
 
@@ -292,21 +550,20 @@ async function getCarwashBookings(date) {
 }
 
 function HandleFeedback () {
-    const selectElement = document.getElementById('userSelect');
-    const selectedUserEmail = selectElement.value;
 
-    const message = `Please write feedback on ${selectedUserEmail}.`; // Message to be sent in the notification
+    const userEmailInput = document.getElementById('userEmailInput').value;
 
-    // Check if a user is selected
-    if (selectedUserEmail) {
-        sendNotification(selectedUserEmail, message); // Send the notification
-        // You can add any additional logic here, such as displaying a success message or closing the modal
+    // Check if an email is entered
+    if (userEmailInput) {
+        CreateFeedbackNotificationElement(userEmailInput); // Send the notification
         console.log('Feedback notification sent successfully!');
+        modal.style.display = 'none';
     } else {
-        // Handle case where no user is selected
-        console.error('No user selected for feedback.');
+        // Handle case where no email is entered
+        console.error('No user email entered.');
     }
 }
+ 
 
 
-export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
+export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}

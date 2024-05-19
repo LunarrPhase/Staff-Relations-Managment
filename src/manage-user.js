@@ -1,6 +1,6 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete, HandleFeedback } from "./firebase_functions.js";
+import { handleRoleChange,handleUserDelete, HandleFeedback} from "./firebase_functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -55,21 +55,17 @@ function loadUsers(filter) {
                                         <option value="HR">HR</option>
                                         <option value="Staff">Staff</option>
                                         <option value="Manager">Manager</option>
-                                        
                                         </select>
                                         <button id="updateRoleBtn">Save changes</button>
                                     </div>
                                 </div>
-                            </span>
                             <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
                             <div id="feedbackModal" class="modal">
                             <div class="modal-content">
-                                <p>Select a user to request feedback:</p>
-                                <select id="userSelect" class="form-select">
-                                  
-                                </select>
-                                <button id="sendFeedbackBtn" >Send Feedback Request</button>
-                                <button id="cancelFeedbackBtn">Cancel</button>
+                            <p>Enter the email of the user to request feedback:</p>
+                            <input type="email" id="userEmailInput" class="form-input" placeholder="User email">
+                            <button id="sendFeedbackBtn">Send Feedback Request</button>
+                            <button id="cancelFeedbackBtn">Cancel</button>
                             </div>
                         </div>
                         </td>
