@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const role = userData.role || "User";
               
                 if (role === "Manager") {
-                    document.getElementById('userInfo').textContent = `Hello, Manager ${firstName}`;
+                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (Manager)`;
                 }
                 else if (role === "HR") {
-                    document.getElementById('userInfo').textContent = `Hello, HR ${firstName}`;
+                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (HR)`;
                 }
                 else {
-                    document.getElementById('userInfo').textContent = `Hello, User ${firstName}`;
+                    document.getElementById('userInfo').textContent = `Hello, ${firstName} (Staff member)`;
                 }
           
                 loading.style.display = 'none'

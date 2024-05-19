@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
             
             
-                    alert(`Slot booked for ${hour}`)
+                    alert(`Successfully booked slot for ${hour}!`)
                     updateAvailableSlots(selectedDay)
                 } else {
                     alert(`No available slots today for ${hour}`)

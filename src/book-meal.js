@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         const selectedDiet = dietSelect.value;
                         const selectedMeal = mealSelect.value;
 
-                       
+                        const userId = user.uid;
+                     
                         const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
                         const userEmail = user.email;
 
