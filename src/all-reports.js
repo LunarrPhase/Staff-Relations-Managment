@@ -3,7 +3,7 @@ import { SendHome } from './firebase_functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async () => {
 
         //getting current user
         const user = CheckUserAuthenticated(auth);

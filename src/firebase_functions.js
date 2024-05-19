@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import { ref, update, get, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc, collection, where, addDoc, getDoc, getDocs, setDoc, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -239,6 +239,134 @@ async function doBooking(typeCarwash, timeSlot, day, user){
 }
 
 
+/* BOOK MEALS */
+
+
+// Populate meals dropdown based on selected date and diet
+async function populateMeals(dateInput, dietSelect, mealSelect) {
+    console.log("hii");
+    const selectedDate = dateInput.value;
+    const selectedDiet = dietSelect.value;
+    const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
+    
+    const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
+
+
+    mealSelect.innerHTML = '';
+
+    mealOptionsSnapshot.forEach((mealDoc) => {
+        const mealData = mealDoc.data();
+
+        if (mealData.diet === selectedDiet) {
+            const option = document.createElement('option');
+            option.text = mealData.meal;
+            option.value = mealData.meal;
+            mealSelect.add(option);
+        }
+    });
+}
+
+
+async function doMealBooking(dateInput, dietSelect, mealSelect, user){
+
+    if (areInputsSelected(dateInput, dietSelect)) {
+
+        const name = document.getElementById('name').value;                        
+        const selectedDate = dateInput.value;
+        //gets todays date
+        const currentDate = new Date();
+        const currentDateString = currentDate.toISOString().split('T')[0];
+
+        //only submits the booking to the database is the date is after today
+        if(selectedDate > currentDateString){
+
+            const selectedDiet = dietSelect.value;
+            const selectedMeal = mealSelect.value;
+
+            const userId = user.uid;
+        
+            const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+            const userEmail = user.email;
+
+            //adds meal to users collection in firestore so each user can have their meals stored for reports, etc
+            await addDoc(userMealOrdersRef, {
+                name: name,
+                email: userEmail,
+                date: selectedDate,
+                diet: selectedDiet,
+                meal: selectedMeal
+            });
+
+            //i added this so we could have a seperate mealOrders collections
+            const mealOrdersCollectionRef = collection(db, 'mealOrders')
+            await addDoc(mealOrdersCollectionRef, {
+                name: name,
+                email: userEmail,
+                date: selectedDate,
+                diet: selectedDiet,
+                meal: selectedMeal
+            });
+
+            //clears the form and sends an alert that the meal has been booked successfully
+            document.querySelector('.mealForm').reset();
+            alert("Successfully booked meal!");
+            const warning = document.getElementById("warning");
+            warning.innerText= "";
+        }
+        
+        else{
+            //updates warning to let them know they selected a date that has already passed.
+            const warning = document.getElementById("warning");
+            warning.innerText= "Cannot book meals for current and previous days."
+        }
+    }
+    
+    //updates the warning to let them know they did not select both date and diet
+    else {
+        const warning = document.getElementById("warning");
+        warning.innerText="Please select both date and diet.";
+    }
+}
+
+
+/* CREATE MEAL */
+
+
+async function CreateMeal(dateInput, dietInput, mealInput){
+
+    //current date
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0];
+
+    //only creates meals for future dates
+    if(dateInput > currentDateString){
+        const colRef = collection(db,'mealOptions');
+
+        // Add a subcollection for each day
+        const dateDocRef = doc(colRef, dateInput);
+        const dateColRef = collection(dateDocRef, 'meals');
+        console.log(dateDocRef);
+
+        await addDoc(dateColRef, {
+          diet: dietInput,
+          meal: mealInput,
+        });
+
+        //clears the form and error upon submission and alerts user that meal has been booked
+        document.querySelector('.add').reset();  
+        alert("Successfully created meal!");
+        const warning = document.getElementById("warning");
+        warning.innerText= "";
+    }
+    else{
+
+      //if the person selects a day that has passed, they get a warning
+      const warning = document.getElementById("warning");
+      warning.innerText= "Cannot book meals for current and previous days."
+    }
+}
+
+
 /* INDEX */
 
 async function FirebaseLogin(auth, database, db, email, password) {
@@ -439,4 +567,4 @@ function HandleFeedback () {
 }
 
 
-export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
+export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, populateMeals, doMealBooking, CreateMeal, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
