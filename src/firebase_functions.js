@@ -1,10 +1,8 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { ref, update, get,query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc, updateDoc ,collection,where, getDocs, deleteDoc} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { doc, updateDoc, collection, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText ,manageDate, getDayName, sleep} from "./functions.js";
-
-
+import { ChangeWindow, SetLoginError, getDayName } from "./functions.js";
 
 
 /* INDEX */
@@ -63,6 +61,8 @@ async function FirebaseLogin(auth, database, db, email, password) {
 
 
 /* MANAGE-USERS */
+
+
 const usersRef = ref(database, 'users');
 function handleRoleChange(target) {
     const row = target.closest('tr');
@@ -99,6 +99,7 @@ function handleRoleChange(target) {
         console.error('Error fetching user data from Firestore:', error);
     });
 }
+
 
 function updateRole(userId, row, databaseType) {
     document.getElementById('roleModal').style.display = 'block';
@@ -175,6 +176,7 @@ function deleteUser(userId, row, databaseType) {
     }
 }
 
+
 function handleUserDelete(target) {
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
@@ -219,6 +221,29 @@ function handleUserDelete(target) {
 }
 
 
+/* ALL CARWASH BOOKINGS */
 
 
-export{FirebaseLogin, handleRoleChange, handleUserDelete}
+async function getCarwashBookings(date) {
+
+    const [year, month, day] = date.split('-')
+    const dateString = `${year}-${month}-${day}`
+    const dayName = getDayName(year, month, day)
+    const fullDateString = `${dateString}-${dayName}`
+    console.log('Querying for date:', fullDateString)
+
+    const bookings = []
+    const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
+    const bookingSnapshot = await getDocs(bookingRef)
+    for (const bookingDoc of bookingSnapshot.docs) {
+        const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
+        const slotSnapshot = await getDocs(slotRef)
+        slotSnapshot.forEach(slotDoc => {
+            bookings.push(slotDoc.data())
+        });
+    }
+    return bookings
+}
+
+
+export{FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
