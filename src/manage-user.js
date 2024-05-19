@@ -64,12 +64,11 @@ function loadUsers(filter) {
                             <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
                             <div id="feedbackModal" class="modal">
                             <div class="modal-content">
-                                <p>Select a user to request feedback:</p>
-                                <select id="userSelect" class="form-select">
-                                  
-                                </select>
-                                <button id="sendFeedbackBtn" >Send Feedback Request</button>
-                                <button id="cancelFeedbackBtn">Cancel</button>
+                            <span class="close">&times;</span>
+                            <p>Enter the email of the user to request feedback:</p>
+                            <input type="email" id="userEmailInput" class="form-input" placeholder="User email">
+                            <button id="sendFeedbackBtn">Send Feedback Request</button>
+                            <button id="cancelFeedbackBtn">Cancel</button>
                             </div>
                         </div>
                         </td>
