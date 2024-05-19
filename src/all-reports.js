@@ -1,5 +1,6 @@
 import { auth, onAuthStateChanged } from './firebaseInit.js';
 import { SendHome } from './firebase_functions.js';
+import { CheckUserAuthenticated } from './functions.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
