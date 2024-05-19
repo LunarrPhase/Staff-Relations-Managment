@@ -60,11 +60,9 @@ function loadUsers(filter) {
                                         <button id="updateRoleBtn">Save changes</button>
                                     </div>
                                 </div>
-                            </span>
                             <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
                             <div id="feedbackModal" class="modal">
                             <div class="modal-content">
-                            <span class="close">&times;</span>
                             <p>Enter the email of the user to request feedback:</p>
                             <input type="email" id="userEmailInput" class="form-input" placeholder="User email">
                             <button id="sendFeedbackBtn">Send Feedback Request</button>
@@ -108,7 +106,7 @@ document.getElementById('usersList').addEventListener('click', (event) => {
         handleUserDelete(target)
     }
     if (target.classList.contains('fa-bell')) {
-        HandleFeedback(target)
+       // HandleFeedback(target)
    
     }
 });
