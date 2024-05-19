@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       document.querySelector('.add').reset();  
       alert("Successfully created meal!");
+      const warning = document.getElementById("warning");
+      warning.innerText= "";
 
     } else{
       const warning = document.getElementById("warning");

@@ -3,10 +3,13 @@ import { collection, getDocs, doc , addDoc} from "https://www.gstatic.com/fireba
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { ChangeWindow } from './functions.js';
 
-
+//ensures page waits for all DOMContent to load
 document.addEventListener('DOMContentLoaded', function() {
+
+    //ensures that a user who is in the database is logged in
     auth.onAuthStateChanged(user => {
         if (user) {
+            //takes user to the appropriate home page
 
             const goHome = document.getElementById('home');
 
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = 'index.html'
                 }
             })
+            //gets all necessary form elements
 
             const submit = document.getElementById('submit-btn');
             const dietSelect = document.getElementById('diet');
@@ -54,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
                     
                     const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
-                    //console.log(mealOptionsSnapshot);
-                    
+                
+                
                     mealSelect.innerHTML = '';
     
                     mealOptionsSnapshot.forEach((mealDoc) => {
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dietSelect.addEventListener('change', populateMeals);
             dateInput.addEventListener('change', populateMeals);
             
-
+//submits the meal the user chose when they click submit button
             if (submit) {
                 submit.addEventListener('click', async (e) => {
                     e.preventDefault();
@@ -83,12 +87,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const name = document.getElementById('name').value;                        
                         const selectedDate = dateInput.value;
-
+//gets todays date
                         const currentDate = new Date();
             const currentDateString = currentDate.toISOString().split('T')[0];
 
 
-
+//only submits the booking to the database is the date is after today
                         if(selectedDate > currentDateString){
 
                         
@@ -99,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      
                         const userMealOrdersRef = collection(db, `users/${userId}/mealOrders`);
                         const userEmail = user.email;
-
+//adds meal to users collection in firestore so each user can have their meals stored for reports, etc
                         await addDoc(userMealOrdersRef, {
                             name: name,
                             email: userEmail,
@@ -118,16 +122,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             meal: selectedMeal
                         });
 
-
+//clears the form and sends an alert that the meal has been booked successfully
                         document.querySelector('.mealForm').reset();
                         alert("Successfully booked meal!");
+                        const warning = document.getElementById("warning");
+                        warning.innerText= "";
+                        
 
                     }
                     else{
+                        //updates warning to let them know they selected a date that has already passed.
                         const warning = document.getElementById("warning");
                         warning.innerText= "Cannot book meals for current and previous days."
                     }
                     }
+                    //updates the warning to let them know they did not select both date and diet
                     else {
                         const warning = document.getElementById("warning");
                         warning.innerText="Please select both date and diet.";
