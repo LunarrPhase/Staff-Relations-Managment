@@ -1,8 +1,33 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref, update, get,query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { ref, update, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { doc, updateDoc, collection, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
-import { ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName } from "./functions.js";
+
+
+/* ALL MEAL BOOKINGS */
+
+
+//access firebase, then document for the day...
+async function displayBookings(selectedDate) {
+   
+    const bookingsRef = collection(db, 'mealOrders')
+    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
+    const usersList = document.getElementById('usersList')
+
+    renderMeals(querySnapshot, usersList);
+}
+
+
+//i made this to be able to view all users without filtering by date.
+async function displayAllBookings() {
+
+    const bookingsRef = collection(db, 'mealOrders')
+    const querySnapshot = await getDocs(query(bookingsRef))
+    const usersList = document.getElementById('usersList');
+
+    renderMeals(querySnapshot, usersList);
+}
 
 
 /* INDEX */
@@ -246,4 +271,4 @@ async function getCarwashBookings(date) {
 }
 
 
-export{FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
+export{displayBookings, displayAllBookings, FirebaseLogin, handleRoleChange, handleUserDelete, getCarwashBookings}
