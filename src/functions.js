@@ -128,20 +128,6 @@ function CreateCarWashNotificationElement(carWashBookings){
     return notificationElements;
 }
 
-// function CreateFeedbackNotificationElement(userEmailInput){
-    
-
-//         const notificationElement = document.createElement('div');
-//         notificationElement.classList.add('notification');
-//         const notificationText = `Please write a feedback report to the member with the email ${userEmailInput.text}.`;
-//         notificationElement.innerText = notificationText;
-//         document.getElementById('notification').appendChild(notificationElement);
-
-//         return notificationElement;
-
-
-    
-// }
 
 
 function CreateFeedbackNotificationElement(feedbackNotifications) {
