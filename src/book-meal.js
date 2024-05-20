@@ -3,6 +3,7 @@ import { SendHome, populateMeals, doMealBooking } from './firebase_functions.js'
 import { areInputsSelected } from './functions.js';
 
 
+
 //ensures page waits for all DOMContent to load
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -11,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (user) {
 
             //takes user to the appropriate home page
-            const goHome = document.getElementById('home');
-            goHome.addEventListener('click', async () => {
+        
+        const goHome = document.getElementById('home');
+        
 
-                //getting current user
-                const user = auth.currentUser;
-                SendHome(user);
-            });
+        goHome.addEventListener('click', async () => {
+            SendHome(user);
+        })
 
             //gets all necessary form elements
             const submit = document.getElementById('submit-btn');
