@@ -138,6 +138,16 @@ h1{
     z-index: 1; /*stays on top*/
 }
 
+.notifications{
+    color: #ffcbcb;
+    margin-top: 3px;
+}
+
+.notifications:hover{
+    color:pink;
+}
+    
+
 /* Popover Styles */
 .popover-container {
     position: relative;
