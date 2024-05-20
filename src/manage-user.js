@@ -1,6 +1,10 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete } from "./firebase_functions.js";
+import { handleRoleChange,handleUserDelete, handleFeedbackRequest } from "./firebase_functions.js";
+
+//ensures page waits for all DOMContent to load
+document.addEventListener('DOMContentLoaded', function() {
+
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -61,6 +65,16 @@ function loadUsers(filter) {
                                     </div>
                                 </div>
                             </span>
+                            <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
+                            <div id="feedbackModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Request Feedback</h2>
+                                <label for="feedbackEmailInput">Recipient Email:</label>
+                                <input type="email" id="feedbackEmailInput" placeholder="Enter recipient's email">
+                                <button id="sendFeedbackRequestBtn">Send Feedback Request</button>
+                            </div>
+                        </div>
                         </td>
                     </tr>
                 `;
@@ -97,7 +111,14 @@ document.getElementById('usersList').addEventListener('click', (event) => {
     if (target.classList.contains('fa-user-xmark')) {
         handleUserDelete(target)
     }
-})
+    if (target.classList.contains('fa-bell')) {
+        handleFeedbackRequest(target)
+   
+    }
+});
+
+});
+
 
 
 
