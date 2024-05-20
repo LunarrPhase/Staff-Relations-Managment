@@ -123,8 +123,6 @@ async function GetCurrentUserFeedbackNotifications(userEmail) {
 
     }
 
-	
-
     try {
 
         // Reference to the feedbackNotifications collection in Firestore
@@ -132,7 +130,6 @@ async function GetCurrentUserFeedbackNotifications(userEmail) {
         const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
 
         // Query to get feedback notifications where recipient matches the current user's email
-
         const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
 
 	
@@ -304,7 +301,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
 
 // Populate meals dropdown based on selected date and diet
 async function populateMeals(dateInput, dietSelect, mealSelect) {
-    console.log("hii");
+    //console.log("hii");
     const selectedDate = dateInput.value;
     const selectedDiet = dietSelect.value;
     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
@@ -587,10 +584,10 @@ function handleUserDelete(target) {
 
 function handleFeedbackRequest(target) {
     const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email');
+    const userEmail = row.getAttribute('data-user-email').toLowerCase();
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    userEmail = userEmail.value.toLowerCase();
+    
     get(usersQuery)
         .then((snapshot) => {
             if (snapshot.exists()) {
