@@ -590,7 +590,7 @@ function handleFeedbackRequest(target) {
     const userEmail = row.getAttribute('data-user-email');
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    userEmail = userEmail.toLowerCase();
+    userEmail = userEmail.value.toLowerCase();
     get(usersQuery)
         .then((snapshot) => {
             if (snapshot.exists()) {
