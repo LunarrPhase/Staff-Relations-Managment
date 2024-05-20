@@ -14,10 +14,10 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/dummy.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/dummy.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/dummy.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js": "<rootDir>/dummy.js"
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/firebase-mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/firebase-mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/firebase-mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js": "<rootDir>/firebase-mocks.js"
     },
     "testEnvironment": "jsdom",
     "collectCoverage": true,
