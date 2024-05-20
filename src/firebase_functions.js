@@ -1,8 +1,10 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { ref, update, get, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc, updateDoc, collection, where, addDoc, getDoc, getDocs, setDoc, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { update, orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { doc, updateDoc, addDoc, setDoc, deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
 import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
+import { collection, getDoc, getDocs, where } from "./firestore-imports.js";
+import { get, ref, query } from "./database-imports.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -10,9 +12,9 @@ import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected
 
 //access firebase, then document for the day...
 async function displayBookings(selectedDate) {
-   
-    const bookingsRef = collection(db, 'mealOrders')
-    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)))
+    
+    const bookingsRef = collection(db, 'mealOrders');
+    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)));
     const usersList = document.getElementById('usersList')
 
     renderMeals(querySnapshot, usersList);
@@ -38,9 +40,9 @@ async function SendHome(user){
     if (user) {
         try {
             //goes to their database in users
-            const userRef = ref(database, 'users/' + user.uid)
+            const userRef = ref(database, 'users/' + user.uid);
             get(userRef).then((snapshot) => {
-
+               
                 const userData = snapshot.val();
                 const role = userData.role;
                 // baisically this makes sure they go to the correct home screen
@@ -59,32 +61,32 @@ async function SendHome(user){
 
 async function GetCurrentUserMealBookings(user){
 
-        //get current user id
-        const userId = user.uid;
+    //get current user id
+    const userId = user.uid;
 
-        if (!userId) {
-            console.error("User ID not available");
-            SendHome(user);
+    if (!userId) {
+        console.error("User ID not available");
+        SendHome(user);
 
-        }
+    }
 
-        //get todays date and convert it to string
-        const today = new Date();
-        const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
-        console.log("getting date");
-        //the refrence to their meal bookings in firestore
-        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+    //get todays date and convert it to string
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+    console.log("getting date");
+    //the refrence to their meal bookings in firestore
+    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
 
-        //get the meal bookings that match todays date    
-        const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
+    //get the meal bookings that match todays date    
+    const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
 
-        const mealBookings = [];
-        querySnapshot.forEach((doc) => {
-            mealBookings.push(doc.data());
-        });
+    const mealBookings = [];
+    querySnapshot.forEach((doc) => {
+        mealBookings.push(doc.data());
+    });
 
-        //return the data on todays meal bookings
-        return mealBookings;
+    //return the data on todays meal bookings
+    return mealBookings;
 }
 
 
@@ -425,9 +427,10 @@ async function FirebaseLogin(auth, database, db, email, password) {
 /* MANAGE-USERS */
 
 
-const usersRef = ref(database, 'users');
+
 function handleRoleChange(target) {
 
+    const usersRef = ref(database, 'users');
     const row = target.closest('tr')
     const userEmail = row.getAttribute('data-user-email')
 
