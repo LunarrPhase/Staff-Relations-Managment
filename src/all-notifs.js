@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
 
         const currentFeedbackNotification = await GetCurrentUserFeedbackNotifications(user.email);
-
+        console.log(user.email);
         //const feedbackNotificationElements = CreateFeedbackNotificationElement(feedbackNotification);
 
         const feedbackNotificationElement = CreateFeedbackNotificationElement(currentFeedbackNotification);
