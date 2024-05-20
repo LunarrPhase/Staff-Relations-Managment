@@ -261,7 +261,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
 
-    if(selectedDay > currentDateString){
+    if(selectedDay >= currentDateString){
 
         //bookSlot(8AM)
         await bookSlot(selectedTimeSlot, selectedDay, selectedType, user);
