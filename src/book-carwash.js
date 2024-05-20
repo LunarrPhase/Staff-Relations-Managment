@@ -46,12 +46,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-const goHome = document.getElementById('home');
-goHome.addEventListener('click', async () => {
-
-    //getting current user
-    const user = auth.currentUser;
-    SendHome(user);
-})
-
 

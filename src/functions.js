@@ -135,7 +135,7 @@ function CreateFeedbackNotificationElement(userEmailInput){
         notificationElement.classList.add('notification');
         const notificationText = `Please write a feedback report to the member with the email ${userEmailInput.text}.`;
         notificationElement.innerText = notificationText;
-        document.getElementById('notifications').appendChild(notificationElement);
+        document.getElementById('notification').appendChild(notificationElement);
 
         return notificationElement;
 
