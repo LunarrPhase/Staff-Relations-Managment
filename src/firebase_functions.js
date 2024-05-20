@@ -12,7 +12,7 @@ import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected
 async function displayBookings(selectedDate) {
    
     const bookingsRef = collection(db, 'mealOrders')
-    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)))
+    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)))
     const usersList = document.getElementById('usersList')
 
     renderMeals(querySnapshot, usersList);
