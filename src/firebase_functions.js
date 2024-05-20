@@ -109,6 +109,66 @@ async function GetCurrentUserCarWashBookings(user){
 }
 
 
+
+
+//get feedback notifications
+
+async function GetCurrentUserFeedbackNotifications(userEmail) {
+
+    if (!userEmail) {
+
+        console.error("User email not available");
+
+        return [];
+
+    }
+
+	
+
+    try {
+
+        // Reference to the feedbackNotifications collection in Firestore
+
+        const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+
+        // Query to get feedback notifications where recipient matches the current user's email
+
+        const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
+
+	
+
+
+        const feedbackNotifications = [];
+
+        querySnapshot.forEach((doc) => {
+
+            feedbackNotifications.push(doc.data());
+
+        });
+
+
+
+        // Return the data on feedback notifications
+        
+        console.log("Feedback notifications:");
+
+        return feedbackNotifications;
+
+    } catch (error) {
+
+        console.error("Error fetching feedback notifications:", error);
+
+        return [];
+
+    }
+
+}
+
+
+
+
+
+
 /* BOOK CARWASH */
 
 
@@ -525,42 +585,55 @@ function handleUserDelete(target) {
         });
 }
 
-function HandleFeedback(target) {
-    const userEmailInput = target.getAttribute('data-user-email');
-    const modal = document.getElementById('feedbackModal');
-    const sendFeedbackBtn = modal.querySelector('#sendFeedbackBtn');
-    const cancelFeedbackBtn = modal.querySelector('#cancelFeedbackBtn');
+function handleFeedbackRequest(target) {
+    const row = target.closest('tr');
+    const userEmail = row.getAttribute('data-user-email');
 
-    // Handle the send feedback button click
-    sendFeedbackBtn.addEventListener('click', () => {
-        const feedbackUserEmail = userEmailInput.trim();
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
 
-        if (feedbackUserEmail) {
-            CreateFeedbackNotificationElement(feedbackUserEmail); // Send the notification
-            console.log('Feedback notification sent successfully!');
+    get(usersQuery)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const userId = Object.keys(snapshot.val())[0];
 
-            // Close the feedback modal
-            modal.style.display = 'none';
+                document.getElementById('feedbackModal').style.display = 'block';
 
-            // Return to the manage user page
-            window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
-        } else {
-            console.error('No user email entered.');
-        }
-    });
+                document.querySelector('.close').addEventListener('click', () => {
+                    document.getElementById('feedbackModal').style.display = 'none';
+                });
 
-    // Handle the cancel feedback button click
-    cancelFeedbackBtn.addEventListener('click', () => {
-        // Close the feedback modal
-        modal.style.display = 'none';
+                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
+                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
 
-        // Return to the manage user page
-        window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
-    });
-
-    // Show the feedback modal
-    modal.style.display = 'block';
+                    if (recipientEmail) {
+                        try {
+                            const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+                            await addDoc(feedbackNotificationsRef, {
+                                requester: userEmail,
+                                recipient: recipientEmail,
+                                timestamp: new Date().toISOString(),
+                            });
+                            console.log('Feedback request sent successfully');
+                            document.getElementById('feedbackModal').style.display = 'none';
+                        } catch (error) {
+                            console.error('Error sending feedback request:', error);
+                        }
+                    } else {
+                        console.error('Recipient email is required');
+                    }
+                });
+            } else {
+                console.error('User not found');
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
 }
+
+
+
+
 /* ALL CARWASH BOOKINGS */
 
 
@@ -589,4 +662,4 @@ async function getCarwashBookings(date) {
  
 
 
-export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
+export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings,GetCurrentUserFeedbackNotifications, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,handleFeedbackRequest, getCarwashBookings}
