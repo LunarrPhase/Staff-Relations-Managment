@@ -2,6 +2,10 @@ import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { handleRoleChange,handleUserDelete, HandleFeedback } from "./firebase_functions.js";
 
+//ensures page waits for all DOMContent to load
+document.addEventListener('DOMContentLoaded', function() {
+
+
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
     get(usersRef).then((snapshot) => {
@@ -112,6 +116,8 @@ document.getElementById('usersList').addEventListener('click', (event) => {
         HandleFeedback(target)
    
     }
+});
+
 });
 
 
