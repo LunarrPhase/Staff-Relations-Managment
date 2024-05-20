@@ -582,10 +582,14 @@ function handleUserDelete(target) {
         });
 }
 
+//handles feedback request on manage users
 function handleFeedbackRequest(target) {
+    //get the selected information
     const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email').toLowerCase();
-
+    const userEmail = row.getAttribute('data-user-email');
+    //this second email helps us avoid problems with case sensitivity 
+    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
+    //query db
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     
     get(usersQuery)
@@ -604,9 +608,10 @@ function handleFeedbackRequest(target) {
 
                     if (recipientEmail) {
                         try {
+                            //adds notification to the collection feedbackNotifications
                             const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
                             await addDoc(feedbackNotificationsRef, {
-                                requester: userEmail,
+                                requester: userEmailLowerCase,
                                 recipient: recipientEmail,
                                 timestamp: new Date().toISOString(),
                             });
