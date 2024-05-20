@@ -12,9 +12,9 @@ import { get, ref, query } from "./database-imports.js";
 
 //access firebase, then document for the day...
 async function displayBookings(selectedDate) {
-    
-    const bookingsRef = collection(db, 'mealOrders');
-    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)));
+
+    const bookingsRef = collection(db, 'mealOrders')
+    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)));
     const usersList = document.getElementById('usersList')
 
     renderMeals(querySnapshot, usersList);
@@ -111,6 +111,63 @@ async function GetCurrentUserCarWashBookings(user){
 }
 
 
+
+
+//get feedback notifications
+
+async function GetCurrentUserFeedbackNotifications(userEmail) {
+
+    if (!userEmail) {
+
+        console.error("User email not available");
+
+        return [];
+
+    }
+
+    try {
+
+        // Reference to the feedbackNotifications collection in Firestore
+
+        const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+
+        // Query to get feedback notifications where recipient matches the current user's email
+        const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
+
+	
+
+
+        const feedbackNotifications = [];
+
+        querySnapshot.forEach((doc) => {
+
+            feedbackNotifications.push(doc.data());
+
+        });
+
+
+
+        // Return the data on feedback notifications
+        
+        console.log("Feedback notifications:");
+
+        return feedbackNotifications;
+
+    } catch (error) {
+
+        console.error("Error fetching feedback notifications:", error);
+
+        return [];
+
+    }
+
+}
+
+
+
+
+
+
 /* BOOK CARWASH */
 
 
@@ -203,7 +260,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
 
-    if(selectedDay > currentDateString){
+    if(selectedDay >= currentDateString){
 
         //bookSlot(8AM)
         await bookSlot(selectedTimeSlot, selectedDay, selectedType, user);
@@ -246,7 +303,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
 
 // Populate meals dropdown based on selected date and diet
 async function populateMeals(dateInput, dietSelect, mealSelect) {
-    console.log("hii");
+    //console.log("hii");
     const selectedDate = dateInput.value;
     const selectedDiet = dietSelect.value;
     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
@@ -528,6 +585,60 @@ function handleUserDelete(target) {
         });
 }
 
+//handles feedback request on manage users
+function handleFeedbackRequest(target) {
+    //get the selected information
+    const row = target.closest('tr');
+    const userEmail = row.getAttribute('data-user-email');
+    //this second email helps us avoid problems with case sensitivity 
+    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
+    //query db
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
+    
+    get(usersQuery)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const userId = Object.keys(snapshot.val())[0];
+
+                document.getElementById('feedbackModal').style.display = 'block';
+
+                document.querySelector('.close').addEventListener('click', () => {
+                    document.getElementById('feedbackModal').style.display = 'none';
+                });
+
+                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
+                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
+
+                    if (recipientEmail) {
+                        try {
+                            //adds notification to the collection feedbackNotifications
+                            const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+                            await addDoc(feedbackNotificationsRef, {
+                                requester: userEmailLowerCase,
+                                recipient: recipientEmail,
+                                timestamp: new Date().toISOString(),
+                            });
+                            console.log('Feedback request sent successfully');
+                            document.getElementById('feedbackModal').style.display = 'none';
+                        } catch (error) {
+                            console.error('Error sending feedback request:', error);
+                        }
+                    } else {
+                        console.error('Recipient email is required');
+                    }
+                });
+            } else {
+                console.error('User not found');
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+}
+
+
+
+
 /* ALL CARWASH BOOKINGS */
 
 
@@ -552,22 +663,8 @@ async function getCarwashBookings(date) {
     return bookings
 }
 
-function HandleFeedback () {
-    const selectElement = document.getElementById('userSelect');
-    const selectedUserEmail = selectElement.value;
 
-    const message = `Please write feedback on ${selectedUserEmail}.`; // Message to be sent in the notification
-
-    // Check if a user is selected
-    if (selectedUserEmail) {
-        sendNotification(selectedUserEmail, message); // Send the notification
-        // You can add any additional logic here, such as displaying a success message or closing the modal
-        console.log('Feedback notification sent successfully!');
-    } else {
-        // Handle case where no user is selected
-        console.error('No user selected for feedback.');
-    }
-}
+ 
 
 
-export{displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, populateMeals, doMealBooking, CreateMeal, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}
+export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings,GetCurrentUserFeedbackNotifications, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,handleFeedbackRequest, getCarwashBookings}

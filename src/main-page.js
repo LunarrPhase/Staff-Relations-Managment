@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     event.preventDefault()
     const loading = document.getElementById('loading');
     loading.style.display = 'block'; // Show loading animation
-
     
     //get the currently signed in user
     onAuthStateChanged(auth, async (user) => {

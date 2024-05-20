@@ -129,11 +129,43 @@ function CreateCarWashNotificationElement(carWashBookings){
 }
 
 
-function PopulateNotifications(notificationContainer, combinedNotificationElements){
-    combinedNotificationElements.forEach((element) => {
-        notificationContainer.appendChild(element);
+
+function CreateFeedbackNotificationElement(feedbackNotifications) {
+
+    const notificationElements = feedbackNotifications.map((notification) => {
+
+        const notificationElement = document.createElement('div');
+
+        notificationElement.classList.add('notification');
+
+	console.log(notification.recipient);
+
+        const notificationText = `Please give feedback to ${notification.recipient}.`;
+
+        notificationElement.innerText = notificationText;
+
+
+
+        return notificationElement;
+
     });
+
+    return notificationElements;
+
 }
+
+
+
+function PopulateNotifications(notificationContainer, combinedNotificationElements){
+
+    combinedNotificationElements.forEach((element) => {
+
+        notificationContainer.appendChild(element);
+
+    });
+
+}
+
 
 
 /* BOOK CAR WASH */
@@ -237,4 +269,5 @@ function truncateText(text, maxLength) {
 }
 
 
-export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, PopulateNotifications, areInputsSelected, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
+
+export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, CreateFeedbackNotificationElement, PopulateNotifications, areInputsSelected, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };

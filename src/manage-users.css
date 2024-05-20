@@ -104,19 +104,7 @@ ul li:hover .drop-down ul li:last-child{
     border-bottom: none;
 }
 
-/*style notification bell*/
 
-.notifications .fa-bell{
-    transition: all 0.5s;
-    color: #ffb5b5;
-    transform-origin: center;
-    margin-top: 4px;
-    padding: 0 10px;
-}
-
-.notifications .fa-bell:hover{
-   color: white;
-}
 
 h1{
     color: #ffb5b5;
@@ -149,6 +137,16 @@ h1{
     background: #4b788f;
     z-index: 1; /*stays on top*/
 }
+
+.notifications{
+    color: #ffcbcb;
+    margin-top: 3px;
+}
+
+.notifications:hover{
+    color:#fff;
+}
+    
 
 /* Popover Styles */
 .popover-container {
@@ -378,11 +376,9 @@ p{
 }
 
 
-
 p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
 
 
 
