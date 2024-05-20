@@ -2,6 +2,7 @@ main{
     height: 100%; /*full height*/
     width: 100%; /*full height*/
     padding-top: 80px;
+    padding-bottom: 50px;
     display: flex;
     justify-content: center; /*center items*/
     align-items: center;
@@ -252,7 +253,7 @@ p{
 h4{
     font-size: 25px;
     margin: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     transition: 5s;
 }
 
