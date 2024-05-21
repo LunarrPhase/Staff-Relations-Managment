@@ -1,10 +1,9 @@
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { update, orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { updateDoc, addDoc, deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
-import { database, firestore as db } from "./firebaseInit.js";
+import { orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { database, firestore as db, signInWithEmailAndPassword } from "./firebaseInit.js";
 import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
-import { collection, doc, getDoc, getDocs, setDoc, where } from "./firestore-imports.js";
-import { get, ref, query } from "./database-imports.js";
+import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "./firestore-imports.js";
+import { get, ref, query, update } from "./database-imports.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -73,7 +72,7 @@ async function GetCurrentUserMealBookings(user){
     //get todays date and convert it to string
     const today = new Date();
     const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
-    console.log("getting date");
+  
     //the refrence to their meal bookings in firestore
     const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
 
@@ -401,7 +400,6 @@ async function CreateMeal(dateInput, dietInput, mealInput){
         // Add a subcollection for each day
         const dateDocRef = doc(colRef, dateInput);
         const dateColRef = collection(dateDocRef, 'meals');
-        console.log(dateDocRef);
 
         await addDoc(dateColRef, {
           diet: dietInput,
@@ -411,19 +409,18 @@ async function CreateMeal(dateInput, dietInput, mealInput){
         //clears the form and error upon submission and alerts user that meal has been booked
         document.querySelector('.add').reset();  
         alert("Successfully created meal!");
-        const warning = document.getElementById("warning");
-        warning.innerText= "";
+        document.getElementById("warning").innerText= "";
     }
     else{
 
       //if the person selects a day that has passed, they get a warning
-      const warning = document.getElementById("warning");
-      warning.innerText= "Cannot book meals for current and previous days."
+      document.getElementById("warning").innerText= "Cannot book meals for current and previous days."
     }
 }
 
 
 /* INDEX */
+
 
 async function FirebaseLogin(auth, database, db, email, password) {
     try {
@@ -438,13 +435,14 @@ async function FirebaseLogin(auth, database, db, email, password) {
         const userRef = ref(database, 'users/' + userUid);
         const snapshot = await get(userRef);
         let userData = snapshot.val();
-
+       
         if (userData) {
             await update(userRef, { last_login: dt });
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
-        } else {
+        }
+        else {
             // Query Firestore by email to get the document ID
             const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
             const querySnapshot = await getDocs(accountsQuery);
@@ -469,7 +467,8 @@ async function FirebaseLogin(auth, database, db, email, password) {
         if (errorMessageElement) {
             errorMessageElement.textContent = errorMessage;
         }
-    } finally {
+    }
+    finally {
         const loadingMessageElement = document.getElementById('loading-message');
         if (loadingMessageElement) {
             loadingMessageElement.style.display = 'none';
