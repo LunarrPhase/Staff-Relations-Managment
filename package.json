@@ -5,7 +5,7 @@
   "main": "index.js",
   "//": "to test locally: jest ./__tests__ else: sh node_modules/.bin/jest ./__tests__ ",
   "scripts": {
-    "test": "sh node_modules/.bin/jest ./__tests__ ",
+    "test": "jest ./__tests__ ",
     "start": "node app"
   },
   "repository": {
@@ -14,10 +14,11 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/firebase-mocks.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/firebase-mocks.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/firebase-mocks.js",
-      "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js": "<rootDir>/firebase-mocks.js"
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js": "<rootDir>/mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js": "<rootDir>/mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js": "<rootDir>/mocks.js",
+      "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js": "<rootDir>/mocks.js",
+      "<rootDir>/src/functions.js": "<rootDir>/mocks.js"
     },
     "testEnvironment": "jsdom",
     "collectCoverage": true,

@@ -1,19 +1,26 @@
 import { displayBookings, displayAllBookings } from "../../src/firebase_functions.js";
+import { mockFunctions } from "../../mocks.js";
 
 
 describe("Meal booking functionality", () => {
 
-    it("Calls renderMeals", async () => {
+    let spy; 
 
-        const consoleSpy = jest.spyOn(console, 'log');
+    beforeEach(() => {
+        spy = jest.spyOn(mockFunctions, "renderMeals");
+    });
+    
+    afterEach(() => {
+        mockFunctions.renderMeals.mockRestore()
+    });
+
+    it("Calls renderMeals", async () => {
         await displayAllBookings("1969-04-20");
-        expect(consoleSpy).toHaveBeenCalledWith("Calling renderMeals.");
+        expect(spy).toHaveBeenCalled();
     })
 
     it("Calls renderMeals when filtering by date", async () => {
-
-        const consoleSpy = jest.spyOn(console, 'log');
         await displayBookings("1969-04-20");
-        expect(consoleSpy).toHaveBeenCalledWith("Calling renderMeals.");
+        expect(spy).toHaveBeenCalled();
     });
 })
