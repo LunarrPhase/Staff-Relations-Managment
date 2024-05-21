@@ -1,12 +1,30 @@
 //WHERE I MOCK FIREBASE AND OTHER FUNCTIONS SO I DON'T HAVE TO DEAL WITH THEM DURING UNIT TESTS
 
+import { signInWithEmailAndPassword } from './src/firebaseInit.js';
 import { updateAvailableSlots } from './src/firebase_functions.js';
 
 
 /* MOCKING FIREBASE */
 
 
-jest.mock("./src/firebaseInit.js", () => jest.fn());
+jest.mock("./src/firebaseInit.js", () => ({
+
+    signInWithEmailAndPassword: function(auth, email, password){
+
+        if (auth && email == "anemail@email.com"){
+            const mockUser = { uid: "uid" };
+            const mockUserCred = { user: mockUser };
+            return mockUserCred;
+        }
+
+        else if (auth && email == "invalidEmail"){
+            const mockUser = { uid: undefined };
+            const mockUserCred = { user: mockUser };
+            return mockUserCred;
+        }
+        throw "Invalid authentication";
+    }
+}));
 
 
 jest.mock("./src/database-imports.js", () => ({
@@ -16,21 +34,38 @@ jest.mock("./src/database-imports.js", () => ({
         if (text == "users/null"){
             throw "ID not found";
         }
-        return;
+        
+        else if (text == "users/uid"){
+            return "validRef";
+        }
     },
     get: function(userRef){
 
+        if (userRef == "validRef"){
+            const mockSnapshot = {
+                val: function(){
+                    return {
+                        role: "role",
+                        firstName: "",
+                        lastName: ""
+                    }
+                }
+            }
+            return mockSnapshot;
+        }
         const promise = new Promise((resolve) => {
             resolve(mockSnapshot);
         });
         return promise;
     },
-    query: function(collections, subcollection){ return }
+    query: function(collections, subcollection){ return },
+    update: async function(ref, object){ return }
 }))
 
 
 jest.mock("./src/firestore-imports.js", () => ({
 
+    addDoc: function(reference, object){ return },
     collection: function(database, collections){ return },
     doc: function(database, collection, field){ return },
     doc: function(reference, val){ return },
@@ -69,8 +104,9 @@ jest.mock("./src/firebase_functions.js", () => ({
 jest.mock("./src/functions.js", () => ({
 
     ChangeWindow: function(role){ return },
+    getDayName: function(year, month, day){ return "Monday" },
     renderMeals: function(querySnapshot, usersList){ return },
-    getDayName: function(year, month, day){ return "Monday" }
+    SetLoginError: function(error){ return "errorMesaage" }
     
 }));
 
