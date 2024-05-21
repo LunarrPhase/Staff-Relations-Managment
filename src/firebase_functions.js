@@ -1,9 +1,9 @@
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 import { update, orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { doc, updateDoc, addDoc, setDoc, deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { updateDoc, addDoc, deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db } from "./firebaseInit.js";
 import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
-import { collection, getDoc, getDocs, where } from "./firestore-imports.js";
+import { collection, doc, getDoc, getDocs, setDoc, where } from "./firestore-imports.js";
 import { get, ref, query } from "./database-imports.js";
 
 
@@ -164,10 +164,6 @@ async function GetCurrentUserFeedbackNotifications(userEmail) {
 }
 
 
-
-
-
-
 /* BOOK CARWASH */
 
 
@@ -178,6 +174,7 @@ async function canBookSlot(day, hour) {
     const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour)
     const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots')
     const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
+   
     //debugging
     //console.log(`Booked Slots for ${hour}: ${bookedSlotsSnapshot.size}`)
     return bookedSlotsSnapshot.size < 5;
@@ -217,11 +214,11 @@ async function bookSlot(hour, selectedDay, selectedType, user) {
     const userEmail = user.email;
 
     if (await canBookSlot(selectedDay, hour)){
-
+        
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         const selectedDate = new Date(selectedDay)
         const dayName = daysOfWeek[selectedDate.getDay()]
-
+        
         const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
         const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
         const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
@@ -241,7 +238,7 @@ async function bookSlot(hour, selectedDay, selectedType, user) {
         });
 
         alert(`Successfully booked slot for ${hour}!`)
-        updateAvailableSlots(selectedDay)
+        updateAvailableSlots(selectedDay);
     }
     else {
         alert(`No available slots today for ${hour}`)
@@ -484,7 +481,6 @@ async function FirebaseLogin(auth, database, db, email, password) {
 /* MANAGE-USERS */
 
 
-
 function handleRoleChange(target) {
 
     const usersRef = ref(database, 'users');
@@ -662,9 +658,6 @@ async function getCarwashBookings(date) {
     }
     return bookings
 }
-
-
- 
 
 
 export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings,GetCurrentUserFeedbackNotifications, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,handleFeedbackRequest, getCarwashBookings}

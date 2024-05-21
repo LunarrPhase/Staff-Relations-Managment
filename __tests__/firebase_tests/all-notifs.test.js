@@ -1,17 +1,18 @@
 import { SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings } from "../../src/firebase_functions";
+import { mockFunctions } from "../../mocks";
 
 
 describe("Send Home functionality", () => {
 
     it("Calls ChangeWindow when user is valid", async () => {
 
-        const consoleSpy = jest.spyOn(console, 'log');
-        const mockUser = { uid: "ID" }
+        const spy = jest.spyOn(mockFunctions, "ChangeWindow");
+        const mockUser = { uid: "validID" };
         await SendHome(mockUser);
-        expect(consoleSpy).toHaveBeenCalledWith("Changing window to role page.");
+        expect(spy).toHaveBeenCalled();
     });
 
-    it("Throws error when user role is not found", async () => {
+    it("Throws an error when user role is not found", async () => {
 
         const consoleSpy = jest.spyOn(console, 'error');
         const mockUser = { uid: null };
@@ -34,15 +35,17 @@ describe("Send Home functionality", () => {
 
 describe("Getting current meal bookings", () => {
 
-    it ("Throws error when user ID is invalid", async () => {
+    it ("Throws error when user ID is invalid and calls Send Home", async () => {
 
-        const consoleSpy = jest.spyOn(console, 'error');
+        const consoleSpy = jest.spyOn(console, "error");
         const mockUser = { uid: null };
         await GetCurrentUserMealBookings(mockUser);
+
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
+        expect(consoleSpy).toHaveBeenCalledWith("Error getting user role:", "ID not found");
     });
 
-    it ("Returns an empty array when there are no meal bookings", async () => {
+    it ("Returns an array when user ID is valid", async () => {
 
         const mockUser = { uid: "val" };
         const arr = GetCurrentUserMealBookings(mockUser);
@@ -54,7 +57,7 @@ describe("Getting current meal bookings", () => {
 
 describe("Getting current carwash bookings", () => {
 
-    it ("Throws error when user ID is invalid", async () => {
+    it ("Throws an error when user ID is invalid", async () => {
 
         const consoleSpy = jest.spyOn(console, 'error');
         const mockUser = { uid: null };
