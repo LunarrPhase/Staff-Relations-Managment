@@ -1,8 +1,8 @@
 import { orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
-import { updateDoc, deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db, signInWithEmailAndPassword } from "./firebaseInit.js";
 import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, where } from "./firestore-imports.js";
+import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "./firestore-imports.js";
 import { get, ref, query, update } from "./database-imports.js";
 
 
@@ -72,7 +72,7 @@ async function GetCurrentUserMealBookings(user){
     //get todays date and convert it to string
     const today = new Date();
     const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
-    console.log("getting date");
+  
     //the refrence to their meal bookings in firestore
     const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
 
@@ -400,7 +400,6 @@ async function CreateMeal(dateInput, dietInput, mealInput){
         // Add a subcollection for each day
         const dateDocRef = doc(colRef, dateInput);
         const dateColRef = collection(dateDocRef, 'meals');
-        console.log(dateDocRef);
 
         await addDoc(dateColRef, {
           diet: dietInput,

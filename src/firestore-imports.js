@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, where } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
-export { addDoc, collection, doc, getDoc, getDocs, setDoc, where }
+export { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where }
