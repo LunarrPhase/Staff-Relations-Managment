@@ -133,8 +133,7 @@ function CreateCarWashNotificationElement(carWashBookings){
 function CreateFeedbackNotificationElement(feedbackNotifications) {
 
     const notificationElements = feedbackNotifications.map((notification) => {
-
-        const notificationElement = document.createElement('div');
+    const notificationElement = document.createElement('div');
 
         notificationElement.classList.add('notification');
 

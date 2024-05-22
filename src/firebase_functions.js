@@ -1,9 +1,8 @@
-import { orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
 import { deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
 import { database, firestore as db, signInWithEmailAndPassword } from "./firebaseInit.js";
 import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
 import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "./firestore-imports.js";
-import { get, ref, query, update } from "./database-imports.js";
+import { equalTo, get, orderByChild, ref, remove, query, update } from "./database-imports.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -643,19 +642,19 @@ async function getCarwashBookings(date) {
     const dateString = `${year}-${month}-${day}`
     const dayName = getDayName(year, month, day)
     const fullDateString = `${dateString}-${dayName}`
-    console.log('Querying for date:', fullDateString)
 
     const bookings = []
     const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
-    const bookingSnapshot = await getDocs(bookingRef)
+    const bookingSnapshot = await getDocs(bookingRef);
+    
     for (const bookingDoc of bookingSnapshot.docs) {
         const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
-        const slotSnapshot = await getDocs(slotRef)
+        const slotSnapshot = await getDocs(slotRef);
         slotSnapshot.forEach(slotDoc => {
             bookings.push(slotDoc.data())
         });
     }
-    return bookings
+    return bookings;
 }
 
 
