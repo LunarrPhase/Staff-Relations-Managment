@@ -31,9 +31,9 @@ jest.mock("./src/database-imports.js", () => ({
 
     equalTo: function(property){ 
 
-        if (property == "dne@database.com"){
+        /*if (property == "dne@database.com"){
             return "invalidQuery";
-        }
+        }*/
         return;
     },
 
@@ -62,13 +62,21 @@ jest.mock("./src/database-imports.js", () => ({
         }
     },
 
-    orderByChild: function(property){ return },
+    orderByChild: function(property){
+        
+        if(property == 'email'){
+            return "roleChangeEmail";
+        }
+    },
 
     query: function(collections, subcollection1, subcollection2){
 
-        if (subcollection1 == "exists"){ return "ref" }
+        if (collections == "mealOrdersRef"){ return "mealOrdersRef" }
+        else if (collections == "carwashRef"){ return "carwashRef" }
+        else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
+        else if (subcollection1 == "roleChangeEmail"){ return "roleChangeEmailQuery" }
         return;
     },
 
@@ -102,14 +110,22 @@ jest.mock("./src/firestore-imports.js", () => ({
             return "carwashBookedRef"
         }
 
+        else if(collections ==  `users/validID/mealOrders`){
+            return "mealOrdersRef";
+        }
+
+        else if(collections ==  `users/validID/carwashBookings`){
+            return "carwashRef";
+        }
+
         else if (subcollection1 == 'daySlotBookings'){
             return "carwashDateRef";
         }
         return;
     },
-    doc: function(database, collection, field){ return },
+    //doc: function(database, collection, field){ return },
     doc: function(reference, val){ return },
-    getDoc: async function(reference){ return mockDocument },
+    //getDoc: async function(reference){ return mockDocument },
 
     getDocs: async function(reference){
     
@@ -133,7 +149,7 @@ jest.mock("./src/firestore-imports.js", () => ({
             return { docs: docs }
         }
 
-        else if (reference == "carwashBookedRef"){
+        else if (reference == "carwashBookedRef" || reference == "mealOrdersRef" || reference == "carwashRef"){
 
             const slot = { data: function(){ return "fullOfBookings" } }
             const snapshot = [ slot ]
@@ -146,7 +162,7 @@ jest.mock("./src/firestore-imports.js", () => ({
         return set;
     },
 
-    setDoc: async function(){ return },
+    //setDoc: async function(){ return },
     updateDoc: async function(){ return },
     where: function(field, regex, fieldVal){
 
@@ -162,8 +178,9 @@ jest.mock("./src/firestore-imports.js", () => ({
 }));
 
 
-const snapshotVal = { role: "role" };
+const snapshotVal = { id: "id", role: "role" };
 const mockSnapshot = {
+    exists: function(){ return true },
     val: function(){
         return snapshotVal;
     }
@@ -175,7 +192,7 @@ const mockSnapshot = {
 
 jest.mock("./src/firebase_functions.js", () => ({
 
-    updateAvailableSlots: function(selectedDate){ return }
+    //updateAvailableSlots: function(selectedDate){ return }
 }))
 
 
@@ -193,7 +210,7 @@ jest.mock("./src/functions.js", () => ({
 
 
 const mockDocument = {
-    exists: function(){ return true }
+    //exists: function(){ return true }
 }
 
 

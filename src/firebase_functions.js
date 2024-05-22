@@ -74,15 +74,15 @@ async function GetCurrentUserMealBookings(user){
   
     //the refrence to their meal bookings in firestore
     const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
-
+    
     //get the meal bookings that match todays date    
     const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
-
+    
     const mealBookings = [];
     querySnapshot.forEach((doc) => {
         mealBookings.push(doc.data());
     });
-
+    
     //return the data on todays meal bookings
     return mealBookings;
 }
@@ -101,6 +101,7 @@ async function GetCurrentUserCarWashBookings(user){
     
     //compare the datas 
     const querySnapshot = await getDocs(query(carWashBookingsRef, where('date', '==', todayString)));
+    
     const carWashBookings = [];
     querySnapshot.forEach((doc) => {
         carWashBookings.push(doc.data());
@@ -109,56 +110,35 @@ async function GetCurrentUserCarWashBookings(user){
 }
 
 
-
-
 //get feedback notifications
-
 async function GetCurrentUserFeedbackNotifications(userEmail) {
 
     if (!userEmail) {
-
         console.error("User email not available");
-
         return [];
-
     }
 
     try {
 
         // Reference to the feedbackNotifications collection in Firestore
-
         const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
 
         // Query to get feedback notifications where recipient matches the current user's email
         const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
 
-	
-
-
         const feedbackNotifications = [];
-
         querySnapshot.forEach((doc) => {
-
             feedbackNotifications.push(doc.data());
-
         });
 
-
-
-        // Return the data on feedback notifications
-        
+        // Return the data on feedback notifications        
         console.log("Feedback notifications:");
-
         return feedbackNotifications;
 
     } catch (error) {
-
         console.error("Error fetching feedback notifications:", error);
-
         return [];
-
     }
-
 }
 
 
@@ -485,17 +465,17 @@ function handleRoleChange(target) {
     const row = target.closest('tr')
     const userEmail = row.getAttribute('data-user-email')
 
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
-
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
+    
     get(usersQuery)
     .then((snapshot) => {
         if (snapshot.exists()) {
-            const userId = Object.keys(snapshot.val())[0]
-           
 
-            document.getElementById('roleModal').style.display = 'block'
-
+            const userId = Object.keys(snapshot.val())[0];
+            document.getElementById('roleModal').style.display = 'block';
+            
             document.querySelector('.close').addEventListener('click', () => {
+                console.log("hii")
                 document.getElementById('roleModal').style.display = 'none'
             })
 
@@ -503,13 +483,12 @@ function handleRoleChange(target) {
             document.getElementById('updateRoleBtn').addEventListener('click', () => {
                 const selectedRole = document.getElementById('roleSelect').value
 
-                console.log(userId)
+                
                 const updateObj = {}
                 updateObj['users/' + userId + '/role'] = selectedRole
 
                 update(ref(database), updateObj)
                 .then(() => {
-                    console.log('Role updated successfully');
                     const roleCell = row.querySelector('.role')
                     if (roleCell) {
                         roleCell.textContent = selectedRole;
@@ -519,7 +498,7 @@ function handleRoleChange(target) {
                 .catch((error) => {
                     console.error('Error updating role:', error)
                 })
-            })
+            });
         }
         else {
             console.error('User not found')
@@ -527,7 +506,7 @@ function handleRoleChange(target) {
     })
     .catch((error) => {
         console.error('Error fetching user data:', error);
-    })
+    });
 }
 
 
@@ -581,11 +560,14 @@ function handleUserDelete(target) {
 
 //handles feedback request on manage users
 function handleFeedbackRequest(target) {
+
     //get the selected information
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
+    
     //this second email helps us avoid problems with case sensitivity 
     const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
+    
     //query db
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     

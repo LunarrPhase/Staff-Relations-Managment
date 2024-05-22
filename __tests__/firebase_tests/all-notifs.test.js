@@ -47,10 +47,9 @@ describe("Getting current meal bookings", () => {
 
     it ("Returns an array when user ID is valid", async () => {
 
-        const mockUser = { uid: "val" };
-        const arr = GetCurrentUserMealBookings(mockUser);
-        const promise = new Promise(() => { return });
-        expect(arr).toStrictEqual(promise);
+        const mockUser = { uid: "validID" };
+        const mealBookings = await GetCurrentUserMealBookings(mockUser);
+        expect(mealBookings).toStrictEqual([ "fullOfBookings"]);
     });
 });
 
@@ -67,9 +66,8 @@ describe("Getting current carwash bookings", () => {
 
     it ("Returns an empty array when there are no meal bookings", async () => {
 
-        const mockUser = { uid: "val" };
-        const arr = GetCurrentUserCarWashBookings(mockUser);
-        const promise = new Promise(() => { return });
-        expect(arr).toStrictEqual(promise);
+        const mockUser = { uid: "validID" };
+        const carWashBookings = await GetCurrentUserCarWashBookings(mockUser);
+        expect(carWashBookings).toStrictEqual([ "fullOfBookings" ]);
     })
 })
