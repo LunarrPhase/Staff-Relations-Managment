@@ -71,8 +71,7 @@ jest.mock("./src/database-imports.js", () => ({
 
     query: function(collections, subcollection1, subcollection2){
 
-        if (collections == "mealOrdersRef"){ return "mealOrdersRef" }
-        else if (collections == "carwashRef"){ return "carwashRef" }
+        if (collections == "allNotifsRef"){ return "allNotifsRef" }
         else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
@@ -107,15 +106,27 @@ jest.mock("./src/firestore-imports.js", () => ({
     collection: function(database, collections, value1, subcollection1, value2, subcollection2){
 
         if(subcollection1 == "daySlotBookings" && subcollection2 == "bookedSlots"){
-            return "carwashBookedRef"
+            return "allNotifsRef"
+        }
+
+        else if(database == "carWashBookingsRef" && collections == "daySlotBookings"){
+            return "carwashSlotRef";
+        }
+
+        else if (database == "carwashBookedSlot" && collections == "bookedSlots"){
+            return "carwashBookedSlot";
         }
 
         else if(collections ==  `users/validID/mealOrders`){
-            return "mealOrdersRef";
+            return "allNotifsRef";
         }
 
         else if(collections ==  `users/validID/carwashBookings`){
-            return "carwashRef";
+            return "allNotifsRef";
+        }
+
+        else if(collections ==  "feedbackNotifications"){
+            return "allNotifsRef";
         }
 
         else if (subcollection1 == 'daySlotBookings'){
@@ -123,9 +134,20 @@ jest.mock("./src/firestore-imports.js", () => ({
         }
         return;
     },
-    //doc: function(database, collection, field){ return },
-    doc: function(reference, val){ return },
-    //getDoc: async function(reference){ return mockDocument },
+
+    doc: function(database, collection, field){
+
+        if (collection == "carWashBookings" && field == "1969-04-20-Sunday"){
+            return "carWashBookingsRef";
+        }
+
+        else if (database == "carwashSlotRef"){
+            return "carwashBookedSlot"
+        }
+        return;
+    },
+
+    getDoc: async function(reference){ return mockDocument },
 
     getDocs: async function(reference){
     
@@ -149,11 +171,15 @@ jest.mock("./src/firestore-imports.js", () => ({
             return { docs: docs }
         }
 
-        else if (reference == "carwashBookedRef" || reference == "mealOrdersRef" || reference == "carwashRef"){
+        else if (reference == "allNotifsRef"){
 
             const slot = { data: function(){ return "fullOfBookings" } }
             const snapshot = [ slot ]
             return snapshot;
+        }
+
+        else if (reference == "carwashBookedSlot"){
+            return [ 0, 1, 2, 3, 4, 5, 6 ];
         }
 
         else if (reference == "noRef"){ return{ empty: true } }
@@ -162,16 +188,16 @@ jest.mock("./src/firestore-imports.js", () => ({
         return set;
     },
 
-    //setDoc: async function(){ return },
+    setDoc: async function(){ return },
     updateDoc: async function(){ return },
     where: function(field, regex, fieldVal){
 
-        if (fieldVal == "email_not@realtime.db"){
-            return "exists";
-        }
+        if (fieldVal == "email_not@realtime.db"){ return "exists" }
+        else if (fieldVal == "email_not@firestore.db"){ return "DNE" }
 
-        else if (fieldVal == "email_not@firestore.db"){
-            return "DNE";
+        const equation = field + regex + fieldVal;
+        if (equation == "requester==invalid_query@database.com"){
+            throw "Querying error";
         }
         return;
     }
@@ -210,7 +236,7 @@ jest.mock("./src/functions.js", () => ({
 
 
 const mockDocument = {
-    //exists: function(){ return true }
+    exists: function(){ return true }
 }
 
 

@@ -124,15 +124,16 @@ async function GetCurrentUserFeedbackNotifications(userEmail) {
         const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
 
         // Query to get feedback notifications where recipient matches the current user's email
+        const w = query(feedbackNotificationsRef, where('requester', '==', userEmail))
+        console.log(w)
         const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
-
+        //console.log(querySnapshot)
         const feedbackNotifications = [];
         querySnapshot.forEach((doc) => {
             feedbackNotifications.push(doc.data());
         });
 
         // Return the data on feedback notifications        
-        console.log("Feedback notifications:");
         return feedbackNotifications;
 
     } catch (error) {
@@ -153,8 +154,6 @@ async function canBookSlot(day, hour) {
     const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots')
     const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
    
-    //debugging
-    //console.log(`Booked Slots for ${hour}: ${bookedSlotsSnapshot.size}`)
     return bookedSlotsSnapshot.size < 5;
 }
 
@@ -176,7 +175,6 @@ async function updateAvailableSlots(selectedDay) {
         const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
         const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
         const availableSlots = 5 - bookedSlotsSnapshot.size;
-        //console.log(`Available slots for ${slot}: ${availableSlots}`)
         const slotElement = document.getElementById(`${slot}-slots`)
 
         if (slotElement) {
