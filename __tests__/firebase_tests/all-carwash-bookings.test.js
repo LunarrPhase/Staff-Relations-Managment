@@ -3,8 +3,9 @@ import { getCarwashBookings } from "../../src/firebase_functions";
 
 describe("getCarwashBookings functionality", () => {
 
-    it("Returns bookings when given a date", () => {
+    it("Returns bookings when given a date", async () => {
 
-        //const r = getCarwashBookings("1969-04-20");
+        const bookings = await getCarwashBookings("1969-04-20");
+        expect(bookings).toStrictEqual([ "fullOfBookings" ])
     })
 })

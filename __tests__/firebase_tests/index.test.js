@@ -1,6 +1,5 @@
 import { FirebaseLogin } from "../../src/firebase_functions.js";
 import { mockFunctions } from "../../mocks.js";
-import { ChangeWindow } from "../../src/functions.js";
 
 
 describe("Login Functionality", () => {
@@ -34,12 +33,14 @@ describe("Login Functionality", () => {
         expect(spy).toHaveBeenCalled();
     });
 
-    /*it("Throws sn error if user details are invalid", async () => {
+    it("Throws an error if user details are invalid", async () => {
 
-        const error = "User data not found in both Realtime Database and Firestore."
-        //await expect(FirebaseLogin(true, "database", "db", "email_not@firestore.db", "password")).toThrow(error);
-        await expect(() => {
-            FirebaseLogin(true, "database", "db", "email_not@firestore.db", "password");
-        }).toThrow(error)
-    })*/
+        const consoleSpy = jest.spyOn(console, "error");
+        //const errorArr = [Error: User data not found in both Realtime Database and Firestore.];
+        await FirebaseLogin(true, "database", "db", "email_not@firestore.db", "password");
+
+        expect(consoleSpy).toHaveBeenCalledTimes(2);
+        expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", "Invalid authentication");
+        //expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", errorArr);
+    })
 });

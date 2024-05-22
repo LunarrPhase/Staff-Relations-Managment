@@ -1,8 +1,5 @@
 //WHERE I MOCK FIREBASE AND OTHER FUNCTIONS SO I DON'T HAVE TO DEAL WITH THEM DURING UNIT TESTS
 
-import { signInWithEmailAndPassword } from './src/firebaseInit.js';
-import { updateAvailableSlots } from './src/firebase_functions.js';
-
 
 /* MOCKING FIREBASE */
 
@@ -17,16 +14,13 @@ jest.mock("./src/firebaseInit.js", () => ({
             return mockUserCred;
         }
 
-        else if (auth && email == "email_not@realtime.db"){
-            const mockUser = { uid: undefined };
-            const mockUserCred = { user: mockUser };
-            return mockUserCred;
-        }
+        else if (auth){
 
-        else if (auth && email == "email_not@firestore.db"){
-            const mockUser = { uid: undefined };
-            const mockUserCred = { user: mockUser };
-            return mockUserCred;
+            if (email == "email_not@realtime.db" || email == "email_not@firestore.db"){
+                const mockUser = { uid: undefined };
+                const mockUserCred = { user: mockUser };
+                return mockUserCred;
+            }
         }
         throw "Invalid authentication";
     }
@@ -34,6 +28,49 @@ jest.mock("./src/firebaseInit.js", () => ({
 
 
 jest.mock("./src/database-imports.js", () => ({
+
+    equalTo: function(property){ 
+
+        if (property == "dne@database.com"){
+            return "invalidQuery";
+        }
+        return;
+    },
+
+    get: function(userRef){
+
+        if (userRef == "validRef"){
+
+            const mockUser = {
+                role: "role",
+                firstName: "firstName",
+                lastName: "lastName"
+            }
+
+            const mockSnapshot = { val: function(){ return { mockUser } } }
+            return mockSnapshot;
+        }
+
+        else if (userRef == "invalidRef"){ return { val: function(){ false } } }
+        else if (userRef == "invalidQuery"){ return { then: function(){ throw Error("error") }}}
+
+        else{
+            const promise = new Promise((resolve) => {
+                resolve(mockSnapshot);
+            });
+            return promise;
+        }
+    },
+
+    orderByChild: function(property){ return },
+
+    query: function(collections, subcollection1, subcollection2){
+
+        if (subcollection1 == "exists"){ return "ref" }
+        else if (subcollection1 == "DNE"){ return "noRef" }
+        else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
+        return;
+    },
 
     ref: function(database, text){
 
@@ -48,37 +85,9 @@ jest.mock("./src/database-imports.js", () => ({
         else if (text == "users/undefined"){
             return "invalidRef";
         }
+        else return "ref";
     },
-    get: function(userRef){
 
-        if (userRef == "validRef"){
-
-            const mockUser = {
-                role: "role",
-                firstName: "",
-                lastName: ""
-            }
-            const mockSnapshot = {
-                val: function(){ return { mockUser } }
-            }
-            return mockSnapshot;
-        }
-
-        else if (userRef == "invalidRef"){
-            return { val: function(){ false } }
-        }
-
-        const promise = new Promise((resolve) => {
-            resolve(mockSnapshot);
-        });
-        return promise;
-    },
-    query: function(collections, subcollection){
-
-        if (subcollection){ return true }
-        else if (subcollection == "DNE"){ return "noRef" }
-        return;
-    },
     update: async function(ref, object){ return }
 }))
 
@@ -86,28 +95,52 @@ jest.mock("./src/database-imports.js", () => ({
 jest.mock("./src/firestore-imports.js", () => ({
 
     addDoc: function(reference, object){ return },
-    collection: function(database, collections){ return },
+
+    collection: function(database, collections, value1, subcollection1, value2, subcollection2){
+
+        if(subcollection1 == "daySlotBookings" && subcollection2 == "bookedSlots"){
+            return "carwashBookedRef"
+        }
+
+        else if (subcollection1 == 'daySlotBookings'){
+            return "carwashDateRef";
+        }
+        return;
+    },
     doc: function(database, collection, field){ return },
     doc: function(reference, val){ return },
     getDoc: async function(reference){ return mockDocument },
 
     getDocs: async function(reference){
-
-        if (reference){
+    
+        if (reference == "ref"){
 
             const mockUser = {
                 role: "role",
                 firstName: "",
                 lastName: ""
             }
-            const document = {
-                data: function(){ return { mockUser } }
-            }
+
+            const document = { data: function(){ return { mockUser } } }
             const docs = [ document ];
             return { docs }
         }
 
-        else if (reference == "NoRef"){ return {} }
+        else if(reference == "carwashDateRef"){
+
+            const document = { id: "id" };
+            const docs = [ document ];
+            return { docs: docs }
+        }
+
+        else if (reference == "carwashBookedRef"){
+
+            const slot = { data: function(){ return "fullOfBookings" } }
+            const snapshot = [ slot ]
+            return snapshot;
+        }
+
+        else if (reference == "noRef"){ return{ empty: true } }
 
         const set = new Set();
         return set;
@@ -118,10 +151,10 @@ jest.mock("./src/firestore-imports.js", () => ({
     where: function(field, regex, fieldVal){
 
         if (fieldVal == "email_not@realtime.db"){
-            return true;
+            return "exists";
         }
 
-        if (fieldVal == "email_not@firestore.db"){
+        else if (fieldVal == "email_not@firestore.db"){
             return "DNE";
         }
         return;
