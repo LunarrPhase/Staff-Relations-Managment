@@ -57,14 +57,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const carWashNotificationElements = CreateCarWashNotificationElement(currentUserCarWashBookings);
 
 
-
-        //const feedbackNotification = await CreateFeedbackNotificationElement(user);
-        
-
+        //get current feedback
         const currentFeedbackNotification = await GetCurrentUserFeedbackNotifications(user.email);
-        console.log(user.email);
-        //const feedbackNotificationElements = CreateFeedbackNotificationElement(feedbackNotification);
-
+        //create the notification element
         const feedbackNotificationElement = CreateFeedbackNotificationElement(currentFeedbackNotification);
 
         const notificationContainer = document.getElementById('NotificationContainer');
