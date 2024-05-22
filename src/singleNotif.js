@@ -42,9 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             //fetch feedback requests
-            userEmail = user.email;
             const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
-            const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
+            const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', user.email)));
 
             const feedbackNotifications = [];
     
