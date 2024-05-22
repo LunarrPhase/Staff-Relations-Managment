@@ -40,7 +40,7 @@ function loadUsers(filter) {
                         <td class="role">${user.role}</td>
                         <td>${user.email}</td>
                         <td>
-                            <span class="fa-solid fa-user-xmark fa-fw" style="cursor: pointer;">
+                            <span class="fa-solid fa-user-xmark fa-fw" style="cursor: pointer;" title="Delete User Account">
                                 <div id="confirmationModal" class="modal">
                                     <div class="modal-content">
                                         <p>Are you sure you want to delete this user?</p>
@@ -49,7 +49,7 @@ function loadUsers(filter) {
                                     </div>
                                 </div>
                             </span>
-                            <span class="fa-solid fa-circle-plus" style="cursor: pointer;" data-user-email="${user.email}">
+                            <span class="fa-solid fa-circle-plus" style="cursor: pointer;" data-user-email="${user.email}" title="Change User Role">
                                 <div id="roleModal" class="modal">
                                     <div class="modal-content">
                                         <p>Update User Role</p>
