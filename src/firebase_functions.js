@@ -559,29 +559,62 @@ function handleUserDelete(target) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 function HandleFeedback(target) {
-    const userEmailInput = target.getAttribute('data-user-email');
+    const userEmail= target.getAttribute('data-user-email');
     const modal = document.getElementById('feedbackModal');
     const sendFeedbackBtn = modal.querySelector('#sendFeedbackBtn');
     const cancelFeedbackBtn = modal.querySelector('#cancelFeedbackBtn');
+        // Access the input element
+        const feedbackInput = modal.querySelector('#feedbackInput');
+
+        // Get the value entered by the admin
+        const feedbackMessage = feedbackInput.value;
+
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
+
+    get(usersQuery)
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            const userId = Object.keys(snapshot.val())[0]
 
     // Handle the send feedback button click
     sendFeedbackBtn.addEventListener('click', () => {
-        const feedbackUserEmail = userEmailInput.trim();
+        const feedbackUserEmail = userEmail.trim();
+        const selectedUserEmail =feedbackMessage.trim();
+        const enteredEmail = document.getElementById('enteredEmail').value.trim();
 
         if (feedbackUserEmail) {
             CreateFeedbackNotificationElement(feedbackUserEmail); // Send the notification
             console.log('Feedback notification sent successfully! to', feedbackUserEmail);
+=======
+//handles feedback request on manage users
+function handleFeedbackRequest(target) {
 
-            // Close the feedback modal
-            modal.style.display = 'none';
+    //get the selected information
+    const row = target.closest('tr');
+    const userEmail = row.getAttribute('data-user-email');
+    
+    //this second email helps us avoid problems with case sensitivity 
+    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
+    
+    //query db
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
+    
+    get(usersQuery)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const userId = Object.keys(snapshot.val())[0];
 
-            // Return to the manage user page
-            window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
-        } else {
-            console.error('No user email entered.');
-        }
-    });
+                document.getElementById('feedbackModal').style.display = 'block';
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 
+                document.querySelector('.close').addEventListener('click', () => {
+                    document.getElementById('feedbackModal').style.display = 'none';
+                });
+
+                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
+                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
+
+<<<<<<< HEAD
     // Handle the cancel feedback button click
     cancelFeedbackBtn.addEventListener('click', () => {
         // Close the feedback modal
@@ -593,10 +626,72 @@ function HandleFeedback(target) {
 
     // Show the feedback modal
     modal.style.display = 'block';
-}  
 
     
+=======
+=======
+//handles feedback request on manage users
+function handleFeedbackRequest(target) {
+
+    //get the selected information
+    const row = target.closest('tr');
+    const userEmail = row.getAttribute('data-user-email');
+    
+    //this second email helps us avoid problems with case sensitivity 
+    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
+    
+    //query db
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
+    
+    get(usersQuery)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const userId = Object.keys(snapshot.val())[0];
+
+                document.getElementById('feedbackModal').style.display = 'block';
+
+                document.querySelector('.close').addEventListener('click', () => {
+                    document.getElementById('feedbackModal').style.display = 'none';
+                });
+
+                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
+                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
+
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
+                    if (recipientEmail) {
+                        try {
+                            //adds notification to the collection feedbackNotifications
+                            const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+                            await addDoc(feedbackNotificationsRef, {
+                                requester: userEmailLowerCase,
+                                recipient: recipientEmail,
+                                timestamp: new Date().toISOString(),
+                            });
+                            console.log('Feedback request sent successfully');
+                            document.getElementById('feedbackModal').style.display = 'none';
+                        } catch (error) {
+                            console.error('Error sending feedback request:', error);
+                        }
+                    } else {
+                        console.error('Recipient email is required');
+                    }
+                });
+            } else {
+                console.error('User not found');
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+<<<<<<< HEAD
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
+=======
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 }
+
+
+
+
 /* ALL CARWASH BOOKINGS */
 
 
