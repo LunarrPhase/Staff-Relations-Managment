@@ -562,6 +562,7 @@ function handleFeedbackRequest(target) {
     //get the selected information
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
+    const usersRef = ref(database, 'users');
     
     //this second email helps us avoid problems with case sensitivity 
     const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
