@@ -556,8 +556,8 @@ function handleUserDelete(target) {
         });
 }
 
-
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 function HandleFeedback(target) {
     const userEmailInput = target.getAttribute('data-user-email');
     const modal = document.getElementById('feedbackModal');
@@ -596,7 +596,7 @@ function HandleFeedback(target) {
 }  
 
     
-
+}
 /* ALL CARWASH BOOKINGS */
 
 
