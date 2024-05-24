@@ -1,71 +1,82 @@
-import { canBookSlot, updateAvailableSlots, bookSlot } from "../../src/firebase_functions.js";
+import { canBookSlot, updateAvailableSlots, bookSlot, doBooking } from "../../src/firebase_functions.js";
 import { mockFirebaseFunctions } from "../../mocks.js";
 
 
 describe("canBookSlot functionality", () => {
     
-    it("Returns true if a slot can be booked", async () => {
+    it("Returns true if a slot can be booked on the given date and time", async () => {
         const bool = await canBookSlot("2069-04-20", "08:00");
         expect(bool).toBe(true);
     });
 
-    it("Returns false if a slot cannot be booked", async () => {
+    it("Returns false if a slot cannot be booked on the given date and time", async () => {
         const bool = await canBookSlot("1969-04-20", "08:00");
         expect(bool).toBe(false);
     });
 });
 
 
-describe("updateAvailableSlots functionality", () => {
+describe("bookSlot functionality", () => {
+ 
+    const mockUser = { email: "anemail@email.com" };
+    let  windowSpy;
 
-    it("Updates slots from the document", () => {
-
-        document.getElementById = jest.fn().mockImplementation((text) => {
-            return { innerHTML: "text" }
+    beforeEach(() => {
+        windowSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+        document.getElementById = jest.fn().mockImplementation(() => {
+                return { value: "", innerText: "", innerHTML: "" }
         });
-        updateAvailableSlots("1969-04-20");
+    });
+
+    afterEach(() => {
+        window.alert.mockRestore();
+        document.getElementById.mockRestore();
+    });
+
+    it("Books slots when there are slots available at the given date and time", async () => {
+        await bookSlot("08:00", "2069-04-20", "type", mockUser);
+        expect(windowSpy).toHaveBeenCalledWith("Successfully booked slot for 08:00!");
+    });
+
+    it("Does not book slots if there are none available at the given date and time", async () => {
+        await(bookSlot("08:00", "1969-04-20", "type", mockUser));
+        expect(windowSpy).toHaveBeenCalledWith("No available slots today for 08:00");
     });
 });
 
 
-describe("bookSlot functionality", () => {
+describe("doBooking functionality", () => {
 
-    let  spy; 
+    const object = { value: "value" };
+    const mockUser = { uid: "validID", email: "anemail@email.com" };
 
     beforeEach(() => {
-        spy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { value: "", innerText: "", innerHTML: "" }
+        });
     });
-
+    
     afterEach(() => {
-        window.alert.mockRestore()
+        document.getElementById.mockRestore();
     });
 
-    it("Books slots when there are slots available", async () => {
-
-        const mockUser = { email: "anemail@email.com" };
-        jest.spyOn(window, 'alert').mockImplementation(() => {});
-
-        document.getElementById = jest.fn().mockImplementation((name) => {
-            return { value: "name" };
-        });
-
-        await bookSlot("08:00", "2069-04-20", "type", mockUser);
-        expect(spy).toHaveBeenCalledWith("Successfully booked slot for 08:00!");
+    it("Prevents bookings if the input date is the current or previous day", async () => {
+        
+        const dateObject = { value: "1969-04-20" };
+        await doBooking(object, object, dateObject, mockUser);
+        expect(document.getElementById).toHaveBeenCalledTimes(2);
     });
 
-    it("Does not book slots if there are none available", async () => {
+    it ("Calls bookSlot and successfully books if the input date is valid", async () => {
 
-        const mockUser = { email: "anemail@email.com" };
-        document.getElementById = jest.fn().mockImplementation((name) => {
-            return { value: "name" };
+        const dateObject = { value: "2169-04-20" };
+        const windowSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+        document.querySelector = jest.fn().mockImplementation((text) => {
+            return { reset: function(){ return } };
         });
 
-        await(bookSlot("08:00", "1969-04-20", "type", mockUser));
-        expect(spy).toHaveBeenCalledWith("No available slots today for 08:00");
-    })
-})
-
-
-/*describe("doBooking functionality", () => {
-
-})*/
+        await doBooking(object, object, dateObject, mockUser);
+        expect(windowSpy).toHaveBeenCalledWith("Successfully booked slot for value!")
+        window.alert.mockRestore();
+    });
+});

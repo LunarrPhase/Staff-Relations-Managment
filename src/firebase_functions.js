@@ -39,10 +39,11 @@ async function SendHome(user){
         try {
             //goes to their database in users
             const userRef = ref(database, 'users/' + user.uid);
-            get(userRef).then((snapshot) => {
-               
+
+            get(userRef).then((snapshot) => {   
                 const userData = snapshot.val();
                 const role = userData.role;
+                
                 // baisically this makes sure they go to the correct home screen
                 ChangeWindow(role);
             });
@@ -124,10 +125,8 @@ async function GetCurrentUserFeedbackNotifications(userEmail) {
         const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
 
         // Query to get feedback notifications where recipient matches the current user's email
-        const w = query(feedbackNotificationsRef, where('requester', '==', userEmail))
-        console.log(w)
         const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
-        //console.log(querySnapshot)
+       
         const feedbackNotifications = [];
         querySnapshot.forEach((doc) => {
             feedbackNotifications.push(doc.data());
@@ -166,8 +165,6 @@ async function updateAvailableSlots(selectedDay) {
     const dayName = daysOfWeek[selectedDate.getDay()]
 
     const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`)
-    // const bookingsSnapshot = await getDocs(collection(bookingRef, 'daySlotBookings'));
-
     const timeSlots = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM']
 
     timeSlots.forEach(async (slot) => {
@@ -198,7 +195,6 @@ async function bookSlot(hour, selectedDay, selectedType, user) {
         const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
         const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
         const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
-
         const slotSnapshot = await getDoc(slotBookingRef);
 
         if (!slotSnapshot.exists()) {
@@ -233,9 +229,8 @@ async function doBooking(typeCarwash, timeSlot, day, user){
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
 
-    if(selectedDay >= currentDateString){
+    if(selectedDay > currentDateString){
 
-        //bookSlot(8AM)
         await bookSlot(selectedTimeSlot, selectedDay, selectedType, user);
 
         const userId = user.uid;
@@ -249,17 +244,6 @@ async function doBooking(typeCarwash, timeSlot, day, user){
             type: selectedType,
             slot: selectedTimeSlot
         })
-
-        //to view all car wash bookings easier you can create another collection that will store all bookings
-        //ever made then you can either view all, or view all by a selectable date.
-        /*const carwashCollectionRef = collection(db, 'carWashOrders')
-        await addDoc(carwashCollectionRef, {
-            name: name,
-            email: userEmail,
-            date: selectedDay,
-            type: selectedType,
-            slot: selectedSlot
-        })*/
 
         document.querySelector('.carForm').reset();
         document.getElementById("warning").innerText="";
@@ -276,7 +260,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
 
 // Populate meals dropdown based on selected date and diet
 async function populateMeals(dateInput, dietSelect, mealSelect) {
-    //console.log("hii");
+    
     const selectedDate = dateInput.value;
     const selectedDiet = dietSelect.value;
     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
@@ -562,6 +546,7 @@ function handleFeedbackRequest(target) {
     //get the selected information
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
+    const usersRef = ref(database, 'users');
     
     //this second email helps us avoid problems with case sensitivity 
     const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();

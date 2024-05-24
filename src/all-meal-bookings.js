@@ -1,6 +1,6 @@
 //need to see all meal bookings made by people on a specifc day
 //so if HR wants to see Monday meal bookings, they should be able to choose day and see from that day.
-import { displayBookings, displayAllBookings } from "./firebase_functions.js"
+import { displayBookings, displayAllBookings } from "./firebase_functions.js";
 
 
 document.getElementById('day').addEventListener('change', () => {
@@ -8,4 +8,4 @@ document.getElementById('day').addEventListener('change', () => {
     displayBookings(selectedDate);
 });
 
-document.getElementById('load-more').addEventListener('click', displayAllBookings)
+document.getElementById('load-more').addEventListener('click', displayAllBookings);

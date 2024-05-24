@@ -4,29 +4,24 @@ import { mockFunctions } from "../../mocks";
 
 describe("Send Home functionality", () => {
 
-    let consoleSpy; 
+    it("Calls ChangeWindow when user has a valid ID", async () => {
 
-    beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error");
-    });
-
-    afterEach(() => {
-        console.error.mockRestore()
-    });
-
-    it("Calls ChangeWindow when user is valid", async () => {
-
-        const spy = jest.spyOn(mockFunctions, "ChangeWindow");
+        const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
         const mockUser = { uid: "validID" };
         await SendHome(mockUser);
-        expect(spy).toHaveBeenCalled();
+
+        expect(windowSpy).toHaveBeenCalled();
+        mockFunctions.ChangeWindow.mockRestore();
     });
 
     it("Throws an error when user role is not found", async () => {
 
+        consoleSpy = jest.spyOn(console, "error");
         const mockUser = { uid: null };
         await SendHome(mockUser);
+
         expect(consoleSpy).toHaveBeenCalledWith("Error getting user role:", "ID not found");
+        console.error.mockRestore();
     });
 
     it("Goes to index.html when user is invalid", async () => {
@@ -44,36 +39,29 @@ describe("Send Home functionality", () => {
 
 describe("Getting current meal bookings", () => {
 
-    let consoleSpy; 
-
-    beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error");
-    });
-
-    afterEach(() => {
-        console.error.mockRestore()
-    });
-
     it ("Throws error when user ID is invalid and calls Send Home", async () => {
 
+        consoleSpy = jest.spyOn(console, "error");
         const mockUser = { uid: null };
         await GetCurrentUserMealBookings(mockUser);
+
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
         expect(consoleSpy).toHaveBeenCalledWith("Error getting user role:", "ID not found");
+        console.error.mockRestore();
     });
 
     it ("Returns an array of meal bookings when user ID is valid", async () => {
 
         const mockUser = { uid: "validID" };
         const mealBookings = await GetCurrentUserMealBookings(mockUser);
-        expect(mealBookings).toStrictEqual([ "fullOfBookings"]);
+        expect(mealBookings).toStrictEqual([ "fullOfBookings" ]);
     });
 });
 
 
 describe("Getting current carwash bookings", () => {
 
-    it ("Returns an array of carwash bookings", async () => {
+    it ("Returns an array of carwash bookings when user ID is valid", async () => {
 
         const mockUser = { uid: "validID" };
         const carWashBookings = await GetCurrentUserCarWashBookings(mockUser);
