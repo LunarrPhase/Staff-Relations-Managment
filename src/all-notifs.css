@@ -143,10 +143,11 @@ h2.permanent::before {
     height: 100%;
     margin:10px;
     border: 2px inset #C0C0C0;
+    background: linear-gradient(to right, #e4e2e3, #dabdd8);
 }
 
 .table-header{
-    background-color:  #ffb5b5;
+    background-color: #dbe9ee;;
     text-align: center;
 }
 

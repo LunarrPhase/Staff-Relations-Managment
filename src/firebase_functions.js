@@ -1,8 +1,8 @@
-import { deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
-import { database, firestore as db, signInWithEmailAndPassword } from "./firebaseInit.js";
-import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "./firestore-imports.js";
-import { equalTo, get, orderByChild, ref, remove, query, update } from "./database-imports.js";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
+import { ref, update, get, query, orderByChild, equalTo, remove} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"
+import { doc, updateDoc, collection, where, addDoc, getDoc, getDocs, setDoc, deleteDoc, query as firestoreQuery} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
+import { database, firestore as db } from "./firebaseInit.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected, CreateFeedbackNotificationElement} from "./functions.js";
 
 
 /* ALL MEAL BOOKINGS */
@@ -10,9 +10,9 @@ import { equalTo, get, orderByChild, ref, remove, query, update } from "./databa
 
 //access firebase, then document for the day...
 async function displayBookings(selectedDate) {
-
+   
     const bookingsRef = collection(db, 'mealOrders')
-    const querySnapshot = await getDocs(query(bookingsRef, where('date', '==', selectedDate)));
+    const querySnapshot = await getDoc(query(bookingsRef, where('date', '==', selectedDate)))
     const usersList = document.getElementById('usersList')
 
     renderMeals(querySnapshot, usersList);
@@ -38,9 +38,9 @@ async function SendHome(user){
     if (user) {
         try {
             //goes to their database in users
-            const userRef = ref(database, 'users/' + user.uid);
+            const userRef = ref(database, 'users/' + user.uid)
             get(userRef).then((snapshot) => {
-               
+
                 const userData = snapshot.val();
                 const role = userData.role;
                 // baisically this makes sure they go to the correct home screen
@@ -59,32 +59,32 @@ async function SendHome(user){
 
 async function GetCurrentUserMealBookings(user){
 
-    //get current user id
-    const userId = user.uid;
+        //get current user id
+        const userId = user.uid;
 
-    if (!userId) {
-        console.error("User ID not available");
-        SendHome(user);
+        if (!userId) {
+            console.error("User ID not available");
+            SendHome(user);
 
-    }
+        }
 
-    //get todays date and convert it to string
-    const today = new Date();
-    const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
-  
-    //the refrence to their meal bookings in firestore
-    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
-    
-    //get the meal bookings that match todays date    
-    const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
-    
-    const mealBookings = [];
-    querySnapshot.forEach((doc) => {
-        mealBookings.push(doc.data());
-    });
-    
-    //return the data on todays meal bookings
-    return mealBookings;
+        //get todays date and convert it to string
+        const today = new Date();
+        const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+        console.log("getting date");
+        //the refrence to their meal bookings in firestore
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+
+        //get the meal bookings that match todays date    
+        const querySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
+
+        const mealBookings = [];
+        querySnapshot.forEach((doc) => {
+            mealBookings.push(doc.data());
+        });
+
+        //return the data on todays meal bookings
+        return mealBookings;
 }
 
 
@@ -101,45 +101,11 @@ async function GetCurrentUserCarWashBookings(user){
     
     //compare the datas 
     const querySnapshot = await getDocs(query(carWashBookingsRef, where('date', '==', todayString)));
-    
     const carWashBookings = [];
     querySnapshot.forEach((doc) => {
         carWashBookings.push(doc.data());
     });
     return carWashBookings;
-}
-
-
-//get feedback notifications
-async function GetCurrentUserFeedbackNotifications(userEmail) {
-
-    if (!userEmail) {
-        console.error("User email not available");
-        return [];
-    }
-
-    try {
-
-        // Reference to the feedbackNotifications collection in Firestore
-        const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
-
-        // Query to get feedback notifications where recipient matches the current user's email
-        const w = query(feedbackNotificationsRef, where('requester', '==', userEmail))
-        console.log(w)
-        const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', userEmail)));
-        //console.log(querySnapshot)
-        const feedbackNotifications = [];
-        querySnapshot.forEach((doc) => {
-            feedbackNotifications.push(doc.data());
-        });
-
-        // Return the data on feedback notifications        
-        return feedbackNotifications;
-
-    } catch (error) {
-        console.error("Error fetching feedback notifications:", error);
-        return [];
-    }
 }
 
 
@@ -153,7 +119,8 @@ async function canBookSlot(day, hour) {
     const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour)
     const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots')
     const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
-   
+    //debugging
+    //console.log(`Booked Slots for ${hour}: ${bookedSlotsSnapshot.size}`)
     return bookedSlotsSnapshot.size < 5;
 }
 
@@ -175,6 +142,7 @@ async function updateAvailableSlots(selectedDay) {
         const bookedSlotsRef = collection(bookingRef, 'daySlotBookings', slot, 'bookedSlots')
         const bookedSlotsSnapshot = await getDocs(bookedSlotsRef)
         const availableSlots = 5 - bookedSlotsSnapshot.size;
+        //console.log(`Available slots for ${slot}: ${availableSlots}`)
         const slotElement = document.getElementById(`${slot}-slots`)
 
         if (slotElement) {
@@ -190,11 +158,11 @@ async function bookSlot(hour, selectedDay, selectedType, user) {
     const userEmail = user.email;
 
     if (await canBookSlot(selectedDay, hour)){
-        
+
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         const selectedDate = new Date(selectedDay)
         const dayName = daysOfWeek[selectedDate.getDay()]
-        
+
         const bookingRef = doc(db, 'carWashBookings', `${selectedDay}-${dayName}`);
         const slotBookingRef = doc(collection(bookingRef, 'daySlotBookings'), hour);
         const bookedSlotsRef = collection(slotBookingRef, 'bookedSlots');
@@ -214,7 +182,7 @@ async function bookSlot(hour, selectedDay, selectedType, user) {
         });
 
         alert(`Successfully booked slot for ${hour}!`)
-        updateAvailableSlots(selectedDay);
+        updateAvailableSlots(selectedDay)
     }
     else {
         alert(`No available slots today for ${hour}`)
@@ -233,7 +201,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
 
-    if(selectedDay >= currentDateString){
+    if(selectedDay > currentDateString){
 
         //bookSlot(8AM)
         await bookSlot(selectedTimeSlot, selectedDay, selectedType, user);
@@ -276,7 +244,7 @@ async function doBooking(typeCarwash, timeSlot, day, user){
 
 // Populate meals dropdown based on selected date and diet
 async function populateMeals(dateInput, dietSelect, mealSelect) {
-    //console.log("hii");
+    console.log("hii");
     const selectedDate = dateInput.value;
     const selectedDiet = dietSelect.value;
     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
@@ -377,6 +345,7 @@ async function CreateMeal(dateInput, dietInput, mealInput){
         // Add a subcollection for each day
         const dateDocRef = doc(colRef, dateInput);
         const dateColRef = collection(dateDocRef, 'meals');
+        console.log(dateDocRef);
 
         await addDoc(dateColRef, {
           diet: dietInput,
@@ -386,18 +355,19 @@ async function CreateMeal(dateInput, dietInput, mealInput){
         //clears the form and error upon submission and alerts user that meal has been booked
         document.querySelector('.add').reset();  
         alert("Successfully created meal!");
-        document.getElementById("warning").innerText= "";
+        const warning = document.getElementById("warning");
+        warning.innerText= "";
     }
     else{
 
       //if the person selects a day that has passed, they get a warning
-      document.getElementById("warning").innerText= "Cannot book meals for current and previous days."
+      const warning = document.getElementById("warning");
+      warning.innerText= "Cannot book meals for current and previous days."
     }
 }
 
 
 /* INDEX */
-
 
 async function FirebaseLogin(auth, database, db, email, password) {
     try {
@@ -412,14 +382,13 @@ async function FirebaseLogin(auth, database, db, email, password) {
         const userRef = ref(database, 'users/' + userUid);
         const snapshot = await get(userRef);
         let userData = snapshot.val();
-       
+
         if (userData) {
             await update(userRef, { last_login: dt });
             role = userData.role || "User";
             firstName = userData.firstName || "";
             lastName = userData.lastName || "";
-        }
-        else {
+        } else {
             // Query Firestore by email to get the document ID
             const accountsQuery = query(collection(db, 'accounts'), where('email', '==', email));
             const querySnapshot = await getDocs(accountsQuery);
@@ -444,8 +413,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
         if (errorMessageElement) {
             errorMessageElement.textContent = errorMessage;
         }
-    }
-    finally {
+    } finally {
         const loadingMessageElement = document.getElementById('loading-message');
         if (loadingMessageElement) {
             loadingMessageElement.style.display = 'none';
@@ -457,23 +425,23 @@ async function FirebaseLogin(auth, database, db, email, password) {
 /* MANAGE-USERS */
 
 
+const usersRef = ref(database, 'users');
 function handleRoleChange(target) {
 
-    const usersRef = ref(database, 'users');
     const row = target.closest('tr')
     const userEmail = row.getAttribute('data-user-email')
 
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    
+    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail))
+
     get(usersQuery)
     .then((snapshot) => {
         if (snapshot.exists()) {
+            const userId = Object.keys(snapshot.val())[0]
+           
 
-            const userId = Object.keys(snapshot.val())[0];
-            document.getElementById('roleModal').style.display = 'block';
-            
+            document.getElementById('roleModal').style.display = 'block'
+
             document.querySelector('.close').addEventListener('click', () => {
-                console.log("hii")
                 document.getElementById('roleModal').style.display = 'none'
             })
 
@@ -481,12 +449,13 @@ function handleRoleChange(target) {
             document.getElementById('updateRoleBtn').addEventListener('click', () => {
                 const selectedRole = document.getElementById('roleSelect').value
 
-                
+                console.log(userId)
                 const updateObj = {}
                 updateObj['users/' + userId + '/role'] = selectedRole
 
                 update(ref(database), updateObj)
                 .then(() => {
+                    console.log('Role updated successfully');
                     const roleCell = row.querySelector('.role')
                     if (roleCell) {
                         roleCell.textContent = selectedRole;
@@ -496,7 +465,7 @@ function handleRoleChange(target) {
                 .catch((error) => {
                     console.error('Error updating role:', error)
                 })
-            });
+            })
         }
         else {
             console.error('User not found')
@@ -504,7 +473,7 @@ function handleRoleChange(target) {
     })
     .catch((error) => {
         console.error('Error fetching user data:', error);
-    });
+    })
 }
 
 
@@ -556,63 +525,42 @@ function handleUserDelete(target) {
         });
 }
 
-//handles feedback request on manage users
-function handleFeedbackRequest(target) {
+function HandleFeedback(target) {
+    const userEmailInput = target.getAttribute('data-user-email');
+    const modal = document.getElementById('feedbackModal');
+    const sendFeedbackBtn = modal.querySelector('#sendFeedbackBtn');
+    const cancelFeedbackBtn = modal.querySelector('#cancelFeedbackBtn');
 
-    //get the selected information
-    const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email');
-    
-    //this second email helps us avoid problems with case sensitivity 
-    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
-    
-    //query db
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    
-    get(usersQuery)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const userId = Object.keys(snapshot.val())[0];
+    // Handle the send feedback button click
+    sendFeedbackBtn.addEventListener('click', () => {
+        const feedbackUserEmail = userEmailInput.trim();
 
-                document.getElementById('feedbackModal').style.display = 'block';
+        if (feedbackUserEmail) {
+            CreateFeedbackNotificationElement(feedbackUserEmail); // Send the notification
+            console.log('Feedback notification sent successfully!');
 
-                document.querySelector('.close').addEventListener('click', () => {
-                    document.getElementById('feedbackModal').style.display = 'none';
-                });
+            // Close the feedback modal
+            modal.style.display = 'none';
 
-                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
-                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
+            // Return to the manage user page
+            window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
+        } else {
+            console.error('No user email entered.');
+        }
+    });
 
-                    if (recipientEmail) {
-                        try {
-                            //adds notification to the collection feedbackNotifications
-                            const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
-                            await addDoc(feedbackNotificationsRef, {
-                                requester: userEmailLowerCase,
-                                recipient: recipientEmail,
-                                timestamp: new Date().toISOString(),
-                            });
-                            console.log('Feedback request sent successfully');
-                            document.getElementById('feedbackModal').style.display = 'none';
-                        } catch (error) {
-                            console.error('Error sending feedback request:', error);
-                        }
-                    } else {
-                        console.error('Recipient email is required');
-                    }
-                });
-            } else {
-                console.error('User not found');
-            }
-        })
-        .catch((error) => {
-            console.error('Error fetching user data:', error);
-        });
+    // Handle the cancel feedback button click
+    cancelFeedbackBtn.addEventListener('click', () => {
+        // Close the feedback modal
+        modal.style.display = 'none';
+
+        // Return to the manage user page
+        window.location.href = 'manage-users.html'; // Replace 'manage-user.html' with your actual page URL
+    });
+
+    // Show the feedback modal
+    modal.style.display = 'block';
 }
-
-
-
-
 /* ALL CARWASH BOOKINGS */
 
 
@@ -622,20 +570,23 @@ async function getCarwashBookings(date) {
     const dateString = `${year}-${month}-${day}`
     const dayName = getDayName(year, month, day)
     const fullDateString = `${dateString}-${dayName}`
+    console.log('Querying for date:', fullDateString)
 
     const bookings = []
     const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
-    const bookingSnapshot = await getDocs(bookingRef);
-    
+    const bookingSnapshot = await getDocs(bookingRef)
     for (const bookingDoc of bookingSnapshot.docs) {
         const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
-        const slotSnapshot = await getDocs(slotRef);
+        const slotSnapshot = await getDocs(slotRef)
         slotSnapshot.forEach(slotDoc => {
             bookings.push(slotDoc.data())
         });
     }
-    return bookings;
+    return bookings
 }
 
 
-export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings,GetCurrentUserFeedbackNotifications, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,handleFeedbackRequest, getCarwashBookings}
+ 
+
+
+export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,HandleFeedback, getCarwashBookings}

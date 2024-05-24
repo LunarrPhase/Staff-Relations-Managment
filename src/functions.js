@@ -128,43 +128,26 @@ function CreateCarWashNotificationElement(carWashBookings){
     return notificationElements;
 }
 
+function CreateFeedbackNotificationElement(userEmailInput){
+    
 
-
-function CreateFeedbackNotificationElement(feedbackNotifications) {
-
-    const notificationElements = feedbackNotifications.map((notification) => {
-    const notificationElement = document.createElement('div');
-
+        const notificationElement = document.createElement('div');
         notificationElement.classList.add('notification');
-
-	console.log(notification.recipient);
-
-        const notificationText = `Please give feedback to ${notification.recipient}.`;
-
+        const notificationText = `Please write a feedback report to the member with the email ${userEmailInput.text}.`;
         notificationElement.innerText = notificationText;
-
-
+        document.getElementById('notification').appendChild(notificationElement);
 
         return notificationElement;
 
-    });
 
-    return notificationElements;
-
+    
 }
-
-
 
 function PopulateNotifications(notificationContainer, combinedNotificationElements){
-
     combinedNotificationElements.forEach((element) => {
-
         notificationContainer.appendChild(element);
-
     });
-
 }
-
 
 
 /* BOOK CAR WASH */
