@@ -41,6 +41,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 carWashBookings.push(doc.data());
             });
 
+            //fetch feedback requests
+            const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+            const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', user.email)));
+
+            const feedbackNotifications = [];
+    
+            querySnapshot.forEach((doc) => {
+    
+                feedbackNotifications.push(doc.data());
+            
+            });
+
+
+
+
             // Determine the notification text -> it will only display one of these in the popup
             let notificationText = "";
             if (mealBookings.length > 0) {
@@ -49,6 +64,10 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (carWashBookings.length > 0) {
                 const carWashBooking = carWashBookings[0]; // Get the first car wash booking for the day
                 notificationText = `Today you booked a ${carWashBooking.type} car wash for the ${carWashBooking.slot} slot.`;
+            }
+            else{
+                const feedback = feedbackNotifications[0];
+                notificationText = `Please give feedback to ${feedback.recipient}.`;
             }
 
             // Update the popover content
