@@ -557,7 +557,6 @@ function handleUserDelete(target) {
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 function HandleFeedback(target) {
     const userEmail= target.getAttribute('data-user-email');
     const modal = document.getElementById('feedbackModal');
@@ -629,35 +628,6 @@ function handleFeedbackRequest(target) {
 
     
 =======
-=======
-//handles feedback request on manage users
-function handleFeedbackRequest(target) {
-
-    //get the selected information
-    const row = target.closest('tr');
-    const userEmail = row.getAttribute('data-user-email');
-    
-    //this second email helps us avoid problems with case sensitivity 
-    const userEmailLowerCase = row.getAttribute('data-user-email').toLowerCase();
-    
-    //query db
-    const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    
-    get(usersQuery)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const userId = Object.keys(snapshot.val())[0];
-
-                document.getElementById('feedbackModal').style.display = 'block';
-
-                document.querySelector('.close').addEventListener('click', () => {
-                    document.getElementById('feedbackModal').style.display = 'none';
-                });
-
-                document.getElementById('sendFeedbackRequestBtn').addEventListener('click', async () => {
-                    const recipientEmail = document.getElementById('feedbackEmailInput').value.toLowerCase();
-
->>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
                     if (recipientEmail) {
                         try {
                             //adds notification to the collection feedbackNotifications
@@ -683,9 +653,6 @@ function handleFeedbackRequest(target) {
         .catch((error) => {
             console.error('Error fetching user data:', error);
         });
-<<<<<<< HEAD
->>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
-=======
 >>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 }
 
