@@ -114,6 +114,7 @@ h2 {
     display: inline-block;
     overflow: hidden;
     transition: color 0.5s ease;
+
 }
 
 h2::before {
@@ -152,7 +153,14 @@ h2.permanent::before {
 
 #NotificationContainer{
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds space between notifications */
+    text-decoration: underline;
+    text-decoration-style: 3px;
+
 }
+
 
 /*style footer*/
 
