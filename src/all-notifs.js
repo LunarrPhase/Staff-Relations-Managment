@@ -2,7 +2,13 @@ import { auth } from './firebaseInit.js';
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { GetCurrentUserCarWashBookings, GetCurrentUserMealBookings, SendHome, HandleFeedback } from './firebase_functions.js';
+=======
+
+import { GetCurrentUserCarWashBookings, GetCurrentUserMealBookings, SendHome, GetCurrentUserFeedbackNotifications } from './firebase_functions.js';
+
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 =======
 
 import { GetCurrentUserCarWashBookings, GetCurrentUserMealBookings, SendHome, GetCurrentUserFeedbackNotifications } from './firebase_functions.js';
@@ -61,7 +67,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const carWashNotificationElements = CreateCarWashNotificationElement(currentUserCarWashBookings);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         const feedbackNotification = await HandleFeedback(user)
+=======
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 =======
 >>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
 
@@ -72,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const notificationContainer = document.getElementById('NotificationContainer');
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         // Combine notification elements for both meal and car wash bookings
         const combinedNotificationElements = [...mealNotificationElements, ...carWashNotificationElements, ...feedbackNotificationElements];
@@ -87,6 +97,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         
 
+=======
+
+
+        // Combine notification elements for both meal and car wash bookings
+
+        const combinedNotificationElements = [...mealNotificationElements, ...carWashNotificationElements, ... feedbackNotificationElement];
+
+
+
+        
+
+>>>>>>> 00227f7f0b8cff742f15f9d08a3ca79520b7fb5a
         PopulateNotifications(notificationContainer, combinedNotificationElements);
 
     });
