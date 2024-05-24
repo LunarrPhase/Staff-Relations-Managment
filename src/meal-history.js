@@ -57,157 +57,153 @@ document.addEventListener("DOMContentLoaded", function() {
    
         //get the meals by diet
         const dietbtn = document.getElementById('GenerateByDiet');
-dietbtn.addEventListener("click", function() {
-    (async () => {
-        try {
-            const user = auth.currentUser;
-            if (!user) {
-                console.error("User not authenticated");
-                return;
-            }
+        dietbtn.addEventListener("click", function() {
 
-            const userId = user.uid;
-            if (!userId) {
-                console.error("User ID not available");
-                return;
-            }
-            // Reference the users meal orders in the db firestore
-            const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
-            const querySnapshot = await getDocs(mealOrdersRef);
-            const mealOrdersByDiet = {};
+            (async () => {
+                try {
 
-            querySnapshot.forEach((doc) => {
-                const mealOrderData = doc.data();
-                const diet = mealOrderData.diet;
+                    const user = auth.currentUser;
+                    if (!user) {
+                        console.error("User not authenticated");
+                        return;
+                    }
 
-                if (!mealOrdersByDiet[diet]) {
-                    mealOrdersByDiet[diet] = [];
+                    const userId = user.uid;
+                    if (!userId) {
+                        console.error("User ID not available");
+                        return;
+                    }
+                    //reference the users meal orders in the db firestore
+                    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+                    const querySnapshot = await getDocs(mealOrdersRef);
+                    const mealOrdersByDiet = {};
+
+                    querySnapshot.forEach((doc) => {
+                        const mealOrderData = doc.data();
+                        const diet = mealOrderData.diet;
+
+                        if (!mealOrdersByDiet[diet]) {
+                            mealOrdersByDiet[diet] = [];
+                        }
+
+                        mealOrdersByDiet[diet].push(mealOrderData);
+                    });
+
+                    // Display meal orders grouped by diet
+                    const mealOrdersReport = document.getElementById("mealOrdersReport");
+                    mealOrdersReport.innerHTML = ""; // Clear previous content
+
+                    for (const diet in mealOrdersByDiet) {
+
+                        const dietHeading = `<h2>${diet}</h2>`;
+                        const mealOrdersTableHeading = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Diet</th>
+                                        <th>Meal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mealOrdersTable${diet}">
+                            </table>
+                        `;
+
+                        mealOrdersReport.innerHTML += dietHeading + mealOrdersTableHeading;
+                        const mealOrdersTableBody = document.getElementById(`mealOrdersTable${diet}`);
+
+                        mealOrdersByDiet[diet].forEach((mealOrderData) => {
+                            const mealOrderRow = `
+                                <tr>
+                                    <td>${mealOrderData.date}</td>
+                                    <td>${mealOrderData.diet}</td>
+                                    <td>${mealOrderData.meal}</td>
+                                </tr>
+                            `;
+                            mealOrdersTableBody.innerHTML += mealOrderRow;
+                        });
+                    }
+                    console.log("Meal orders retrieved and sorted by diet successfully");
                 }
-
-                mealOrdersByDiet[diet].push(mealOrderData);
-            });
-
-            if (Object.keys(mealOrdersByDiet).length === 0) {
-                alert("No Meal History to display");
-                return;
-            }
-
-            // Display meal orders grouped by diet
-            const mealOrdersReport = document.getElementById("mealOrdersReport");
-            mealOrdersReport.innerHTML = ""; // Clear previous content
-
-            for (const diet in mealOrdersByDiet) {
-                const dietHeading = `<h2>${diet}</h2>`;
-                const mealOrdersTableHeading = `
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Diet</th>
-                                <th>Meal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mealOrdersTable${diet}">
-                    </table>
-                `;
-
-                mealOrdersReport.innerHTML += dietHeading + mealOrdersTableHeading;
-                const mealOrdersTableBody = document.getElementById(`mealOrdersTable${diet}`);
-
-                mealOrdersByDiet[diet].forEach((mealOrderData) => {
-                    const mealOrderRow = `
-                        <tr>
-                            <td>${mealOrderData.date}</td>
-                            <td>${mealOrderData.diet}</td>
-                            <td>${mealOrderData.meal}</td>
-                        </tr>
-                    `;
-                    mealOrdersTableBody.innerHTML += mealOrderRow;
-                });
-            }
-            console.log("Meal orders retrieved and sorted by diet successfully");
-        } catch (error) {
-            console.error("Error fetching and sorting meal orders: ", error);
-        }
-    })();
-});
-const dateBtn = document.getElementById('GenerateByDate');
-dateBtn.addEventListener("click", function() {
-    (async () => {
-        try {
-            const user = auth.currentUser;
-            if (!user) {
-                console.error("User not authenticated");
-                return;
-            }
-
-            const userId = user.uid;
-            if (!userId) {
-                console.error("User ID not available");
-                return;
-            }
-
-            const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
-            const querySnapshot = await getDocs(mealOrdersRef);
-            const mealOrdersByDate = {};
-
-            querySnapshot.forEach((doc) => {
-                const mealOrderData = doc.data();
-                const date = mealOrderData.date;
-
-                if (!mealOrdersByDate[date]) {
-                    mealOrdersByDate[date] = [];
+                catch (error) {
+                    console.error("Error fetching and sorting meal orders: ", error);
                 }
-                mealOrdersByDate[date].push(mealOrderData);
-            });
+            })();
+        });
 
-            if (Object.keys(mealOrdersByDate).length === 0) {
-                alert("No Meal History to display");
-                return;
-            }
+        //get meals by date (so the same as earlier just by date not diet)
+        const dateBtn = document.getElementById('GenerateByDate');
+        dateBtn.addEventListener("click", function() {
 
-            // Display meal orders grouped by date
-            const mealOrdersReport = document.getElementById("mealOrdersReport");
-            mealOrdersReport.innerHTML = ""; // Clear previous content
+            (async () => {
+                try {
 
-            for (const date in mealOrdersByDate) {
-                const dateHeading = `<h2>${date}</h2>`;
-                const mealOrdersTableHeading = `
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Diet</th>
-                                <th>Meal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mealOrdersTable${date}">
-                    </table>
-                `;
-
-                mealOrdersReport.innerHTML += dateHeading + mealOrdersTableHeading;
-                const mealOrdersTableBody = document.getElementById(`mealOrdersTable${date}`);
-
-                mealOrdersByDate[date].forEach((mealOrderData) => {
-                    const mealOrderRow = `
-                        <tr>
-                            <td>${mealOrderData.date}</td>
-                            <td>${mealOrderData.diet}</td>
-                            <td>${mealOrderData.meal}</td>
-                        </tr>
-                    `;
-                    mealOrdersTableBody.innerHTML += mealOrderRow;
-                });
-            }
-            console.log("Meal orders retrieved and sorted by date successfully");
-        } catch (error) {
-            console.error("Error fetching and sorting meal orders: ", error);
-        }
-    })();
-});
-
-
-});
+                    const user = auth.currentUser;
+                    if (!user) {
+                        console.error("User not authenticated");
+                        return;
+                    }
+    
+                    const userId = user.uid;
+                    if (!userId) {
+                        console.error("User ID not available");
+                        return;
+                    }
+    
+                    const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+                    const querySnapshot = await getDocs(mealOrdersRef);
+                    const mealOrdersByDate = {};
+    
+                    querySnapshot.forEach((doc) => {
+                        const mealOrderData = doc.data();
+                        const date = mealOrderData.date;
+    
+                        if (!mealOrdersByDate[date]) {
+                            mealOrdersByDate[date] = [];
+                        }
+                        mealOrdersByDate[date].push(mealOrderData);
+                    });
+    
+                    // Display meal orders grouped by date
+                    const mealOrdersReport = document.getElementById("mealOrdersReport");
+                    mealOrdersReport.innerHTML = ""; // Clear previous content
+    
+                    for (const date in mealOrdersByDate) {
+                        const dateHeading = `<h2>${date}</h2>`;
+                        const mealOrdersTableHeading = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Diet</th>
+                                        <th>Meal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mealOrdersTable${date}">
+                            </table>
+                        `;
+    
+                        mealOrdersReport.innerHTML += dateHeading + mealOrdersTableHeading;
+                        const mealOrdersTableBody = document.getElementById(`mealOrdersTable${date}`);
+    
+                        mealOrdersByDate[date].forEach((mealOrderData) => {
+                            const mealOrderRow = `
+                                <tr>
+                                    <td>${mealOrderData.date}</td>
+                                    <td>${mealOrderData.diet}</td>
+                                    <td>${mealOrderData.meal}</td>
+                                </tr>
+                            `;
+                            mealOrdersTableBody.innerHTML += mealOrderRow;
+                        });
+                    }
+                    console.log("Meal orders retrieved and sorted by date successfully");
+                }
+                catch (error) {
+                    console.error("Error fetching and sorting meal orders: ", error);
+                }
+            })();
+        });
 
 
 
@@ -230,7 +226,7 @@ GeneratePDF.addEventListener("click", async function() {
             console.error("User ID not available");
             return;
         }
-        // Reference the meal orders in the users database
+        //refrence the meal orders in the users database
         const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
         const querySnapshot = await getDocs(mealOrdersRef);
         // Initialize data object for meal orders grouped by date
@@ -245,15 +241,10 @@ GeneratePDF.addEventListener("click", async function() {
             mealOrdersByDate[date].push(mealOrderData);
         });
 
-        if (Object.keys(mealOrdersByDate).length === 0) {
-            alert("No Meal History to generate");
-            return;
-        }
-
         // Generate PDF using jsPDF
         const doc = new jsPDF();
         doc.text("Meal Order History", 10, 10);
-        // Formatting
+        //formatting 
         let startY = 20;
         for (const date in mealOrdersByDate) {
             doc.text(`Date: ${date}`, 10, startY);
@@ -267,12 +258,12 @@ GeneratePDF.addEventListener("click", async function() {
         }
         
         doc.save('meal_order_history_by_date.pdf');
+
         console.log("PDF generated successfully");
     } catch (error) {
         console.error("Error generating PDF: ", error);
     }
 });
-
 
 
 //generate csv
@@ -291,7 +282,7 @@ GenerateCSV.addEventListener("click", async function() {
             console.error("User ID not available");
             return;
         }
-        // Fetch data
+        //fetch data
         const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
         const querySnapshot = await getDocs(mealOrdersRef);
 
@@ -306,11 +297,6 @@ GenerateCSV.addEventListener("click", async function() {
             }
             mealOrdersByDate[date].push(mealOrderData);
         });
-
-        if (Object.keys(mealOrdersByDate).length === 0) {
-            alert("No Meal History to generate");
-            return;
-        }
 
         // Generate CSV content
         let csvContent = "Date,Diet,Meal\n";
@@ -335,8 +321,14 @@ GenerateCSV.addEventListener("click", async function() {
 });
 
 
- });
 
+
+
+
+
+    });
+
+});
 
 
 

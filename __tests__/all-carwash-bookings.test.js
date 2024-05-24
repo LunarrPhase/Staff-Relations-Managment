@@ -47,22 +47,6 @@ describe("Manages date", () => {
         expect(mockDateInput.value).toBe("");
         expect(customValidity.text).toBe("Please select a Monday or Friday.")
     });
-
-    /*it("Disables dates that are not Monday or Friday", () => {
-        
-        const spy = jest.spyOn(document, "querySelectorAll").mockImplementation(() =>{
-
-            const date1 = {value: "Monday" }
-            const date2 = { value: "Tuesday" }
-            const dates = [ date1, date2 ]
-            return dates
-        })
-        document.addEventListener('DOMContentLoaded', () => {
-            
-          });
-        mockDateInput.value = "2022-03-25";
-        manageDate(mockDateInput);
-    })*/
 });
 
 

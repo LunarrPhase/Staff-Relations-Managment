@@ -1,10 +1,6 @@
 import { database} from "./firebaseInit.js";
 import { ref, get} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { handleRoleChange,handleUserDelete, handleFeedbackRequest } from "./firebase_functions.js";
-
-//ensures page waits for all DOMContent to load
-document.addEventListener('DOMContentLoaded', function() {
-
+import { handleRoleChange,handleUserDelete, HandleFeedback } from "./firebase_functions.js";
 
 const usersRef = ref(database, 'users');
 function loadUsers(filter) {
@@ -40,7 +36,7 @@ function loadUsers(filter) {
                         <td class="role">${user.role}</td>
                         <td>${user.email}</td>
                         <td>
-                            <span class="fa-solid fa-user-xmark fa-fw" style="cursor: pointer;" title="Delete User Account">
+                            <span class="fa-solid fa-user-xmark fa-fw" style="cursor: pointer;">
                                 <div id="confirmationModal" class="modal">
                                     <div class="modal-content">
                                         <p>Are you sure you want to delete this user?</p>
@@ -49,7 +45,7 @@ function loadUsers(filter) {
                                     </div>
                                 </div>
                             </span>
-                            <span class="fa-solid fa-circle-plus" style="cursor: pointer;" data-user-email="${user.email}" title="Change User Role">
+                            <span class="fa-solid fa-circle-plus" style="cursor: pointer;" data-user-email="${user.email}">
                                 <div id="roleModal" class="modal">
                                     <div class="modal-content">
                                         <p>Update User Role</p>
@@ -68,11 +64,12 @@ function loadUsers(filter) {
                             <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
                             <div id="feedbackModal" class="modal">
                             <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <h2>Request Feedback</h2>
-                                <label for="feedbackEmailInput">Recipient Email:</label>
-                                <input type="email" id="feedbackEmailInput" placeholder="Enter recipient's email">
-                                <button id="sendFeedbackRequestBtn">Send Feedback Request</button>
+                                <p>Select a user to request feedback:</p>
+                                <select id="userSelect" class="form-select">
+                                  
+                                </select>
+                                <button id="sendFeedbackBtn" >Send Feedback Request</button>
+                                <button id="cancelFeedbackBtn">Cancel</button>
                             </div>
                         </div>
                         </td>
@@ -112,11 +109,9 @@ document.getElementById('usersList').addEventListener('click', (event) => {
         handleUserDelete(target)
     }
     if (target.classList.contains('fa-bell')) {
-        handleFeedbackRequest(target)
+        HandleFeedback(target)
    
     }
-});
-
 });
 
 
