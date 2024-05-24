@@ -88,6 +88,7 @@ jest.mock("./src/firestore-imports.js", () => ({
 
         if(database == "carWashBookingsRef"){ return "carWashSlotRef" }
         if (database == "carWashBookedRef"){ return "carWashBookedRef" }
+        if (collection == "meals"){ return "populateMealsRef" }
 
         if(subcollection1 == "daySlotBookings"){
             if (subcollection2 == "bookedSlots"){
@@ -117,13 +118,14 @@ jest.mock("./src/firestore-imports.js", () => ({
 
     getDoc: async function(reference){
         if (reference == "slotBookingRef"){ return mockFailedSnapshot }
-        return mockUserDoc },
+        return mockDoc },
 
     getDocs: async function(reference){
     
-        if (reference == "ref" ){ return { docs: mockUserDocs } }
+        if (reference == "ref" ){ return { docs: mockDocs } }
         if (reference == "carWashBookedRef"){ return { size: 6 } }
         if (reference == "noRef"){ return mockEmptyDoc }
+        if (reference == "populateMealsRef"){ return mockDocs }
 
         if (reference == "allNotifsRef"){
 
@@ -166,34 +168,42 @@ jest.mock("./src/firebase_functions.js", () => ({
 
 jest.mock("./src/functions.js", () => ({
 
+    areInputsSelected: function(dateInput, dietSelect){
+        
+        if (dietSelect.value == "" || dateInput.value == ""){
+            return false;
+        }
+        return true;
+    },
+
     ChangeWindow: function(role){ return },
     getDayName: function(year, month, day){ return "Monday" },
     renderMeals: function(querySnapshot, usersList){ return },
     SetLoginError: function(error){ return "errorMesaage" }
-    
 }));
 
 
 /* MOCKING FIREBASE OBJECTS */
 
 
-const mockUser = { id: "id", role: "role" }
+const mockData = { id: "id", role: "role" };
 
-const mockUserDoc = {
+const mockDoc = {
 
     id: "id",
     exists: function(){ return true },
-    data: function(){ return { user: mockUser } }
+    data: function(){
+        return { data: mockData, diet: "diet", meal: "meal" };
+    }
 }
 
 const mockEmptyDoc = { empty: true }
-
-const mockUserDocs = [ mockUserDoc ];
+const mockDocs = [ mockDoc ];
 
 const mockSnapshot = {
 
     exists: function(){ return true },
-    val: function(){ return mockUser }
+    val: function(){ return mockData }
 };
 
 const mockEmptySnapshot = {

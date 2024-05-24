@@ -1,5 +1,4 @@
-import { canBookSlot, updateAvailableSlots, bookSlot, doBooking } from "../../src/firebase_functions.js";
-import { mockFirebaseFunctions } from "../../mocks.js";
+import { canBookSlot, bookSlot, doBooking } from "../../src/firebase_functions.js";
 
 
 describe("canBookSlot functionality", () => {
@@ -47,7 +46,7 @@ describe("bookSlot functionality", () => {
 
 describe("doBooking functionality", () => {
 
-    const object = { value: "value" };
+    const mockObject = { value: "value" };
     const mockUser = { uid: "validID", email: "anemail@email.com" };
 
     beforeEach(() => {
@@ -62,20 +61,20 @@ describe("doBooking functionality", () => {
 
     it("Prevents bookings if the input date is the current or previous day", async () => {
         
-        const dateObject = { value: "1969-04-20" };
-        await doBooking(object, object, dateObject, mockUser);
+        const mockDateObject = { value: "1969-04-20" };
+        await doBooking(mockObject, mockObject, mockDateObject, mockUser);
         expect(document.getElementById).toHaveBeenCalledTimes(2);
     });
 
     it ("Calls bookSlot and successfully books if the input date is valid", async () => {
 
-        const dateObject = { value: "2169-04-20" };
+        const mockDateObject = { value: "2169-04-20" };
         const windowSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
         document.querySelector = jest.fn().mockImplementation((text) => {
             return { reset: function(){ return } };
         });
 
-        await doBooking(object, object, dateObject, mockUser);
+        await doBooking(mockObject, mockObject, mockDateObject, mockUser);
         expect(windowSpy).toHaveBeenCalledWith("Successfully booked slot for value!")
         window.alert.mockRestore();
     });

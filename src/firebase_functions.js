@@ -266,14 +266,13 @@ async function populateMeals(dateInput, dietSelect, mealSelect) {
     const mealOptionsRef = doc(db, 'mealOptions', selectedDate);
     
     const mealOptionsSnapshot = await getDocs(collection(mealOptionsRef, 'meals'));
-
-
     mealSelect.innerHTML = '';
-
+    
     mealOptionsSnapshot.forEach((mealDoc) => {
         const mealData = mealDoc.data();
 
         if (mealData.diet === selectedDiet) {
+            console.log("yoohoo")
             const option = document.createElement('option');
             option.text = mealData.meal;
             option.value = mealData.meal;
@@ -331,6 +330,7 @@ async function doMealBooking(dateInput, dietSelect, mealSelect, user){
         }
         
         else{
+
             //updates warning to let them know they selected a date that has already passed.
             const warning = document.getElementById("warning");
             warning.innerText= "Cannot book meals for current and previous days."
@@ -340,7 +340,7 @@ async function doMealBooking(dateInput, dietSelect, mealSelect, user){
     //updates the warning to let them know they did not select both date and diet
     else {
         const warning = document.getElementById("warning");
-        warning.innerText="Please select both date and diet.";
+        warning.innerText = "Please select both date and diet.";
     }
 }
 
@@ -416,7 +416,7 @@ async function FirebaseLogin(auth, database, db, email, password) {
                 firstName = userData.firstName || "";
                 lastName = userData.lastName || "";
             } else {
-                throw new Error("User data not found in both Realtime Database and Firestore.");
+                throw "User data not found in both Realtime Database and Firestore.";
             }
         }
         ChangeWindow(role);
