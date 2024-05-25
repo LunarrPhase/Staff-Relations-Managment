@@ -495,6 +495,7 @@ function handleRoleChange(target) {
 function handleUserDelete(target) {
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
+     const userRef = ref(database, 'users/' + userUid);
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     get(usersQuery)
