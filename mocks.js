@@ -31,13 +31,7 @@ jest.mock("./src/firebaseInit.js", () => ({
 
 jest.mock("./src/database-imports.js", () => ({
 
-    equalTo: function(property){ 
-
-        /*if (property == "dne@database.com"){
-            return "invalidQuery";
-        }*/
-        return;
-    },
+    equalTo: function(property){ return },
 
     get: function(userRef){
 
@@ -89,6 +83,7 @@ jest.mock("./src/firestore-imports.js", () => ({
         if(database == "carWashBookingsRef"){ return "carWashSlotRef" }
         if (database == "carWashBookedRef"){ return "carWashBookedRef" }
         if (collection == "meals"){ return "populateMealsRef" }
+        if (collection == "users/poorNetwork/timesheets"){ throw "Network Error" }
 
         if(subcollection1 == "daySlotBookings"){
             if (subcollection2 == "bookedSlots"){
@@ -159,7 +154,7 @@ jest.mock("./src/firestore-imports.js", () => ({
 
 jest.mock("./src/firebase_functions.js", () => ({
 
-    //updateAvailableSlots: function(selectedDate){ return }
+    doBooking: function(){ return }
 }))
 
 
@@ -217,8 +212,8 @@ const mockFailedSnapshot = {
 }
 
 
-const mockFunctions = require('./src/functions.js');
-const mockFirebaseFunctions = require('./src/firebase_functions.js');
+const mockFunctions = require('./firebase/functions.js');
+const mockFirebaseFunctions = require('./firebase/firebase_functions.js');
 
 export{ mockFunctions, mockFirebaseFunctions };
 

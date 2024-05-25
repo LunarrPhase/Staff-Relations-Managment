@@ -1,8 +1,98 @@
 import { deleteDoc, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"
-import { database, firestore as db, signInWithEmailAndPassword } from "./firebaseInit.js";
-import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected } from "./functions.js";
+import { database, firestore as db, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "./firebaseInit.js";
+import { renderMeals, ChangeWindow, SetLoginError, getDayName, areInputsSelected, CheckInputs, isValidAccessKey, SetSignUpError, SetRole, truncateText } from "./functions.js";
 import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, where } from "./firestore-imports.js";
-import { equalTo, get, orderByChild, ref, remove, query, update } from "./database-imports.js";
+import { equalTo, get, orderByChild, ref, remove, set, query, update } from "./database-imports.js";
+
+
+/* ADD TASK */
+
+
+async function AddTimeSheet(auth){
+
+    //Get input from the form
+    var fullName = document.getElementById("fullName").value;
+    var email = document.getElementById("email").value;
+    var date = document.getElementById("date").value;
+    var startTime = document.getElementById("startTime").value;
+    var endTime = document.getElementById("endTime").value;
+    var totalHours = document.getElementById("totalHours").value;
+    
+    if (totalHours.length > 4) {
+        // Limit total time to  4 characters just incase a user goes crazy
+        totalHours = totalHours.substring(0, 4);
+    }
+
+    var projectCode = document.getElementById("projectCode").value;
+    var taskName = document.getElementById("taskName").value;
+    var taskDescription = document.getElementById("taskDescription").value;
+
+    //adds the data collected to the users timesheets in firestore
+    try {
+        console.log("sup")
+        const user = auth.currentUser;
+
+        if (user) {
+            const userId = user.uid;
+
+            if (userId) {
+
+                //Adding the timesheet to the user's timesheets subcollection with auto-generated ID
+                const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+
+               //structure the json
+                await addDoc(timesheetsRef, {
+                    fullName: fullName,
+                    email: email,
+                    date: date,
+                    startTime: startTime,
+                    endTime: endTime,
+                    projectCode: projectCode,
+                    taskName: taskName,
+                    taskDescription: taskDescription,
+                    totalHours: totalHours
+                });
+
+                //takes user back to the timesheet page.
+                window.location.href = "timesheet.html";
+            }
+            else {
+                console.error("User ID not available");
+            }
+        }
+        else {
+            console.error("User not authenticated");
+        }
+    }
+    catch (error) {
+        console.error("Error adding timesheet: ", error);
+    }
+}
+
+
+/* ALL CARWASH BOOKINGS */
+
+
+async function GetCarwashBookings(date) {
+
+    const [year, month, day] = date.split('-')
+    const dateString = `${year}-${month}-${day}`
+    const dayName = getDayName(year, month, day)
+    const fullDateString = `${dateString}-${dayName}`
+
+    const bookings = []
+    const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
+    const bookingSnapshot = await getDocs(bookingRef);
+    
+    for (const bookingDoc of bookingSnapshot.docs) {
+        const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
+        const slotSnapshot = await getDocs(slotRef);
+        slotSnapshot.forEach(slotDoc => {
+            bookings.push(slotDoc.data())
+        });
+    }
+    return bookings;
+}
 
 
 /* ALL MEAL BOOKINGS */
@@ -380,10 +470,188 @@ async function CreateMeal(dateInput, dietInput, mealInput){
 }
 
 
+/* FEEDBACK REPORTS */
+
+
+async function MakePDF(user){
+    
+    const userRef = ref(database, 'users/' + user.uid);
+    let email = null;
+
+    try {
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        email = userData.email;
+    }
+    catch (error) {
+        console.error("Error getting user email:", error);
+        return;
+    }
+
+    const feedbackRef = collection(db, 'feedback');
+    const querySnapshot = await getDocs(query(feedbackRef, where('recipient', '==', email)));
+    const feedbackData = [];
+
+    querySnapshot.forEach((doc) => {
+        if (doc.exists) {
+            const data = doc.data();
+            feedbackData.push(data);
+        }
+    });
+
+    if (feedbackData.length === 0) {
+        alert("No Feedback Report to generate");
+        return;
+    }
+
+    const feedbackPdf = new jsPDF();
+    let axis = 10;
+
+    feedbackData.forEach((feedback) => {
+        feedbackPdf.text(`From: ${feedback.sender}`, 10, axis);
+        axis += 10;
+        feedbackPdf.text(`Type: ${feedback.type}`, 10, axis);
+        axis += 10;
+        feedbackPdf.text(`Message: ${feedback.message}`, 10, axis);
+        axis += 15;
+    });
+
+    feedbackPdf.save('feedback_report.pdf');
+};
+
+
+async function GenerateScreenReport(user){
+
+    const userRef = ref(database, 'users/' + user.uid);
+    let email = null;
+
+    try {
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        email = userData.email;
+    }
+    catch (error) {
+        console.error("Error getting user email:", error);
+        return;
+    }
+
+    const feedbackRef = collection(db, 'feedback');
+    const querySnapshot = await getDocs(query(feedbackRef, where('recipient', '==', email)));
+
+    if (querySnapshot.empty) {
+        alert("No Feedback Report to display");
+        return;
+    }
+
+    const existingTable = document.getElementById('existingTable');
+
+    // Clear existing rows in the table
+    const rowsToRemove = Array.from(existingTable.querySelectorAll('tr:not(:first-child)'));
+    rowsToRemove.forEach(row => row.remove());
+
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const from = data.sender;
+        const type = data.type;
+        const message = data.message;
+
+        // Create a new row
+        const newRow = existingTable.insertRow();
+
+        // Insert cells into the new row
+        const fromCell = newRow.insertCell();
+        const typeCell = newRow.insertCell();
+        const messageCell = newRow.insertCell();
+
+        // Set the cell content
+        fromCell.textContent = from;
+        typeCell.textContent = type;
+        messageCell.textContent = message;
+    });
+}
+
+
+/* FEEDBACK */
+
+async function CheckEmailExists(email){
+
+    const usersRef = ref(database, 'users')
+    const snapshot = await get(usersRef)
+    const users = snapshot.val()
+
+    for (const key in users) {
+        if (users[key].email === email) {
+            return true
+        }
+    }
+    return false
+}
+
+
+async function SendFeedBack(user){
+
+    const recipient = document.getElementById('recipient').value;
+    const type = document.getElementById('type').value;
+    const message = document.getElementById('message').value;
+
+    const userRef = ref(database, 'users/' + user.uid);
+    let email = null;
+
+    try {
+        const snapshot = await get(userRef);
+        const userData = snapshot.val();
+        email = userData.email;
+    }
+    catch (error) {
+        console.error("Error getting user email:", error);
+    }
+
+    try {
+        const emailExists = await CheckEmailExists(recipient);
+        
+        if (!emailExists) {
+            alert('The entered email does not exist.');
+            return;
+        }
+  
+        try {
+            await addDoc(collection(db, 'feedback'), {
+                message: message,
+                recipient: recipient,
+                type: type,
+                sender: email 
+            });
+
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'block';
+            const closeButton = document.getElementsByClassName('close')[0];
+            
+            closeButton.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
+        catch (error) {
+            console.error('Error adding feedback: ', error);
+        }
+    }
+    catch (error) {
+        console.error('Error checking email existence:', error);
+    }
+}
+
 /* INDEX */
 
 
-async function FirebaseLogin(auth, database, db, email, password) {
+function EnsureSignOut(auth){
+   
+    auth.signOut().then(() => {})
+    .catch((error) => {
+        console.error('Error signing out: ', error);
+    });
+}
+
+
+async function FirebaseLogin(auth, email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -415,12 +683,15 @@ async function FirebaseLogin(auth, database, db, email, password) {
                 role = userData.role || "User";
                 firstName = userData.firstName || "";
                 lastName = userData.lastName || "";
-            } else {
+            }
+            else {
                 throw "User data not found in both Realtime Database and Firestore.";
             }
         }
         ChangeWindow(role);
-    } catch (error) {
+    }
+    catch (error) {
+
         console.error("Firebase Error:", error);
         document.getElementById("authenticating").style.display = "none";
         const errorMessage = SetLoginError(error);
@@ -434,6 +705,97 @@ async function FirebaseLogin(auth, database, db, email, password) {
         if (loadingMessageElement) {
             loadingMessageElement.style.display = 'none';
         }
+    }
+}
+
+
+/* MAIN PAGE */
+
+
+async function SetGreeting(user){
+
+    const loading = document.getElementById('loading');
+    if (user) {
+        try {
+
+            const userRef = ref(database, 'users/' + user.uid);
+            const snapshot = await get(userRef);
+            const userData = snapshot.val();
+         
+            const firstName = userData.firstName || "Unknown";
+            const role = userData.role || "User";
+            const waveImagePath = "wave.svg";  // Ensure this path is correct
+
+            if (role === "Manager") {
+                document.getElementById('userInfo').innerHTML = `
+                    Hello, ${firstName} (Manager)
+                    <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">
+                `;
+            }
+            
+            else if (role === "HR") {
+                document.getElementById('userInfo').innerHTML = `
+                    Hello, ${firstName} (HR) 
+                    <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">
+                `;
+            }
+            
+            else {
+                document.getElementById('userInfo').innerHTML = `
+                    Hello, ${firstName} (Employee)
+                    <img src="${waveImagePath}" alt="Profile Picture" style="width:70px; height:70px;">
+                `;
+            }
+            loading.style.display = 'none'
+        }
+        catch (error) {
+            console.error("Error fetching user data:", error);
+            loading.style.display = 'none';
+        }
+    }
+    else {
+        loading.style.display = 'none'
+    }
+}
+
+
+async function LogOut(user){
+
+    try {
+        const dt = new Date();
+        const userUid = user.uid;
+        const email = user.email;
+
+        
+        const userRef = ref(database, 'users/' + userUid);
+        const snapshot = await get(userRef);
+
+        if (snapshot.exists()) {
+            
+            await update(userRef, {
+                last_logout: dt,
+            });
+        }
+        
+        else {
+            
+            const accountDocRef = doc(db, 'accounts', email);
+            const docSnap = await getDoc(accountDocRef);
+
+            if (docSnap.exists()) {
+                await updateDoc(accountDocRef, {
+                    last_logout: dt,
+                });
+            }
+            else {
+                throw new Error("User data not found in both Realtime Database and Firestore.");
+            }
+        }
+        await signOut(auth);
+        window.location.href = 'index.html';
+    }
+    catch (error) {
+        console.error("Logout Error:", error);
     }
 }
 
@@ -493,8 +855,10 @@ function handleRoleChange(target) {
 
 
 function handleUserDelete(target) {
+
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
+    const usersRef = ref(database, 'users');
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     get(usersQuery)
@@ -596,31 +960,864 @@ function handleFeedbackRequest(target) {
 }
 
 
-
-
-/* ALL CARWASH BOOKINGS */
-
-
-async function getCarwashBookings(date) {
-
-    const [year, month, day] = date.split('-')
-    const dateString = `${year}-${month}-${day}`
-    const dayName = getDayName(year, month, day)
-    const fullDateString = `${dateString}-${dayName}`
-
-    const bookings = []
-    const bookingRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings');
-    const bookingSnapshot = await getDocs(bookingRef);
+function HandleEvent(event){
     
-    for (const bookingDoc of bookingSnapshot.docs) {
-        const slotRef = collection(db, 'carWashBookings', fullDateString, 'daySlotBookings', bookingDoc.id, 'bookedSlots');
-        const slotSnapshot = await getDocs(slotRef);
-        slotSnapshot.forEach(slotDoc => {
-            bookings.push(slotDoc.data())
-        });
+    const target = event.target
+        
+    if (target.classList.contains('fa-circle-plus')) {
+        handleRoleChange(target)
     }
-    return bookings;
+    
+    if (target.classList.contains('fa-user-xmark')) {
+        handleUserDelete(target)
+    }
+    if (target.classList.contains('fa-bell')) {
+        handleFeedbackRequest(target)
+    }
 }
 
 
-export{doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings,GetCurrentUserFeedbackNotifications, canBookSlot, updateAvailableSlots, bookSlot, doBooking, FirebaseLogin, handleRoleChange, handleUserDelete,handleFeedbackRequest, getCarwashBookings}
+function LoadUsers(filter){
+
+    const usersRef = ref(database, 'users');
+
+    get(usersRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            let users = [];
+
+            snapshot.forEach((childSnapshot) => {
+                const user = childSnapshot.val();
+                if (user.firstName && user.lastName && user.role) {
+                    users.push(user);
+                }
+            });
+
+            //filters users based on the provided filter
+            if (filter) {
+                const filterLower = filter.toLowerCase();
+                users = users.filter(user =>
+                    user.firstName.toLowerCase().includes(filterLower) ||
+                    user.lastName.toLowerCase().includes(filterLower) ||
+                    user.role.toLowerCase().includes(filterLower)
+                );
+            }
+
+            users.sort((a, b) => (a.firstName > b.firstName) ? 1 : -1);
+
+            let html = '';
+            users.forEach((user) => {
+                html += `
+                    <tr data-user-email="${user.email}">
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td class="role">${user.role}</td>
+                        <td>${user.email}</td>
+                        <td>
+                            <span class="fa-solid fa-user-xmark fa-fw" style="cursor: pointer;" title="Delete User Account">
+                                <div id="confirmationModal" class="modal">
+                                    <div class="modal-content">
+                                        <p>Are you sure you want to delete this user?</p>
+                                        <button id="confirmDeleteBtn">Yes</button>
+                                        <button id="cancelDeleteBtn">No</button>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="fa-solid fa-circle-plus" style="cursor: pointer;" data-user-email="${user.email}" title="Change User Role">
+                                <div id="roleModal" class="modal">
+                                    <div class="modal-content">
+                                        <p>Update User Role</p>
+                                        <span class="close">&times;</span>
+                                        <select id="roleSelect" class="form-select">
+                                        <option selected disabled hidden>Select a role...</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Staff">Staff</option>
+                                        <option value="Manager">Manager</option>
+                                        
+                                        </select>
+                                        <button id="updateRoleBtn">Save changes</button>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="fa-solid fa-bell" style="cursor: pointer;" data-user-email="${user.email}" title="Send feedback request"></span>
+                            <div id="feedbackModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Request Feedback</h2>
+                                <label for="feedbackEmailInput">Recipient Email:</label>
+                                <input type="email" id="feedbackEmailInput" placeholder="Enter recipient's email">
+                                <button id="sendFeedbackRequestBtn">Send Feedback Request</button>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('usersList').innerHTML = html;
+        }
+        else {
+            console.log('No data available');
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+}
+
+
+/* MEAL HISTORY */
+
+
+async function GenerateCSV(auth){
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+        // Fetch data
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+
+        // Initialize data object for meal orders grouped by date
+        const mealOrdersByDate = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const date = mealOrderData.date;
+            if (!mealOrdersByDate[date]) {
+                mealOrdersByDate[date] = [];
+            }
+            mealOrdersByDate[date].push(mealOrderData);
+        });
+
+        if (Object.keys(mealOrdersByDate).length === 0) {
+            alert("No Meal History to generate");
+            return;
+        }
+
+        // Generate CSV content
+        let csvContent = "Date,Diet,Meal\n";
+        for (const date in mealOrdersByDate) {
+            mealOrdersByDate[date].forEach(mealOrder => {
+                csvContent += `${date},${mealOrder.diet},${mealOrder.meal}\n`;
+            });
+        }
+
+        // Download CSV file
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', 'meal_order_history.csv');
+        document.body.appendChild(link);
+        link.click();
+
+        console.log("CSV generated successfully");
+    }
+    catch (error) {
+        console.error("Error generating CSV: ", error);
+    }
+}
+
+
+async function GeneratePDF(auth){
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+        // Reference the meal orders in the users database
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+        // Initialize data object for meal orders grouped by date
+        const mealOrdersByDate = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const date = mealOrderData.date;
+            if (!mealOrdersByDate[date]) {
+                mealOrdersByDate[date] = [];
+            }
+            mealOrdersByDate[date].push(mealOrderData);
+        });
+
+        if (Object.keys(mealOrdersByDate).length === 0) {
+            alert("No Meal History to generate");
+            return;
+        }
+
+        // Generate PDF using jsPDF
+        const doc = new jsPDF();
+        doc.text("Meal Order History", 10, 10);
+        // Formatting
+        let startY = 20;
+        for (const date in mealOrdersByDate) {
+            doc.text(`Date: ${date}`, 10, startY);
+            const tableData = mealOrdersByDate[date].map(mealOrder => [mealOrder.diet, mealOrder.meal]);
+            doc.autoTable({
+                startY: startY + 10,
+                head: [['Diet', 'Meal']],
+                body: tableData
+            });
+            startY = doc.autoTable.previous.finalY + 10;
+        }
+        
+        doc.save('meal_order_history_by_date.pdf');
+        console.log("PDF generated successfully");
+    }
+    catch (error) {
+        console.error("Error generating PDF: ", error);
+    }
+}
+
+
+async function GenerateByDate(auth){
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+        const mealOrdersByDate = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const date = mealOrderData.date;
+
+            if (!mealOrdersByDate[date]) {
+                mealOrdersByDate[date] = [];
+            }
+            mealOrdersByDate[date].push(mealOrderData);
+        });
+
+        if (Object.keys(mealOrdersByDate).length === 0) {
+            alert("No Meal History to display");
+            return;
+        }
+
+        // Display meal orders grouped by date
+        const mealOrdersReport = document.getElementById("mealOrdersReport");
+        mealOrdersReport.innerHTML = ""; // Clear previous content
+
+        for (const date in mealOrdersByDate) {
+            const dateHeading = `<h2>${date}</h2>`;
+            const mealOrdersTableHeading = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Diet</th>
+                            <th>Meal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mealOrdersTable${date}">
+                </table>
+            `;
+
+            mealOrdersReport.innerHTML += dateHeading + mealOrdersTableHeading;
+            const mealOrdersTableBody = document.getElementById(`mealOrdersTable${date}`);
+
+            mealOrdersByDate[date].forEach((mealOrderData) => {
+                const mealOrderRow = `
+                    <tr>
+                        <td>${mealOrderData.date}</td>
+                        <td>${mealOrderData.diet}</td>
+                        <td>${mealOrderData.meal}</td>
+                    </tr>
+                `;
+                mealOrdersTableBody.innerHTML += mealOrderRow;
+            });
+        }
+        console.log("Meal orders retrieved and sorted by date successfully");
+    }
+    catch (error) {
+        console.error("Error fetching and sorting meal orders: ", error);
+    }
+}
+
+
+async function GenerateByDiet(auth){
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+        // Reference the users meal orders in the db firestore
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const querySnapshot = await getDocs(mealOrdersRef);
+        const mealOrdersByDiet = {};
+
+        querySnapshot.forEach((doc) => {
+            const mealOrderData = doc.data();
+            const diet = mealOrderData.diet;
+
+            if (!mealOrdersByDiet[diet]) {
+                mealOrdersByDiet[diet] = [];
+            }
+
+            mealOrdersByDiet[diet].push(mealOrderData);
+        });
+
+        if (Object.keys(mealOrdersByDiet).length === 0) {
+            alert("No Meal History to display");
+            return;
+        }
+
+        // Display meal orders grouped by diet
+        const mealOrdersReport = document.getElementById("mealOrdersReport");
+        mealOrdersReport.innerHTML = ""; // Clear previous content
+
+        for (const diet in mealOrdersByDiet) {
+            const dietHeading = `<h2>${diet}</h2>`;
+            const mealOrdersTableHeading = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Diet</th>
+                            <th>Meal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mealOrdersTable${diet}">
+                </table>
+            `;
+
+            mealOrdersReport.innerHTML += dietHeading + mealOrdersTableHeading;
+            const mealOrdersTableBody = document.getElementById(`mealOrdersTable${diet}`);
+
+            mealOrdersByDiet[diet].forEach((mealOrderData) => {
+                const mealOrderRow = `
+                    <tr>
+                        <td>${mealOrderData.date}</td>
+                        <td>${mealOrderData.diet}</td>
+                        <td>${mealOrderData.meal}</td>
+                    </tr>
+                `;
+                mealOrdersTableBody.innerHTML += mealOrderRow;
+            });
+        }
+        console.log("Meal orders retrieved and sorted by diet successfully");
+    }
+    catch (error) {
+        console.error("Error fetching and sorting meal orders: ", error);
+    }
+}
+
+
+async function CreateNewAccount(auth){
+
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    let accessKey = document.getElementById('accessKey').value;
+
+    if (!CheckInputs(firstName, lastName, accessKey)){
+        return;
+    }
+
+    if (isValidAccessKey(accessKey)) {
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                document.getElementById("signingUp").style.display = "block";
+                const user = userCredential.user;
+                const role = SetRole(accessKey);
+                // Add user to Realtime Database
+                set(ref(database, 'users/' + user.uid), {
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    role: role,
+                }).then(() => {
+                    // Add user to Firestore 'accounts' collection
+                    setDoc(doc(db, "accounts", email), {
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        role: role,
+                    }).then(() => {
+                        // Add the document to Realtime Database under users.
+                        set(ref(database, 'users/' + user.uid), {
+                            email: email,
+                            firstName: firstName,
+                            lastName: lastName,
+                            role: role,
+                        }).then(() => {
+                            document.getElementById("signingUp").style.display = "none";
+                            document.getElementById("info").textContent = "Your account was successfully created. Go back to the sign in page and sign in.";
+                            window.location.href = 'index.html';
+                        }).catch((error) => {
+                            document.getElementById('error-message').textContent = "Error adding document to Realtime Database 'users' node: " + error.message;
+                        });
+                    }).catch((error) => {
+                        document.getElementById('error-message').textContent = "Error adding document to Firestore: " + error.message;
+                    });
+                }).catch((error) => {
+                    document.getElementById('error-message').textContent = "Error adding document to Realtime Database: " + error.message;
+                });
+            })
+            .catch((error) => {
+                const errorMessage = SetSignUpError(error, email, password);
+                document.getElementById('error-message').textContent = errorMessage;
+            });
+    }
+    else {
+        document.getElementById('error-message').textContent = "Invalid access key.";
+    }
+}
+
+
+async function DisplaySingleNotification(auth){
+
+    try {
+        //get current user credentials
+        const user = auth.currentUser;
+
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+        //get todays date
+        const today = new Date();
+        const todayString = today.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+
+        // Fetch meal bookings
+        const mealOrdersRef = collection(db, `users/${userId}/mealOrders`);
+        const mealQuerySnapshot = await getDocs(query(mealOrdersRef, where('date', '==', todayString)));
+        const mealBookings = [];
+        mealQuerySnapshot.forEach((doc) => {
+            mealBookings.push(doc.data());
+        });
+
+        // Fetch car wash bookings
+        const carWashBookingsRef = collection(db, `users/${userId}/carwashBookings`);
+        const carWashQuerySnapshot = await getDocs(query(carWashBookingsRef, where('date', '==', todayString)));
+        const carWashBookings = [];
+        carWashQuerySnapshot.forEach((doc) => {
+            carWashBookings.push(doc.data());
+        });
+
+        //fetch feedback requests
+        const feedbackNotificationsRef = collection(db, 'feedbackNotifications');
+        const querySnapshot = await getDocs(query(feedbackNotificationsRef, where('requester', '==', user.email)));
+
+        const feedbackNotifications = [];
+
+        querySnapshot.forEach((doc) => {
+
+            feedbackNotifications.push(doc.data());
+        
+        });
+
+
+
+
+        // Determine the notification text -> it will only display one of these in the popup
+        let notificationText = "";
+        if (mealBookings.length > 0) {
+            const mealBooking = mealBookings[0]; // Get the first meal booking for the day
+            notificationText = `Today you booked a ${mealBooking.diet} meal of: ${mealBooking.meal}.`;
+        } else if (carWashBookings.length > 0) {
+            const carWashBooking = carWashBookings[0]; // Get the first car wash booking for the day
+            notificationText = `Today you booked a ${carWashBooking.type} car wash for the ${carWashBooking.slot} slot.`;
+        }
+        else{
+            const feedback = feedbackNotifications[0];
+            notificationText = `Please give feedback to ${feedback.recipient}.`;
+        }
+
+        // Update the popover content
+        const popoverContent = document.getElementById('popover-content');
+        if (notificationText) {
+            popoverContent.innerHTML = `
+                <h3>Notifications</h3>
+                <p>${notificationText}</p>
+                <a href="all-notifs.html" class="see-all-link">See all</a>
+            `;
+        }
+    }
+    catch (error) {
+        console.error("Error fetching bookings: ", error);
+    }
+    
+}
+
+
+/* TIMESHEET-REPORTS */
+
+
+async function GetTimesheetsByProject(user){
+
+    if (user) {
+        const userId = user.uid;
+        if (userId) {
+            try {
+                const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+                const querySnapshot = await getDocs(timesheetsRef);
+                const timesheetsByProject = {};
+
+                querySnapshot.forEach((doc) => {
+                    const timesheetData = doc.data();
+                    const projectCode = timesheetData.projectCode;
+
+                    if (!timesheetsByProject[projectCode]) {
+                        timesheetsByProject[projectCode] = [];
+                    }
+
+                    timesheetsByProject[projectCode].push(timesheetData);
+                });
+
+                if (Object.keys(timesheetsByProject).length === 0) {
+                    alert("No Timesheet History to display");
+                    return;
+                }
+
+                const timesheetReport = document.getElementById("timesheetReport");
+                timesheetReport.innerHTML = ""; 
+
+                for (const projectCode in timesheetsByProject) {
+                    const projectHeading = `<h2>${projectCode}</h2>`;
+                    const timesheetTableHeading = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task Name</th>
+                                    <th>Task Description</th>
+                                    <th>Total Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody id="timesheetTable${projectCode}">
+                        </table>
+                    `;
+
+                    timesheetReport.innerHTML += projectHeading + timesheetTableHeading;
+                    const timesheetTableBody = document.getElementById(`timesheetTable${projectCode}`);
+                    timesheetsByProject[projectCode].forEach((timesheetData) => {
+                        const truncatedTaskDescription = truncateText(timesheetData.taskDescription, 20);
+                        const timesheetRow = `
+                            <tr>
+                                <td>${timesheetData.date}</td>
+                                <td>${timesheetData.startTime}</td>
+                                <td>${timesheetData.endTime}</td>
+                                <td>${timesheetData.taskName}</td>     
+                                <td class="truncate" title="${timesheetData.taskDescription}">${truncatedTaskDescription}</td>
+                                <td>${timesheetData.totalHours}</td>
+                            </tr>
+                        `;
+
+                        timesheetTableBody.innerHTML += timesheetRow;
+                    });
+                }
+                console.log("Timesheets retrieved and sorted by project successfully");
+            } catch (error) {
+                console.error("Error fetching and sorting timesheets: ", error);
+            }
+        } else {
+            console.error("User ID not available");
+        }
+    } else {
+        console.error("User not authenticated");
+    }
+}
+
+
+async function GetTimesheetsByTask(user){
+
+    if (user) {
+        const userId = user.uid;
+        if (userId) {
+            try {
+                const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+                const querySnapshot = await getDocs(timesheetsRef);
+                const timesheetsByTask = {};
+
+                querySnapshot.forEach((doc) => {
+                    const timesheetData = doc.data();
+                    const taskName = timesheetData.taskName;
+
+                    if (!timesheetsByTask[taskName]) {
+                        timesheetsByTask[taskName] = [];
+                    }
+
+                    timesheetsByTask[taskName].push(timesheetData);
+                });
+
+                if (Object.keys(timesheetsByTask).length === 0) {
+                    alert("No Timesheet History to display");
+                    return;
+                }
+
+                const timesheetReport = document.getElementById("timesheetReport");
+                timesheetReport.innerHTML = ""; 
+
+                for (const taskName in timesheetsByTask) {
+                    const taskHeading = `<h2>${taskName}</h2>`;
+                    const timesheetTableHeading = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Project Code</th>
+                                    <th>Task Description</th>
+                                    <th>Total Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody id="timesheetTable${taskName}">
+                        </table>
+                    `;
+
+                    timesheetReport.innerHTML += taskHeading + timesheetTableHeading;
+                    const timesheetTableBody = document.getElementById(`timesheetTable${taskName}`);
+                    timesheetsByTask[taskName].forEach((timesheetData) => {
+                        const truncatedTaskDescription = truncateText(timesheetData.taskDescription, 20);
+                        const timesheetRow = `
+                            <tr>
+                                <td>${timesheetData.date}</td>
+                                <td>${timesheetData.startTime}</td>
+                                <td>${timesheetData.endTime}</td>
+                                <td>${timesheetData.projectCode}</td>
+                                <td class="truncate" title="${timesheetData.taskDescription}">${truncatedTaskDescription}</td>
+                                <td>${timesheetData.totalHours}</td>
+                            </tr>
+                        `;
+
+                        timesheetTableBody.innerHTML += timesheetRow;
+                    });
+                }
+                console.log("Timesheets retrieved and sorted by task description successfully");
+            } catch (error) {
+                console.error("Error fetching and sorting timesheets: ", error);
+            }
+        } else {
+            console.error("User ID not available");
+        }
+    } else {
+        console.error("User not authenticated");
+    }
+}
+
+
+async function GenerateTimesheetPDF(auth){
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
+        const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+        const querySnapshot = await getDocs(timesheetsRef);
+        const timesheetsByProject = {};
+
+        querySnapshot.forEach((doc) => {
+            const timesheetData = doc.data();
+            const projectCode = timesheetData.projectCode;
+
+            if (!timesheetsByProject[projectCode]) {
+                timesheetsByProject[projectCode] = [];
+            }
+            timesheetsByProject[projectCode].push(timesheetData);
+        });
+
+        if (Object.keys(timesheetsByProject).length === 0) {
+            alert("No Timesheet History to generate PDF");
+            return;
+        }
+
+        const doc = new jsPDF();
+        let yOffset = 10;
+        
+        for (const projectCode in timesheetsByProject) {
+            doc.setFontSize(16);
+            doc.text(`Project: ${projectCode}`, 10, yOffset);
+            const table = [];
+
+            timesheetsByProject[projectCode].forEach(timesheetData => {
+                table.push([
+                    timesheetData.date,
+                    timesheetData.startTime,
+                    timesheetData.endTime,
+                    timesheetData.taskName,
+                    timesheetData.taskDescription,
+                    timesheetData.totalHours
+                ]);
+            });
+
+            doc.autoTable({
+                startY: yOffset + 10,
+                head: [['Date', 'Start Time', 'End Time', 'Task Name', 'Task Description', 'Total Hours']],
+                body: table
+            });
+
+            yOffset = doc.autoTable.previous.finalY + 20;
+        }
+        doc.save('timesheets.pdf');
+        console.log("PDF generated successfully");
+    } catch (error) {
+        console.error("Error generating PDF: ", error);
+    }
+}
+
+
+async function GenerateTimesheetCSV(auth){
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const userId = user.uid;
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
+        const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+        const querySnapshot = await getDocs(timesheetsRef);
+        const allTimesheets = [];
+
+        querySnapshot.forEach((doc) => {
+            const timesheetData = doc.data();
+            allTimesheets.push(timesheetData);
+        });
+
+        if (allTimesheets.length === 0) {
+            alert("No Timesheet History to generate CSV");
+            return;
+        }
+
+        const csvData = allTimesheets.map(timesheetData => {
+            return [
+                timesheetData.date,
+                timesheetData.startTime,
+                timesheetData.endTime,
+                timesheetData.projectCode,
+                timesheetData.taskName,
+                timesheetData.taskDescription,
+                timesheetData.totalHours
+            ].join(',');
+        }).join('\n');
+
+        const csvFile = new Blob([csvData], {type: "text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.download = `timesheets.csv`;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    } catch (error) {
+        console.error("Error generating CSV file: ", error);
+    }
+}
+
+
+/* TIMESHEET */
+
+
+async function FetchTimesheets(user){
+
+    if (user) {
+        const userId = user.uid;
+
+        if (user.uid) {
+            try {
+                //fetch the timesheets from the current users firestore db
+                const timesheetsRef = collection(db, `users/${userId}/timesheets`);
+                const querySnapshot = await getDocs(timesheetsRef);
+                const timesheetsBody = document.getElementById("timeSheetBody");
+
+                querySnapshot.forEach((doc) => {
+
+                    // Process each timesheet document
+                    const timesheetData = doc.data();
+                    const truncatedTaskDescription = truncateText(timesheetData.taskDescription, 20);
+                    const timesheetRow = `
+
+                        <tr>
+                            <td>${timesheetData.date}</td>
+                            <td>${timesheetData.startTime}</td>
+                            <td>${timesheetData.endTime}</td>
+                            <td>${timesheetData.projectCode}</td>
+                            <td>${timesheetData.taskName}</td>
+                            <td class="truncate" title="${timesheetData.taskDescription}">${truncatedTaskDescription}</td>
+                            <td>${timesheetData.totalHours}</td>
+                        </tr>
+                        `;
+                    //add it to the html
+                      timesheetsBody.innerHTML += timesheetRow;
+                      
+                });
+                console.log("Timesheets retrieved successfully");
+            }
+            catch (error) {
+                console.error("Error fetching timesheets: ", error);
+            }
+        }
+        else {
+            console.error("User ID not available");
+        }
+    }
+
+    else {
+        console.error("User not authenticated");
+    }
+}
+
+
+export{ AddTimeSheet, doMealBooking, CreateMeal, populateMeals, displayBookings, displayAllBookings, SendHome,
+    GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, GetCurrentUserFeedbackNotifications, canBookSlot,
+    updateAvailableSlots, bookSlot, doBooking, MakePDF, GenerateScreenReport, CheckEmailExists, SendFeedBack,
+    EnsureSignOut, FirebaseLogin, SetGreeting, LogOut, handleRoleChange, handleUserDelete, handleFeedbackRequest,
+    GetCarwashBookings, HandleEvent, LoadUsers, GenerateCSV, GeneratePDF, GenerateByDate, GenerateByDiet,
+    CreateNewAccount, DisplaySingleNotification, FetchTimesheets, GetTimesheetsByProject, GetTimesheetsByTask,
+    GenerateTimesheetPDF, GenerateTimesheetCSV }

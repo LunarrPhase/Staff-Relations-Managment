@@ -1,3 +1,18 @@
+import { doBooking } from "./firebase_functions.js";
+
+
+/* ADMIN MAIN PAGE */
+
+
+function CreateRR(){
+
+    const link = document.createElement('a');
+    link.href = 'https://youtu.be/xvFZjo5PgG0?si=j54z27hdpHLeZyP6';
+    link.target = '_blank';
+    link.click();
+}
+
+
 /*CAR-WASH BOOKING DATE MANAGEMENT*/
 
 
@@ -175,6 +190,38 @@ function areInputsSelected(day, typeCarwash) {
 }
 
 
+async function SubmitBooking(user){
+
+    const typeCarwash = document.getElementById('carWashType');
+    const timeSlot = document.getElementById('timeSlot');
+    const day = document.getElementById('date');
+
+    if (areInputsSelected(day, typeCarwash)) {
+        doBooking(typeCarwash, timeSlot, day, user);
+    } 
+    else alert("Please select both date and time slot.");
+}
+
+
+async function BookCarWash(user){
+
+    if (user) {
+        const submit = document.getElementById('submit-btn');
+        
+        if (submit) {
+
+            submit.addEventListener('click', async (e) => {
+                e.preventDefault();
+                SubmitBooking(user)
+            });
+        }
+    }
+    else {
+        console.error("No user is signed in.");
+    }
+}
+
+
 /* LOGIN */
 
 
@@ -260,6 +307,21 @@ function SetSignUpError(error, email, password){
 }
 
 
+function CheckInputs(firstName, lastName, accessKey){
+
+    if (firstName.trim() === "" || lastName.trim() === "") {
+        document.getElementById('error-message').textContent = "Enter a valid first and last name.";
+        return false;
+    }
+
+    if (!accessKey) {
+        document.getElementById('error-message').textContent = "Enter a valid access key.";
+        return false;
+    }
+    return true
+}
+
+
 /* TIMESHEET */
 
 
@@ -269,4 +331,7 @@ function truncateText(text, maxLength) {
 
 
 
-export{renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement, CreateFeedbackNotificationElement, PopulateNotifications, areInputsSelected, ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName, renderBookings };
+export{CreateRR, renderMeals, CheckUserAuthenticated, CreateMealNotificationElements, CreateCarWashNotificationElement,
+    CreateFeedbackNotificationElement, PopulateNotifications, areInputsSelected, SubmitBooking, BookCarWash,
+    ChangeWindow, SetLoginError, isValidAccessKey, SetRole, SetSignUpError, truncateText, manageDate, getDayName,
+    renderBookings, CheckInputs };

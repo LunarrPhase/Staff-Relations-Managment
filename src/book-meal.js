@@ -12,13 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (user) {
 
             //takes user to the appropriate home page
-        
-        const goHome = document.getElementById('home');
-        
-
-        goHome.addEventListener('click', async () => {
-            SendHome(user);
-        })
+            const goHome = document.getElementById('home');
+            goHome.addEventListener('click', async () => {
+                SendHome(user);
+            });
 
             //gets all necessary form elements
             const submit = document.getElementById('submit-btn');
@@ -33,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     populateMeals(dateInput, dietSelect, mealSelect);
                 }
             });
+
             dateInput.addEventListener('change', () => {
                 
                 if (areInputsSelected(dateInput, dietSelect)) {
@@ -43,12 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
             //submits the meal the user chose when they click submit button
             if (submit) {
                 submit.addEventListener('click', async (e) => {
-                   
                     e.preventDefault();
                     doMealBooking(dateInput, dietSelect, mealSelect, user);                    
                 });
             }
-            console.log("User is signed in");
         }
         else {
             // No user is signed in
