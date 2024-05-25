@@ -151,21 +151,11 @@ function CreateFeedbackNotificationElement(feedbackNotifications) {
     const notificationElement = document.createElement('div');
 
         notificationElement.classList.add('notification');
-
-	console.log(notification.recipient);
-
         const notificationText = `Please give feedback to ${notification.recipient}.`;
-
         notificationElement.innerText = notificationText;
-
-
-
         return notificationElement;
-
     });
-
     return notificationElements;
-
 }
 
 

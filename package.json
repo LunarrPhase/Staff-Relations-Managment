@@ -5,7 +5,7 @@
   "main": "index.js",
   "//": "to test locally: jest ./__tests__ else: sh node_modules/.bin/jest ./__tests__ ",
   "scripts": {
-    "test": "sh node_modules/.bin/jest ./__tests__ ",
+    "test": "jest ./__tests__ ",
     "start": "node app"
   },
   "repository": {
@@ -39,7 +39,8 @@
     "firebase": "^10.11.0",
     "firebase-admin": "^12.1.0",
     "jest": "^29.7.0",
-    "jsdom": "^24.0.0"
+    "jsdom": "^24.0.0",
+    "jspdf": "^2.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

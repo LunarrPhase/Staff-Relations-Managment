@@ -40,7 +40,7 @@ describe("GenerateScreenreport functionality", () => {
     });
 
 
-    it("Puts up a window alert is input user has no reports to display", async () => {
+    it("Puts up a window alert if input user has no reports to display", async () => {
 
         const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
         const mockUser = { uid: "newID" }
@@ -49,4 +49,18 @@ describe("GenerateScreenreport functionality", () => {
         expect(windowSpy).toHaveBeenCalledWith("No Feedback Report to display");
         window.alert.mockRestore();
     });
+
+    it("", async () => {
+
+       /* const mockUser = { uid: "uid" }
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return{
+                querySelectorAll: function(){
+                    return { remove: function(){ return } }
+                },
+                insertRow: function(){ return { textContent: "" } }
+            }
+        })
+        await GenerateScreenReport(mockUser);*/
+    })
 });

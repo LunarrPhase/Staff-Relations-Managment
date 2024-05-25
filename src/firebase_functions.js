@@ -361,7 +361,7 @@ async function populateMeals(dateInput, dietSelect, mealSelect) {
         const mealData = mealDoc.data();
 
         if (mealData.diet === selectedDiet) {
-            console.log("yoohoo")
+            
             const option = document.createElement('option');
             option.text = mealData.meal;
             option.value = mealData.meal;
@@ -534,7 +534,7 @@ async function GenerateScreenReport(user){
         return;
     }
 
-    const feedbackRef = collection(db, 'feedback');
+    const feedbackRef = collection(db, 'feedback'); 
     const querySnapshot = await getDocs(query(feedbackRef, where('recipient', '==', email)));
 
     if (querySnapshot.empty) {
@@ -549,6 +549,7 @@ async function GenerateScreenReport(user){
     rowsToRemove.forEach(row => row.remove());
 
     querySnapshot.forEach((doc) => {
+    
         const data = doc.data();
         const from = data.sender;
         const type = data.type;

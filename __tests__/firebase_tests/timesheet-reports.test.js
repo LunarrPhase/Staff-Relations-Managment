@@ -1,5 +1,6 @@
 import { mockFunctions } from "../../mocks";
 import { GenerateTimesheetCSV, GenerateTimesheetPDF, GetTimesheetsByTask, GetTimesheetsByProject } from "../../src/firebase_functions";
+import { jsPDF } from "jspdf";
 
 
 describe("GenerateTimesheetCSV", () => {
@@ -35,7 +36,7 @@ describe("GenerateTimesheetCSV", () => {
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
     });
 
-    it("Throws an error if the input auth has an valid user property with an invalid ID", async () => {
+    it("Generates Timesheet CSV if input auth is correct and database is not empty", async () => {
 
         const mockAuth = { currentUser: { uid: "validID" } };
         const documentSpy = jest.spyOn(document.body, 'appendChild');
@@ -54,6 +55,16 @@ describe("GenerateTimesheetCSV", () => {
         window.URL.createObjectURL.mockRestore();
         document.createElement.mockRestore();
     });
+
+    it("Puts up an alert if input auth is correct and database is empty", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+        const mockAuth = { currentUser: { uid: "newID" } };
+
+        await GenerateTimesheetCSV(mockAuth);
+        expect(windowSpy).toHaveBeenCalledWith("No Timesheet History to generate CSV");
+        window.alert.mockRestore();
+    });
 });
 
 
@@ -62,7 +73,7 @@ describe("GenerateTimesheetPDF", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "error")//.mockImplementation(() => jest.fn());
     });
 
     afterEach(() => {

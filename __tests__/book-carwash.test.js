@@ -11,6 +11,7 @@ describe("BookCarWash Functionality", () => {
         const consoleSpy = jest.spyOn(console, "error");
         BookCarWash(null);
         expect(consoleSpy).toHaveBeenCalledWith("No user is signed in.");
+        console.error.mockRestore();
     });
 });
 
@@ -33,7 +34,7 @@ describe("SubmitBooking Functionality", () => {
         window.alert.mockRestore();
     });
 
-    it("Calls doBooking if required documeny inputs are filled in", async () => {
+    it("Calls doBooking if required document inputs are filled in", async () => {
 
         document.querySelector = jest.fn().mockImplementation((text) => {
             return { reset: function(){ return } };

@@ -1,5 +1,5 @@
 import { doMealBooking, populateMeals } from "../../src/firebase_functions";
-import { mockFunctions } from "../../mocks";
+
 
 describe("populateMeals functionality", () => {
 
@@ -61,7 +61,6 @@ describe("doMealBooking functionality", () => {
         }
     };
 
-
     it("Does not do meal booking if date and diet are not selected", async () => {
 
         const mockObject = { value: "" };
@@ -87,5 +86,5 @@ describe("doMealBooking functionality", () => {
         await doMealBooking(mockDateObject, mockDietObject, mockMealSelect, mockUser);
         expect(windowSpy).toHaveBeenCalledWith("Successfully booked meal!")
         window.alert.mockRestore();
-    })
-})
+    });
+});

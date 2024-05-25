@@ -1,4 +1,4 @@
-import { CheckUserAuthenticated, CreateCarWashNotificationElement, CreateMealNotificationElements, PopulateNotifications } from "../src/functions.js";
+import { CheckUserAuthenticated, CreateCarWashNotificationElement, CreateMealNotificationElements, CreateFeedbackNotificationElement, PopulateNotifications } from "../src/functions.js";
 
 
 describe("Checks user authenticated", () => {
@@ -78,6 +78,19 @@ describe("Creating notification elements", () => {
         expect(notifications.length).toBe(mockCarWashBookings.length);
         expect(notif.outerText).toBe("div");
         expect(notif.innerText).toBe("Today you booked a Deluxe car wash for today's 8:00 AM slot.");
+    });
+
+    it("Returns feedback notification element", () => {
+
+        const mockFeedbackNotif = { recipient: "anemail@email.com" }
+
+        const mockFeedbackNotifs = [ mockFeedbackNotif ]; 
+        const notifications = CreateFeedbackNotificationElement(mockFeedbackNotifs);
+        const notif = notifications[0];
+
+        expect(notifications.length).toBe(mockFeedbackNotifs.length);
+        expect(notif.outerText).toBe("div");
+        expect(notif.innerText).toBe("Please give feedback to anemail@email.com.");
     })
 });
 

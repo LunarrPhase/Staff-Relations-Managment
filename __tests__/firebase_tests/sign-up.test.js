@@ -50,5 +50,5 @@ describe("CreateNewAccount functionality", () => {
         expect(functionSpy).toHaveBeenCalled();
         document.getElementById.mockRestore();
         mockFunctions.SetSignUpError.mockRestore();
-    })
-})
+    });
+});

@@ -32,7 +32,7 @@ describe("GenerateByDiet Functionality", () => {
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
     });
 
-    it("Generates meals by diet when user info is correct", async () => {
+    it("Generates meals by diet when user info is correct and database has values", async () => {
 
         const mockAuth = { currentUser: { uid: "validID" } }
         const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {})
@@ -44,6 +44,21 @@ describe("GenerateByDiet Functionality", () => {
         
         expect(consoleSpy).toHaveBeenCalledWith("Meal orders retrieved and sorted by diet successfully");
         console.log.mockRestore();
+        document.getElementById.mockRestore();
+    });
+
+    it("Puts up alert when user info is correct and database has no values", async () => {
+
+        const mockAuth = { currentUser: { uid: "newID" } }
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {})
+        
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { innerHTML: "" }
+        });
+        await GenerateByDiet(mockAuth);
+        
+        expect(windowSpy).toHaveBeenCalledWith("No Meal History to display");
+        window.alert.mockRestore();
         document.getElementById.mockRestore();
     });
 });
@@ -130,7 +145,7 @@ describe("GenerateCSV", () => {
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
     });
 
-    it("Generates a CSV of meal bookings if input is correct", async () => {
+    it("Generates a CSV of meal bookings if input is correct and database is not empty", async () => {
 
         const mockAuth = { currentUser: { uid: "validID" } };
         const documentSpy = jest.spyOn(document.body, 'appendChild');
@@ -147,6 +162,16 @@ describe("GenerateCSV", () => {
         expect(documentSpy).toHaveBeenCalled();
         window.URL.createObjectURL.mockRestore();
         document.createElement.mockRestore();
+    });
+
+    it("Puts up an alert if input auth is correct and database is empty", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+        const mockAuth = { currentUser: { uid: "newID" } };
+
+        await GenerateCSV(mockAuth);
+        expect(windowSpy).toHaveBeenCalledWith("No Meal History to generate");
+        window.alert.mockRestore();
     });
 });
 
