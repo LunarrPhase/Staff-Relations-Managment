@@ -1,4 +1,4 @@
-import { isValidAccessKey, SetRole, SetSignUpError } from '../src/functions.js';
+import { isValidAccessKey, SetRole, SetSignUpError, CheckInputs } from '../src/functions.js';
 
 
 const hrKey = "hR456456";
@@ -51,82 +51,34 @@ describe("Sign up functionality", () => {
 });
 
 
-jest.mock("firebase/app", () => {
-    return {
-        initializeApp: jest.fn().mockReturnValue({
-            database: jest.fn().mockReturnValue({
-                ref: jest.fn().mockReturnThis(),
-            })
-        }), 
-        auth: jest.fn().mockReturnValue()
-    };
+describe("CheckInputs Functionality", () => {
+
+    it("Returns true when inputs are not empty", () => {
+
+        const mockObject = { trim: function(){ return "value" } };
+        const bool = CheckInputs(mockObject, mockObject, "accessKey");
+        expect(bool).toBe(true);
+    });
+
+    it("Returns false when first and lastname inputs are empty", () => {
+
+        const mockObject = { trim: function(){ return "" } };
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { textContent: "" }
+        });
+
+        const bool = CheckInputs(mockObject, mockObject, "accessKey");
+        expect(bool).toBe(false);
+    });
+
+    it("Returns false when access key input is empty", () => {
+
+        const mockObject = { trim: function(){ return "value" } };
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { textContent: "" }
+        });
+
+        const bool = CheckInputs(mockObject, mockObject, null);
+        expect(bool).toBe(false);
+    });
 });
-
-/*test("getAlbums function returns an array", () => {
-    const data = MusicService.getAlbums();
-    expect(data.constructor).toEqual(Array);
-});*/
-
-
-  /*it('Calls correct firebase method', async () => {
-
-    const email = 'example@gmail.com';
-    const password = '123';
-
-    FirebaseLogin(firebase.auth, firebase.database, email, password);
-    //expect(firebase.auth().signInWithEmailAndPassword).toBeCalledWith(firebase.auth, email, password);
-     /// Import the login function after mocking Firebase
-      
-      const { login } = require('../src/index.js');
-      //const { login } = express.static("src/index.js");
-
-      // Simulate user input
-      const email = 'test@example.com';
-      const password = 'password';
-
-      // Simulate DOM event
-      const event = {
-          preventDefault: sinon.spy(),
-          target: {
-              elements: {
-                  email: { value: email },
-                  password: { value: password }
-              }
-          }
-      };
-
-      // Call the login function
-      await login;
-
-      // Assert that signInWithEmailAndPassword was called with the correct arguments
-      expect(signInWithEmailAndPasswordStub.calledOnceWith(sinon.match.any, email, password));
-      // You can add more assertions here if needed
-  });*/
-
-
-  /*jest.mock('firebase/auth');
-
-describe('Login', () => {
-  it('Logs user in', async () => {
-    const mockedSignIn = jest.mocked(signInWithEmailAndPassword);
-    mockedSignIn.mockResolvedValue();
-
-    const user = FirebaseLogin('email', 'password');
-
-    expect(mockedSignIn).toHaveBeenCalledWith(undefined, 'email', 'password');
-    
-  });
-});*/
-
-
-/*jest.mock("firebase/app", () => {
-  return {
-      initializeApp: jest.fn().mockReturnValue({
-          database: jest.fn().mockReturnValue({
-              ref: jest.fn().mockReturnThis(),
-          })
-      }), 
-      auth: jest.fn().mockReturnValue()
-  };
-});*/
-

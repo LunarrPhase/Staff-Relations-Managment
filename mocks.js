@@ -1,8 +1,5 @@
 //WHERE I MOCK FIREBASE AND OTHER FUNCTIONS SO I DON'T HAVE TO DEAL WITH THEM DURING UNIT TESTS
 
-import { ref } from 'firebase/database';
-import { createUserWithEmailAndPassword } from './src/firebaseInit.js';
-
 
 /* MOCKING FIREBASE */
 
@@ -32,10 +29,14 @@ jest.mock("./src/firebaseInit.js", () => ({
 
     createUserWithEmailAndPassword: function(auth, email, password){
         
-        const promise = new Promise((resolve) => {
-            resolve(mockSnapshot);
-        });
-        return promise;
+        if (!auth){
+            const promise = new Promise((resolve) => {
+                resolve(mockEmptySnapshot);
+            });
+            return promise;
+        }
+
+        if (auth){ return mockSnapshot }
     }
 }));
 
@@ -73,6 +74,7 @@ jest.mock("./src/database-imports.js", () => ({
     query: function(collection, subcollection1, subcollection2){
 
         if (collection == "allNotifsRef"){ return "allNotifsRef" }
+        else if (collection == "feedbackRef" && subcollection1 == "exists"){ return "feedbackRef"}
         else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
@@ -104,7 +106,9 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (database == "carWashBookedRef"){ return "carWashBookedRef" }
         if (collection == "meals"){ return "populateMealsRef" }
         if (collection == "users/poorNetwork/timesheets"){ throw "Network Error" }
-        if (collection == "users/validID/timesheets"){ return "fetchTimesheetsRef"}
+        if (collection == "users/validID/timesheets"){ return "fetchTimesheetsRef" }
+        if (collection == "users/newID/timesheets"){ return "noRef" }
+        if (collection == "feedback"){ return "feedbackRef"}
 
         if(subcollection1 == "daySlotBookings"){
             if (subcollection2 == "bookedSlots"){
@@ -144,6 +148,7 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (reference == "populateMealsRef"){ return mockDocs }
         if (reference == "fetchTimesheetsRef"){ return mockDocs }
         if (reference == "allNotifsRef"){ return mockDocs }
+        if (reference == "feedbackRef"){ return mockDocs }
         const set = new Set();
         return set;
     },
@@ -209,7 +214,7 @@ jest.mock("./src/functions.js", () => ({
 /* MOCKING FIREBASE OBJECTS */
 
 
-const mockData = { id: "id", role: "role" };
+const mockData = { id: "id", role: "role", email: "anemail@email.com" };
 
 const mockDoc = {
 
@@ -235,6 +240,7 @@ const mockDocs = [ mockDoc ];
 
 const mockSnapshot = {
 
+    user: mockData,
     email: "anemail@email.com",
     exists: function(){ return true },
     val: function(){ return mockData }
