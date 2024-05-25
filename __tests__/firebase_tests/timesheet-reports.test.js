@@ -1,6 +1,5 @@
 import { mockFunctions } from "../../mocks";
 import { GenerateTimesheetCSV, GenerateTimesheetPDF, GetTimesheetsByTask, GetTimesheetsByProject } from "../../src/firebase_functions";
-import { jsPDF } from "jspdf";
 
 
 describe("GenerateTimesheetCSV", () => {
