@@ -1,12 +1,15 @@
 import { SendHome, GetCurrentUserMealBookings, GetCurrentUserCarWashBookings, GetCurrentUserFeedbackNotifications } from "../../src/firebase_functions";
-import { mockFunctions } from "../../mocks";
+import { mockFunctions, mockDoc } from "../../mocks";
+
+
+const mockReturnObject = mockDoc.data();
 
 
 describe("Send Home functionality", () => {
 
     it("Calls ChangeWindow when user has a valid ID", async () => {
 
-        const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
+        const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow").mockImplementation(() => {});
         const mockUser = { uid: "validID" };
         await SendHome(mockUser);
 
@@ -16,7 +19,7 @@ describe("Send Home functionality", () => {
 
     it("Throws an error when user role is not found", async () => {
 
-        consoleSpy = jest.spyOn(console, "error");
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
         const mockUser = { uid: null };
         await SendHome(mockUser);
 
@@ -54,7 +57,7 @@ describe("Getting current meal bookings", () => {
 
         const mockUser = { uid: "validID" };
         const mealBookings = await GetCurrentUserMealBookings(mockUser);
-        expect(mealBookings).toStrictEqual([ "fullOfBookings" ]);
+        expect(mealBookings).toStrictEqual([ mockReturnObject ]);
     });
 });
 
@@ -65,7 +68,7 @@ describe("Getting current carwash bookings", () => {
 
         const mockUser = { uid: "validID" };
         const carWashBookings = await GetCurrentUserCarWashBookings(mockUser);
-        expect(carWashBookings).toStrictEqual([ "fullOfBookings" ]);
+        expect(carWashBookings).toStrictEqual([ mockReturnObject ]);
     });
 });
 
@@ -92,7 +95,7 @@ describe("Getting current user feedback notifications", () =>{
     it("Returns an array of feedback notifications", async () => {
 
         const userFeedback = await GetCurrentUserFeedbackNotifications("anemail@email.com");
-        expect(userFeedback).toStrictEqual([ "fullOfBookings" ]);
+        expect(userFeedback).toStrictEqual([ mockReturnObject ]);
     });
 
     it("Throws an error when the email has the database return a querying error", async () => {

@@ -1,5 +1,8 @@
 //WHERE I MOCK FIREBASE AND OTHER FUNCTIONS SO I DON'T HAVE TO DEAL WITH THEM DURING UNIT TESTS
 
+import { ref } from 'firebase/database';
+import { createUserWithEmailAndPassword } from './src/firebaseInit.js';
+
 
 /* MOCKING FIREBASE */
 
@@ -25,25 +28,34 @@ jest.mock("./src/firebaseInit.js", () => ({
             }
         }
         throw "Invalid authentication";
+    },
+
+    createUserWithEmailAndPassword: function(auth, email, password){
+        
+        const promise = new Promise((resolve) => {
+            resolve(mockSnapshot);
+        });
+        return promise;
     }
 }));
 
 
 jest.mock("./src/database-imports.js", () => ({
 
-    equalTo: function(property){ 
-
-        /*if (property == "dne@database.com"){
-            return "invalidQuery";
-        }*/
-        return;
-    },
+    equalTo: function(property){ return },
 
     get: function(userRef){
 
         if (userRef == "validRef"){ return mockSnapshot }
         if (userRef == "invalidRef"){ return mockFailedSnapshot }
         if (userRef == "invalidQuery"){ return mockEmptySnapshot }
+        if (userRef == "allUsersRef"){ return mockAllSnapshot }
+        
+        if (userRef == "newUserRef"){
+            return {
+                val: function(){ return {email: "new_user@company.com"} }
+            }
+        }
 
         const promise = new Promise((resolve) => {
             resolve(mockSnapshot);
@@ -73,6 +85,8 @@ jest.mock("./src/database-imports.js", () => ({
         if (text == "users/null"){ throw "ID not found" }
         if (text == "users/uid"){ return "validRef" }
         if (text == "users/undefined"){ return "invalidRef" }
+        if (text == "users/newID"){ return "newUserRef" }
+        if (text == "users"){ return "allUsersRef"}
         return "ref";
     },
 
@@ -89,6 +103,8 @@ jest.mock("./src/firestore-imports.js", () => ({
         if(database == "carWashBookingsRef"){ return "carWashSlotRef" }
         if (database == "carWashBookedRef"){ return "carWashBookedRef" }
         if (collection == "meals"){ return "populateMealsRef" }
+        if (collection == "users/poorNetwork/timesheets"){ throw "Network Error" }
+        if (collection == "users/validID/timesheets"){ return "fetchTimesheetsRef"}
 
         if(subcollection1 == "daySlotBookings"){
             if (subcollection2 == "bookedSlots"){
@@ -126,14 +142,8 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (reference == "carWashBookedRef"){ return { size: 6 } }
         if (reference == "noRef"){ return mockEmptyDoc }
         if (reference == "populateMealsRef"){ return mockDocs }
-
-        if (reference == "allNotifsRef"){
-
-            const mockBookingDoc = {
-                data: function(){ return "fullOfBookings" }
-            };
-            return [ mockBookingDoc ];
-        }
+        if (reference == "fetchTimesheetsRef"){ return mockDocs }
+        if (reference == "allNotifsRef"){ return mockDocs }
         const set = new Set();
         return set;
     },
@@ -149,18 +159,13 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (equation == "requester==invalid_query@database.com"){
             throw "Querying error";
         }
+
+        if (equation == "recipient==new_user@company.com"){
+            return "DNE"
+        }
         return;
     }
 }));
-
-
-/* MOCKING FIREBASE_FUNCTIONS */
-
-
-jest.mock("./src/firebase_functions.js", () => ({
-
-    //updateAvailableSlots: function(selectedDate){ return }
-}))
 
 
 /* MOCKING OTHER FUNCTIONS */
@@ -176,6 +181,24 @@ jest.mock("./src/functions.js", () => ({
         return true;
     },
 
+    CheckInputs: function(input){
+
+        if (input == ""){
+            return false;
+        }
+        return true;
+    },
+
+    isValidAccessKey: function(accessKey){
+
+        if(accessKey == "valid"){
+            return true;
+        }
+        return false;
+    },
+
+    SetSignUpError: function(){ return },
+    truncateText: function(){ return "truncatedString"},
     ChangeWindow: function(role){ return },
     getDayName: function(year, month, day){ return "Monday" },
     renderMeals: function(querySnapshot, usersList){ return },
@@ -193,32 +216,48 @@ const mockDoc = {
     id: "id",
     exists: function(){ return true },
     data: function(){
-        return { data: mockData, diet: "diet", meal: "meal" };
+        return {
+            data: mockData,
+            diet: "diet", meal: "meal",
+            taskDescription: "asdfghjkl",
+            date: "date", startTime: "", endTime: "", projectCode: "", taskName: "", totalHours: ""
+        };
     }
 }
 
-const mockEmptyDoc = { empty: true }
+const mockEmptyDoc = {
+    empty: true,
+    forEach: function(){
+        return
+    }
+}
 const mockDocs = [ mockDoc ];
 
 const mockSnapshot = {
 
+    email: "anemail@email.com",
     exists: function(){ return true },
     val: function(){ return mockData }
 };
 
 const mockEmptySnapshot = {
+
     then: function(){ throw Error("error") }
 }
 
 const mockFailedSnapshot = {
 
     exists: function(){ return false },
-    val: function(){ return false }
+    val: function(){ return undefined }
+}
+
+const mockAllSnapshot = {
+    val: function(){ return [ mockSnapshot ]}
 }
 
 
 const mockFunctions = require('./src/functions.js');
-const mockFirebaseFunctions = require('./src/firebase_functions.js');
 
-export{ mockFunctions, mockFirebaseFunctions };
+
+export{ mockFunctions, mockDoc };
 

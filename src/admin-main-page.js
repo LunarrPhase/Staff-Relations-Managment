@@ -1,18 +1,17 @@
-const mealInfo = document.getElementById('meal-info');
-mealInfo.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default action
+import { CreateRR } from "./functions.js";
 
-    const link = document.createElement('a');
-    link.href = 'https://youtu.be/xvFZjo5PgG0?si=j54z27hdpHLeZyP6';
-    link.target = '_blank';
+document.addEventListener("DOMContentLoaded", (event) => {
 
-    link.click();
-    //console.log('Meal info clicked!');
-});
+    const mealInfo = document.getElementById('meal-info');
+    mealInfo.addEventListener('click', function(event) {
 
+        // Prevent the default action
+        event.preventDefault();
+        CreateRR();
+    });
 
-
-const manageUsers = document.getElementById('manage-users')
-manageUsers.addEventListener('click', () => {
-    window.location.href = 'manage-users.html'
+    const manageUsers = document.getElementById('manage-users');
+    manageUsers.addEventListener('click', () => {
+        window.location.href = 'manage-users.html'
+    });
 })

@@ -1,2 +1,2 @@
-import { equalTo, get, orderByChild, ref, remove, query, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-export{ equalTo, get, orderByChild, ref, remove, query, update };
+import { equalTo, get, orderByChild, ref, remove, set, query, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+export{ equalTo, get, orderByChild, ref, remove, set, query, update };

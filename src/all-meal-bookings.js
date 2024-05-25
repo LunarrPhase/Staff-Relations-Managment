@@ -3,9 +3,13 @@
 import { displayBookings, displayAllBookings } from "./firebase_functions.js";
 
 
-document.getElementById('day').addEventListener('change', () => {
-    const selectedDate = document.getElementById('day').value;
-    displayBookings(selectedDate);
+document.addEventListener("DOMContentLoaded", (event) => {
+    
+    document.getElementById('day').addEventListener('change', () => {
+        const selectedDate = document.getElementById('day').value;
+        displayBookings(selectedDate);
+    });
+    
+    document.getElementById('load-more').addEventListener('click', displayAllBookings);
+    
 });
-
-document.getElementById('load-more').addEventListener('click', displayAllBookings);
