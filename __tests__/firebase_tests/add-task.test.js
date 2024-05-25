@@ -8,7 +8,7 @@ describe("AddTimeSheet Functionality", () => {
     document.getElementById = jest.fn().mockImplementation((text) => {return mockElement});
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error");
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {

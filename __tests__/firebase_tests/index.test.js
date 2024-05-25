@@ -1,4 +1,4 @@
-import { FirebaseLogin } from "../../src/firebase_functions.js";
+import { FirebaseLogin, EnsureSignOut } from "../../src/firebase_functions.js";
 import { mockFunctions } from "../../mocks.js";
 
 
@@ -8,7 +8,7 @@ describe("Login Functionality", () => {
     const mockElement = document.createElement("style", { style: { display: "" } } );
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error");
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
         documentSpy = jest.spyOn(document, "getElementById").mockReturnValue(mockElement);
         windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
     });
@@ -21,7 +21,7 @@ describe("Login Functionality", () => {
 
     it("Throws an error when the auth is invalid", async () => {
         
-        await FirebaseLogin(false, null, null, "", "");
+        await FirebaseLogin(false, "", "");
         expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", "Invalid authentication");
         expect(document.getElementById).toHaveBeenCalledTimes(3);
     });
@@ -29,19 +29,28 @@ describe("Login Functionality", () => {
     it("Signs in if user's details are valid and in the realtime database", async () => {
 
         const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
-        await FirebaseLogin(true, "database", "db", "anemail@email.com", "password");
+        await FirebaseLogin(true, "anemail@email.com", "password");
         expect(windowSpy).toHaveBeenCalled();
     });
 
     it("Signs in if user's details are valid and in the firestore", async () => {
-        await FirebaseLogin(true, "database", "db", "email_not@realtime.db", "password");
+        await FirebaseLogin(true, "email_not@realtime.db", "password");
         expect(windowSpy).toHaveBeenCalled();
     });
 
     it("Throws an error if user details are invalid", async () => {
 
-        await FirebaseLogin(true, "database", "db", "email_not@firestore.db", "password");
+        await FirebaseLogin(true, "email_not@firestore.db", "password");
         expect(consoleSpy).toHaveBeenCalledTimes(1);
         expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", "User data not found in both Realtime Database and Firestore.")
     });
 });
+
+
+/*describe("EnsureSignOut Functionality", () => {
+
+    it("Signs out if there are no errors", () => {
+        const mockAuth = { signOut: function(){ return } }
+        EnsureSignOut(mockAuth);
+    })
+})*/

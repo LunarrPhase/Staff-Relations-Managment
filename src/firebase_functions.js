@@ -29,7 +29,6 @@ async function AddTimeSheet(auth){
 
     //adds the data collected to the users timesheets in firestore
     try {
-        console.log("sup")
         const user = auth.currentUser;
 
         if (user) {
@@ -819,7 +818,6 @@ function handleRoleChange(target) {
             document.getElementById('roleModal').style.display = 'block';
             
             document.querySelector('.close').addEventListener('click', () => {
-                console.log("hii")
                 document.getElementById('roleModal').style.display = 'none'
             })
 
@@ -1335,6 +1333,9 @@ async function GenerateByDiet(auth){
 }
 
 
+/* SIGN UP */
+
+
 async function CreateNewAccount(auth){
 
     let email = document.getElementById('email').value;
@@ -1398,6 +1399,9 @@ async function CreateNewAccount(auth){
 }
 
 
+/* SINGLE NOTIF */
+
+
 async function DisplaySingleNotification(auth){
 
     try {
@@ -1441,16 +1445,12 @@ async function DisplaySingleNotification(auth){
         const feedbackNotifications = [];
 
         querySnapshot.forEach((doc) => {
-
             feedbackNotifications.push(doc.data());
-        
         });
-
-
-
 
         // Determine the notification text -> it will only display one of these in the popup
         let notificationText = "";
+
         if (mealBookings.length > 0) {
             const mealBooking = mealBookings[0]; // Get the first meal booking for the day
             notificationText = `Today you booked a ${mealBooking.diet} meal of: ${mealBooking.meal}.`;
@@ -1475,8 +1475,7 @@ async function DisplaySingleNotification(auth){
     }
     catch (error) {
         console.error("Error fetching bookings: ", error);
-    }
-    
+    }  
 }
 
 
@@ -1755,7 +1754,8 @@ async function GenerateTimesheetCSV(auth){
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
         downloadLink.click();
-    } catch (error) {
+    }
+    catch (error) {
         console.error("Error generating CSV file: ", error);
     }
 }
