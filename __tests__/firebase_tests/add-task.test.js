@@ -36,7 +36,7 @@ describe("AddTimeSheet Functionality", () => {
         expect(consoleSpy).toHaveBeenCalledWith("Error adding timesheet: ", "Network Error");
     });
 
-    it("Returns to timesheet.html when the auth is valid", async () => {
+    it("Returns to timesheet.html when the auth is valid and value > 4", async () => {
 
         const mockAuth = { currentUser: { uid: "validID" } };
         Object.defineProperty(globalThis, "window", {
@@ -46,5 +46,20 @@ describe("AddTimeSheet Functionality", () => {
         
         await AddTimeSheet(mockAuth);
         expect(window).toEqual({location: {href: "timesheet.html"} });
+    });
+
+    it("Returns to timesheet.html when the auth is valid and value < 4", async () => {
+
+        const mockElement = { value: "123" };
+        const mockAuth = { currentUser: { uid: "validID" } };
+
+        document.getElementById = jest.fn().mockImplementation((text) => {return mockElement});
+        Object.defineProperty(globalThis, "window", {
+            value: { location: { href: "" } },
+            writable: true,
+        });
+        
+        await AddTimeSheet(mockAuth);
+        expect(window).toEqual({location: {href: "timesheet.html"} });
     })
-})
+});

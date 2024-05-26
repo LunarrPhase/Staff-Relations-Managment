@@ -1,4 +1,4 @@
-import { canBookSlot, bookSlot, doBooking } from "../../src/firebase_functions.js";
+import { canBookSlot, bookSlot, doBooking, updateAvailableSlots } from "../../src/firebase_functions.js";
 
 
 describe("canBookSlot functionality", () => {
@@ -13,6 +13,18 @@ describe("canBookSlot functionality", () => {
         expect(bool).toBe(false);
     });
 });
+
+
+describe("updateAvailableSlots Functionality", () => {
+
+    it("Does nothing if document has no slots left", async () => {
+
+        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => { return });
+        await updateAvailableSlots("2069-04-20");
+        expect(documentSpy).toHaveBeenCalled();
+        document.getElementById.mockRestore();
+    })
+})
 
 
 describe("bookSlot functionality", () => {

@@ -6,7 +6,7 @@ describe("populateMeals functionality", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "log").mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
         document.createElement = jest.fn().mockImplementation(() => {
             return { text: "", value: ""};
         });
@@ -17,7 +17,7 @@ describe("populateMeals functionality", () => {
         document.createElement.mockRestore();
     });
 
-    it("Fills mealSelect when given the correct date and diet inputs", async () => {
+    it("Fills mealSelect when given the correct date and diet inputs that match database", async () => {
 
         const mockDateObject = { value: "date" };
         const mockDietObject = { value: "diet" };
@@ -33,6 +33,22 @@ describe("populateMeals functionality", () => {
 
         await populateMeals(mockDateObject, mockDietObject, mockMealSelect);
         expect(consoleSpy).toHaveBeenCalledWith("meal added");
+    });
+
+    it("Does nothing when given the correct date and diet inputs that don't match the database", async () => {
+
+        const mockDateObject = { value: "date" };
+        const mockDietObject = { value: "" };
+
+        const mockMealSelect = {
+            
+            innerHTML: "",
+            add: function(val){
+                console.log(val.text + " added");
+                return;
+            }
+        };
+        await populateMeals(mockDateObject, mockDietObject, mockMealSelect);
     });
 });
 

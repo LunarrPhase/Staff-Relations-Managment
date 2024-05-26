@@ -16,14 +16,13 @@ jest.mock("./src/firebaseInit.js", () => ({
         }
 
         //THESE ARE NOT IN THE REALTIME DB BUT COULD BE IN THE FIRESTORE DB
-        else if (auth){
-            if (email == "email_not@realtime.db" || email == "email_not@firestore.db"){
+        if (email == "email_not@realtime.db" || email == "email_not@firestore.db"){
 
-                const mockUser = { uid: undefined };
-                const mockUserCred = { user: mockUser };
-                return mockUserCred;
-            }
+            const mockUser = { uid: undefined };
+            const mockUserCred = { user: mockUser };
+            return mockUserCred;
         }
+        
         throw "Invalid authentication";
     },
 
@@ -50,21 +49,23 @@ jest.mock("./src/database-imports.js", () => ({
 
     get: function(userRef){
 
-        if (userRef == "validRef"){ return mockSnapshot }
-        if (userRef == "invalidRef"){ return mockFailedSnapshot }
         if (userRef == "invalidQuery"){ return mockEmptySnapshot }
-        if (userRef == "allUsersRef"){ return mockAllSnapshot }
+        else if (userRef == "validRef"){ return mockSnapshot }
+        else if (userRef == "invalidRef"){ return mockFailedSnapshot }
+        else if (userRef == "allUsersRef"){ return mockAllSnapshot }
         
-        if (userRef == "newUserRef"){
+        else if (userRef == "newUserRef"){
             return {
                 val: function(){ return {email: "new_user@company.com"} }
             }
         }
 
-        const promise = new Promise((resolve) => {
-            resolve(mockSnapshot);
-        });
-        return promise;
+        else{
+            const promise = new Promise((resolve) => {
+                resolve(mockSnapshot);
+            });
+            return promise;
+        }
     },
 
     orderByChild: function(property){ return },
@@ -76,7 +77,7 @@ jest.mock("./src/database-imports.js", () => ({
         else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
-        return;
+        else return;
     },
 
     ref: function(database, text){
