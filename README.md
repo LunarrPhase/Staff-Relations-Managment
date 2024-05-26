@@ -34,7 +34,8 @@ This project, "Staff Relations Management," equips companies with a centralized 
 
 To use the application, follow these steps:
 1. Open your browser and navigate to `http://localhost:3000`.
-2. Log in with your credentials.
+2. - Log in with your credentials. 
+    - If you don't have an account, create one then log in using one these access codes depending on your role: mR123123 (manager), hR456456 (HR), or uR789789 (staff)
 3. Use the dashboard to monitor and manage employee relations, task timesheets, and performance feedback.
 
 ## Key Resources
@@ -61,7 +62,7 @@ To use the application, follow these steps:
  
 - **.DS_Store**: A macOS system file that stores custom attributes of a folder, such as the position of icons. 
 
-- **README.md**: A markdown file that includes information on how to set up, run, navigate, and contribute to the project. It is this file.
+- **README.md**: A markdown file that contains the documentation for the project. It includes information on how to set up, run, and contribute to the project. It is this file.
 
 
 
