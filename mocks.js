@@ -29,7 +29,7 @@ jest.mock("./src/firebaseInit.js", () => ({
     createUserWithEmailAndPassword: function(auth, email, password){
         
         const promise = new Promise((resolve) => {
-            resolve(mockEmptySnapshot);
+            resolve();
         });
         return promise;
     },
@@ -45,19 +45,36 @@ jest.mock("./src/firebaseInit.js", () => ({
 
 jest.mock("./src/database-imports.js", () => ({
 
-    equalTo: function(property){ return true },
+    equalTo: function(property){
+        if (property == "email_not@realtime.db"){ return "invalid" }
+        if (property == "error"){ return "error" }
+        return
+    },
 
     get: function(userRef){
 
         if (userRef == "invalidQuery"){ return mockEmptySnapshot }
         else if (userRef == "validRef"){ return mockSnapshot }
-        else if (userRef == "invalidRef"){ return mockFailedSnapshot }
         else if (userRef == "allUsersRef"){ return mockAllSnapshot }
+        else if (userRef == "invalidRef"){
+
+            const promise = new Promise((resolve) => {
+                resolve(mockFailedSnapshot);
+            });
+            return promise;
+        }
         
         else if (userRef == "newUserRef"){
             return {
                 val: function(){ return {email: "new_user@company.com"} }
             }
+        }
+
+        else if (userRef == "error"){
+            const promise = new Promise((resolve, reject) => {
+                reject(new Error("Promise rejected"));
+            })
+            return promise;
         }
 
         else{
@@ -77,6 +94,8 @@ jest.mock("./src/database-imports.js", () => ({
         else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
+        else if (subcollection2 == "invalid"){ return "invalidRef" }
+        else if (subcollection2 == "error" ){ return "error" }
         else return;
     },
 
@@ -278,7 +297,7 @@ const mockFailedSnapshot = {
 }
 
 const mockAllSnapshot = {
-    val: function(){ return [ mockSnapshot ]}
+    val: function(){ return [ mockSnapshot ]},
 }
 
 

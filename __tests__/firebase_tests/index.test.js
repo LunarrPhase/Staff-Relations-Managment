@@ -19,15 +19,35 @@ describe("Login Functionality", () => {
         mockFunctions.ChangeWindow.mockRestore();
     })
 
-    it("Throws an error when the auth is invalid", async () => {
+    it("Throws an error when the auth is invalid and the error message element is on the document", async () => {
         
         await FirebaseLogin(false, "", "");
         expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", "Invalid authentication");
         expect(document.getElementById).toHaveBeenCalledTimes(3);
     });
 
-    it("Signs in if user's details are valid and in the realtime database", async () => {
+    it("Throws an error when the auth is invalid and the error message element is not on the document", async () => {
+        
+        jest.spyOn(document, "getElementById").mockImplementation((text) => {
+            if (text == "authenticating"){ return mockElement }
+            else return;
+        });
+        
+        await FirebaseLogin(false, "", "");
+        expect(consoleSpy).toHaveBeenCalledWith("Firebase Error:", "Invalid authentication");
+        expect(document.getElementById).toHaveBeenCalledTimes(3);
+    });
 
+    it("Signs in if user's details are valid and in the realtime database and the loading element is on the document", async () => {
+
+        const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
+        await FirebaseLogin(true, "anemail@email.com", "password");
+        expect(windowSpy).toHaveBeenCalled();
+    });
+
+    it("Signs in if user's details are valid and in the realtime database and the loading element is not on the document", async () => {
+
+        jest.spyOn(document, "getElementById").mockImplementation((text) => { return });
         const windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
         await FirebaseLogin(true, "anemail@email.com", "password");
         expect(windowSpy).toHaveBeenCalled();
@@ -49,7 +69,7 @@ describe("Login Functionality", () => {
 
 describe("EnsureSignOut Functionality", () => {
 
-    it("Signs out if there are no errors with the input auth", () => {
+    it("Signs out if there are no errors with the input auth", async () => {
 
         const mockAuth = {
             signOut: function(){
@@ -59,6 +79,24 @@ describe("EnsureSignOut Functionality", () => {
                 return promise;
             }
         }
-        EnsureSignOut(mockAuth);
+        await EnsureSignOut(mockAuth);
+    });
+
+    it("Signs out if there are no errors with the input auth", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+        const error = new Error("Promise rejected");
+        const mockAuth = {
+            signOut: function(){
+                const promise = new Promise((resolve, reject) => {
+                    reject(new Error("Promise rejected"));
+                })
+                return promise;
+            }
+        }
+
+        await EnsureSignOut(mockAuth);
+        expect(consoleSpy).toHaveBeenCalledWith("Error signing out: ", error);
+        console.error.mockRestore();
     });
 });

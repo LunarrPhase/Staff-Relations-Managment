@@ -701,9 +701,9 @@ async function SendFeedBack(user){
 /* INDEX */
 
 
-function EnsureSignOut(auth){
+async function EnsureSignOut(auth){
    
-    auth.signOut().then(() => {})
+    await auth.signOut().then(() => {})
     .catch((error) => {
         console.error('Error signing out: ', error);
     });
@@ -860,14 +860,14 @@ async function LogOut(user, auth){
 /* MANAGE-USERS */
 
 
-function handleRoleChange(target) {
+async function handleRoleChange(target) {
 
     const usersRef = ref(database, 'users');
     const row = target.closest('tr')
     const userEmail = row.getAttribute('data-user-email')
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    console.log(usersQuery)
-    get(usersQuery)
+    
+    await get(usersQuery)
     .then((snapshot) => {
         if (snapshot.exists()) {
 
@@ -909,14 +909,14 @@ function handleRoleChange(target) {
 }
 
 
-function handleUserDelete(target) {
+async function handleUserDelete(target) {
 
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
     const usersRef = ref(database, 'users/');
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    get(usersQuery)
+    await get(usersQuery)
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const userId = Object.keys(snapshot.val())[0];
@@ -961,7 +961,7 @@ function handleUserDelete(target) {
 
 
 //handles feedback request on manage users
-function handleFeedbackRequest(target) {
+async function handleFeedbackRequest(target) {
 
     //get the selected information
     const row = target.closest('tr');
@@ -974,7 +974,7 @@ function handleFeedbackRequest(target) {
     //query db
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     
-    get(usersQuery)
+    await get(usersQuery)
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const userId = Object.keys(snapshot.val())[0];
