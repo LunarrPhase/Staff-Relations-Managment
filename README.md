@@ -61,7 +61,7 @@ To use the application, follow these steps:
  
 - **.DS_Store**: A macOS system file that stores custom attributes of a folder, such as the position of icons. 
 
-- **README.md**: A markdown file that contains the documentation for the project. It includes information on how to set up, run, and contribute to the project. It is this file.
+- **README.md**: A markdown file that includes information on how to set up, run, navigate, and contribute to the project. It is this file.
 
 
 
