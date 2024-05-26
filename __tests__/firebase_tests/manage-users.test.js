@@ -1,81 +1,149 @@
-import { handleRoleChange } from "../../src/firebase_functions.js";
+import { handleRoleChange, handleUserDelete, handleFeedbackRequest, HandleEvent } from "../../src/firebase_functions.js";
 
 
-const eventListener = {
-    addEventListener: jest.fn().mockImplementationOnce((event, handler) => {
-        handler();
-    })
-}
+describe("HandleEvent Functionality", () => {
 
+    
+    it("Calls handleRoleChange when the input target is the circle", () => {
 
-document.getElementById = jest.fn().mockImplementation((text) => {
+        const mockTarget = {
+            classList: {
+                contains: function(val){
+                    if(val == "fa-circle-plus"){ return true }
+                }
+            },
+            closest: function() {
+                return { getAttribute: function(){ return true } }
+            }
+        };
 
-    if (text == "roleModal"){
-        return { 
-            style: { display: "" },
-            value: "value"
-        }
-    }
-    else{
-        return eventListener;
-    }
-})
+        const mockEvent = { target: mockTarget }
+        HandleEvent(mockEvent)
+    });
 
+    it("Calls handleUserDelete when the input target is the x-mark", () => {
 
-document.querySelector = jest.fn().mockImplementation((text) => {
-    return eventListener;
+        const mockTarget = {
+            classList: {
+                contains: function(val){
+                    if(val == "fa-user-xmark"){ return true }
+                }
+            },
+            closest: function() {
+                return { getAttribute: function(){ return true } }
+            }
+        };
+
+        const mockEvent = { target: mockTarget }
+        HandleEvent(mockEvent)
+    });
+
+    it("Calls handleFeedbackRequest when the input target is the bell", () => {
+
+        const mockTarget = {
+            classList: {
+                contains: function(val){
+                    if(val == "fa-bell"){ return true }
+                }
+            },
+            closest: function() {
+                return {
+                    getAttribute: function(){
+                        return { toLowerCase: function(){ return true }}
+                    }
+                }
+            }
+        };
+
+        const mockEvent = { target: mockTarget }
+        HandleEvent(mockEvent)
+    });
 });
 
 
-describe("", () => {
-
-    it("Throws error when user", () => {
-
-        const mockRow = {
-            getAttribute: function(text){ return "dne@database.com" }
-        };
-
-        const mockTarget = {
-            closest: function(){ return mockRow }
-        };
-
-        const consoleSpy = jest.spyOn(console, "error");
-        //handleRoleChange()
-        /*handleRoleChange(mockTarget);
-        expect(() => {
-            handleRoleChange(mockTarget);
-        }).toThrow("error")
-        expect(consoleSpy).toHaveBeenCalled();*/
-    })
+describe("handleRoleChange Functionality", () => {
 
     it("Updates role successfully when given a valid target", () => {
 
-        const mockrowCell = { textContent: "" };
-
-        const mockRow = {
-            getAttribute: function(text){ return "anemail@email.com" },
-            querySelector: function(text){ return mockrowCell }
-        };
-
         const mockTarget = {
-            closest: function(){ return mockRow }
+            closest: function() {
+                return { getAttribute: function(){ return true } }
+            }
         };
-       
+
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return{
+                style: { display: "" },
+                addEventListener: function(){ return }
+            }
+        });
+
+        document.querySelector = jest.fn().mockImplementation(() => {
+            return{
+                addEventListener: function(){ return }
+            }
+        });
+
         handleRoleChange(mockTarget);
     });
+});
 
-    it("Throws an error", () => {
 
-        const mockRow = {
-            getAttribute: function(text){ return "anemail@email.com" },
-            querySelector: function(text){ throw "error" }
-        };
+describe("handleUserDelete Functionality", () => {
+
+    it("Deletes user successfully when given a valid target", () => {
 
         const mockTarget = {
-            closest: function(){ return mockRow }
+            closest: function() {
+                return { getAttribute: function(){ return true } }
+            }
         };
-       
-        handleRoleChange(mockTarget);
 
-    })
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return{
+                style: { display: "" },
+                addEventListener: function(){ return }
+            }
+        });
+
+        document.querySelector = jest.fn().mockImplementation(() => {
+            return{
+                addEventListener: function(){ return }
+            }
+        })
+
+        handleUserDelete(mockTarget);
+    });
+});
+
+
+describe("handleFeedBackRequest Functionality", () => {
+
+    it("Updates role successfully when given a valid target", () => {
+
+        const mockTarget = {
+            closest: function() {
+                return {
+                    getAttribute: function(){
+                        return { toLowerCase: function(){ return true } }
+                    }
+                }
+            }
+        };
+
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return{
+                style: { display: "" },
+                addEventListener: function(){ return }
+            }
+        });
+
+        document.querySelector = jest.fn().mockImplementation(() => {
+            return{
+                addEventListener: function(){ return }
+            }
+        })
+
+        handleFeedbackRequest(mockTarget);
+    });
 })

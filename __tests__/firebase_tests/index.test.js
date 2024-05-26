@@ -4,13 +4,13 @@ import { mockFunctions } from "../../mocks.js";
 
 describe("Login Functionality", () => {
 
-    let consoleSpy, documentSpy, windowSpy;
+    let consoleSpy, windowSpy;
     const mockElement = document.createElement("style", { style: { display: "" } } );
 
     beforeEach(() => {
         consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
-        documentSpy = jest.spyOn(document, "getElementById").mockReturnValue(mockElement);
         windowSpy = jest.spyOn(mockFunctions, "ChangeWindow");
+        jest.spyOn(document, "getElementById").mockReturnValue(mockElement);
     });
 
     afterEach(() =>{
@@ -47,10 +47,18 @@ describe("Login Functionality", () => {
 });
 
 
-/*describe("EnsureSignOut Functionality", () => {
+describe("EnsureSignOut Functionality", () => {
 
-    it("Signs out if there are no errors", () => {
-        const mockAuth = { signOut: function(){ return } }
+    it("Signs out if there are no errors with the input auth", () => {
+
+        const mockAuth = {
+            signOut: function(){
+                const promise = new Promise((resolve) => {
+                    resolve();
+                });
+                return promise;
+            }
+        }
         EnsureSignOut(mockAuth);
-    })
-})*/
+    });
+});
