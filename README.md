@@ -11,8 +11,8 @@ A centralized platform to streamline all aspects of staff relations, including m
 3. [Usage](#usage)
 4. [Key Resources](#key-resources)
 5. [Project Structure](#project-structure)
-6. [Contribution Guidelines](#contribution-guidelines)
-7. [License](#license)
+
+
 
 ## Project Description
 
@@ -44,8 +44,7 @@ To use the application, follow these steps:
 - [GitHub Repository](https://github.com/LunarrPhase/Staff-Relations-Managment)
 
 
-
-# Project Structure
+## Project Structure
 
 - **.github/workflows/**: Contains YAML files that define automated workflows for GitHub Actions, specifying tasks such as testing, building, and deploying code.
 - **.vscode/**: Contains configuration files for Visual Studio Code, such as settings, launch configurations, and extensions specific to the project.
@@ -63,3 +62,6 @@ To use the application, follow these steps:
 - **.DS_Store**: A macOS system file that stores custom attributes of a folder, such as the position of icons. 
 
 - **README.md**: A markdown file that contains the documentation for the project. It includes information on how to set up, run, and contribute to the project. It is this file.
+
+
+
