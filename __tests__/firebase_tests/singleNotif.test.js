@@ -6,7 +6,7 @@ describe("DisplaySingleNotification Functionality", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -29,7 +29,38 @@ describe("DisplaySingleNotification Functionality", () => {
 
     it("Throws an error if the input auth has an valid user property with an invalid ID", async () => {
 
+        const mockAuth = { currentUser: { uid: null } };
+        await DisplaySingleNotification(mockAuth);
+        expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
+    });
+
+    it("Successfully sets notification element with meal booking if input auth is valid", async () => {
+
         const mockAuth = { currentUser: { uid: "validID" } };
+        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => {
+            return { innerHTML: "" }
+        })
+    
+        await DisplaySingleNotification(mockAuth);
+        expect(documentSpy).toHaveBeenCalledTimes(1)
+        document.getElementById.mockRestore();
+    });
+
+    it("Successfully sets notification element with car booking if input auth is valid and meal booking is empty", async () => {
+
+        const mockAuth = { currentUser: { uid: "onlyCarID" } };
+        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => {
+            return { innerHTML: "" }
+        })
+    
+        await DisplaySingleNotification(mockAuth);
+        expect(documentSpy).toHaveBeenCalledTimes(1)
+        document.getElementById.mockRestore();
+    });
+
+    it("Successfully sets notification element with feedback request if input auth is valid and carwash booking is empty", async () => {
+
+        const mockAuth = { currentUser: { uid: "onlyFeedbackID" } };
         const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => {
             return { innerHTML: "" }
         })

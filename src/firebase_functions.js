@@ -69,6 +69,64 @@ async function AddTimeSheet(auth){
 }
 
 
+/* ADMIN FEEDBACK REQUEST */
+
+
+async function SendNotification(userId, message){
+
+    try {
+        const userDoc = doc(db, 'users', userId);
+        const userSnapshot = await getDoc(userDoc);
+        const userData = userSnapshot.data();
+        const userToken = userData.fcmToken;
+
+        await fetch('https://fcm.googleapis.com/fcm/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_SERVER_KEY'
+            },
+            body: JSON.stringify({
+                to: userToken,
+                data: {
+                    message: message
+                },
+                notification: {
+                    title: 'Feedback Request',
+                    body: message,
+                    click_action: 'YOUR_ACTION_URL'
+                }
+            })
+        });
+    } catch (error) {
+        console.error('Error sending notification:', error);
+    }
+};
+
+
+// Function to handle sending notifications based on selected users
+async function handleSendNotification(){
+
+    const selectedRows = document.querySelectorAll('#usersList tbody .selected');
+    
+    if (selectedRows.length !== 2) {
+        alert('Please select exactly two users.');
+        return;
+    }
+
+    const userId1 = selectedRows[0].dataset.userId;
+    const userId2 = selectedRows[1].dataset.userId;
+
+    const userDoc2 = doc(db, 'users', userId2);
+    const userSnapshot2 = await getDoc(userDoc2);
+    const userData2 = userSnapshot2.data();
+    const userName2 = `${userData2.firstName} ${userData2.lastName}`;
+
+    const message = `Please write a feedback report on ${userName2}.`;
+    await SendNotification(userId1, message);
+};
+
+
 /* ALL CARWASH BOOKINGS */
 
 
@@ -584,6 +642,8 @@ async function CheckEmailExists(email){
             return true
         }
     }
+
+    if (email == undefined){ throw "Invalid value for email" }
     return false
 }
 
@@ -1112,8 +1172,6 @@ async function GenerateCSV(auth){
         link.setAttribute('download', 'meal_order_history.csv');
         document.body.appendChild(link);
         link.click();
-
-        console.log("CSV generated successfully");
     }
     catch (error) {
         console.error("Error generating CSV: ", error);
@@ -1818,4 +1876,4 @@ export{ AddTimeSheet, doMealBooking, CreateMeal, populateMeals, displayBookings,
     EnsureSignOut, FirebaseLogin, SetGreeting, LogOut, handleRoleChange, handleUserDelete, handleFeedbackRequest,
     GetCarwashBookings, HandleEvent, LoadUsers, GenerateCSV, GeneratePDF, GenerateByDate, GenerateByDiet,
     CreateNewAccount, DisplaySingleNotification, FetchTimesheets, GetTimesheetsByProject, GetTimesheetsByTask,
-    GenerateTimesheetPDF, GenerateTimesheetCSV }
+    GenerateTimesheetPDF, GenerateTimesheetCSV, SendNotification, handleSendNotification }

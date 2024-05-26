@@ -29,14 +29,10 @@ jest.mock("./src/firebaseInit.js", () => ({
 
     createUserWithEmailAndPassword: function(auth, email, password){
         
-        if (!auth){
-            const promise = new Promise((resolve) => {
-                resolve(mockEmptySnapshot);
-            });
-            return promise;
-        }
-
-        if (auth){ return mockSnapshot }
+        const promise = new Promise((resolve) => {
+            resolve(mockEmptySnapshot);
+        });
+        return promise;
     },
 
     signOut: function(){
@@ -110,6 +106,9 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (collection == "users/validID/timesheets"){ return "fetchTimesheetsRef" }
         if (collection == "users/newID/timesheets"){ return "noRef" }
         if (collection == "feedback"){ return "feedbackRef"}
+        if (collection == "users/onlyCarID/carwashBookings" || collection == "feedbackNotifications"){
+            return "allNotifsRef"
+        }
 
         if(subcollection1 == "daySlotBookings"){
             if (subcollection2 == "bookedSlots"){
@@ -135,6 +134,7 @@ jest.mock("./src/firestore-imports.js", () => ({
         if (database == "carWashSlotRef"){ return "carWashBookedRef" }
         if (collection == "08:00"){ return "slotBookingRef" }
         if (collection == "accounts" && field == "email_not@firestore.db"){ return "noRef"}
+        if (collection == "users" && field == undefined){ throw "Undefined userID" }
         return;
     },
 
@@ -219,6 +219,14 @@ jest.mock("./src/functions.js", () => ({
 }));
 
 
+global.fetch = jest.fn(() => {
+    const promise = new Promise((resolve) => {
+        resolve(mockSnapshot);
+    });
+    return promise;
+  });
+
+
 /* MOCKING FIREBASE OBJECTS */
 
 
@@ -231,6 +239,9 @@ const mockDoc = {
     data: function(){
         return {
             data: mockData,
+            firstName: "firstName",
+            lastName: "lastName",
+            fcmToken: "token",
             diet: "diet", meal: "meal",
             taskDescription: "asdfghjkl",
             date: "date", startTime: "", endTime: "", projectCode: "", taskName: "", totalHours: ""

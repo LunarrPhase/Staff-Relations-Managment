@@ -21,7 +21,7 @@ describe("SendFeedBack Functionality", () => {
 
     beforeEach(() => {
 
-        consoleSpy = jest.spyOn(console, "error")//.mockImplementation(() => {});
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
         windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
         document.getElementById = jest.fn().mockImplementation(() => {
             return { value: "", innerText: "" };
@@ -72,6 +72,18 @@ describe("SendFeedBack Functionality", () => {
         expect(consoleSpy).toHaveBeenCalledWith("Error adding feedback: ", error)
         document.getElementById.mockRestore();
         document.getElementsByClassName.mockRestore();
+    });
+
+    it ("Throws an error if recipient email does not exist", async () => {
+
+        const mockUser = { uid: "uid" }
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { value: undefined };
+        });
+
+        await SendFeedBack(mockUser);
+        document.getElementById.mockRestore();
+        expect(consoleSpy).toHaveBeenCalledWith("Error checking email existence:", "Invalid value for email");
     });
 
     it ("Sends feedback if user and email are valid and no network errors occur", async () => {

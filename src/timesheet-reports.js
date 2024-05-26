@@ -1,5 +1,4 @@
-import { auth, onAuthStateChanged, firestore as db } from './firebaseInit.js';
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { auth, onAuthStateChanged } from './firebaseInit.js';
 import { GenerateTimesheetCSV, GenerateTimesheetPDF, GetTimesheetsByProject, GetTimesheetsByTask, SendHome } from './firebase_functions.js';
 
 
