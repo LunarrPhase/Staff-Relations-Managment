@@ -37,13 +37,20 @@ jest.mock("./src/firebaseInit.js", () => ({
         }
 
         if (auth){ return mockSnapshot }
+    },
+
+    signOut: function(){
+        const promise = new Promise((resolve) => {
+            resolve();
+        });
+        return promise;
     }
 }));
 
 
 jest.mock("./src/database-imports.js", () => ({
 
-    equalTo: function(property){ return },
+    equalTo: function(property){ return true },
 
     get: function(userRef){
 
@@ -64,21 +71,15 @@ jest.mock("./src/database-imports.js", () => ({
         return promise;
     },
 
-    orderByChild: function(property){
-        
-        if(property == 'email'){
-            return "roleChangeEmail";
-        }
-    },
+    orderByChild: function(property){ return },
 
     query: function(collection, subcollection1, subcollection2){
 
         if (collection == "allNotifsRef"){ return "allNotifsRef" }
-        else if (collection == "feedbackRef" && subcollection1 == "exists"){ return "feedbackRef"}
+        else if (collection == "feedbackRef" && subcollection1 == "hasFeedback"){ return "feedbackRef"}
         else if (subcollection1 == "exists"){ return "ref" }
         else if (subcollection1 == "DNE"){ return "noRef" }
         else if (subcollection2 == "invalidQuery"){ return "invalidQuery" }
-        else if (subcollection1 == "roleChangeEmail"){ return "roleChangeEmailQuery" }
         return;
     },
 
@@ -133,12 +134,16 @@ jest.mock("./src/firestore-imports.js", () => ({
 
         if (database == "carWashSlotRef"){ return "carWashBookedRef" }
         if (collection == "08:00"){ return "slotBookingRef" }
+        if (collection == "accounts" && field == "email_not@firestore.db"){ return "noRef"}
         return;
     },
 
     getDoc: async function(reference){
-        if (reference == "slotBookingRef"){ return mockFailedSnapshot }
-        return mockDoc },
+        if (reference == "slotBookingRef" || reference == "noRef"){
+            return mockFailedSnapshot
+        }
+        return mockDoc
+    },
 
     getDocs: async function(reference){
     
@@ -167,6 +172,9 @@ jest.mock("./src/firestore-imports.js", () => ({
 
         if (equation == "recipient==new_user@company.com"){
             return "DNE"
+        }
+        if (equation == "recipient==anemail@email.com"){
+            return "hasFeedback"
         }
         return;
     }

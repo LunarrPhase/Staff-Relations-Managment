@@ -50,17 +50,21 @@ describe("GenerateScreenreport functionality", () => {
         window.alert.mockRestore();
     });
 
-    it("", async () => {
+    it("Generates report if input user has reports", async () => {
 
-       /* const mockUser = { uid: "uid" }
+       const mockUser = { uid: "uid" }
         document.getElementById = jest.fn().mockImplementation(() => {
             return{
                 querySelectorAll: function(){
                     return { remove: function(){ return } }
                 },
-                insertRow: function(){ return { textContent: "" } }
+                insertRow: function(){
+                    return { 
+                        insertCell: function(){ return { textContent: "" } }
+                    }
+                }
             }
         })
-        await GenerateScreenReport(mockUser);*/
+        await GenerateScreenReport(mockUser);
     })
 });

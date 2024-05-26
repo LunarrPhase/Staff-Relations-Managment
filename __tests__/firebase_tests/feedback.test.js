@@ -21,7 +21,7 @@ describe("SendFeedBack Functionality", () => {
 
     beforeEach(() => {
 
-        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        consoleSpy = jest.spyOn(console, "error")//.mockImplementation(() => {});
         windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
         document.getElementById = jest.fn().mockImplementation(() => {
             return { value: "", innerText: "" };
@@ -51,9 +51,48 @@ describe("SendFeedBack Functionality", () => {
         expect(windowSpy).toHaveBeenCalledWith("The entered email does not exist.");
     });
 
+    it ("Throws error if user and email are valid and there is an error on the document", async () => {
+
+        const mockUser = { uid: "uid" }
+        const error = new Error("Cannot set properties of undefined (setting 'display')", { details: "Type Error" })
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return {
+                value: "anemail@email.com",
+                innerText: "",
+            };
+        });
+
+        document.getElementsByClassName = jest.fn().mockImplementation(() => {
+            return [{ 
+                onclick: function(){ return }
+            }]
+        })
+       
+        await SendFeedBack(mockUser);
+        expect(consoleSpy).toHaveBeenCalledWith("Error adding feedback: ", error)
+        document.getElementById.mockRestore();
+        document.getElementsByClassName.mockRestore();
+    });
+
     it ("Sends feedback if user and email are valid and no network errors occur", async () => {
 
-        const mockUser = { uid: "validID" }
+        const mockUser = { uid: "uid" }
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return {
+                value: "anemail@email.com",
+                innerText: "",
+                style: { display: "" }
+            };
+        });
+
+        document.getElementsByClassName = jest.fn().mockImplementation(() => {
+            return [{ 
+                onclick: function(){ return }
+            }]
+        })
+
         await SendFeedBack(mockUser);
+        document.getElementById.mockRestore();
+        document.getElementsByClassName.mockRestore();
     });
 })

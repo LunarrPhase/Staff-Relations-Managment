@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     logout.addEventListener("click", async () => {
         e.preventDefault();
-        await LogOut(user);
+        await LogOut(user, auth);
     });
 
 

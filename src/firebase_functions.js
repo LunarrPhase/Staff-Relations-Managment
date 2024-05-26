@@ -547,7 +547,7 @@ async function GenerateScreenReport(user){
     // Clear existing rows in the table
     const rowsToRemove = Array.from(existingTable.querySelectorAll('tr:not(:first-child)'));
     rowsToRemove.forEach(row => row.remove());
-
+   
     querySnapshot.forEach((doc) => {
     
         const data = doc.data();
@@ -608,12 +608,11 @@ async function SendFeedBack(user){
 
     try {
         const emailExists = await CheckEmailExists(recipient);
-        
+       
         if (!emailExists) {
             alert('The entered email does not exist.');
             return;
         }
-  
         try {
             await addDoc(collection(db, 'feedback'), {
                 message: message,
@@ -759,14 +758,13 @@ async function SetGreeting(user){
 }
 
 
-async function LogOut(user){
+async function LogOut(user, auth){
 
     try {
         const dt = new Date();
         const userUid = user.uid;
         const email = user.email;
 
-        
         const userRef = ref(database, 'users/' + userUid);
         const snapshot = await get(userRef);
 
@@ -778,7 +776,6 @@ async function LogOut(user){
         }
         
         else {
-            
             const accountDocRef = doc(db, 'accounts', email);
             const docSnap = await getDoc(accountDocRef);
 
@@ -808,9 +805,8 @@ function handleRoleChange(target) {
     const usersRef = ref(database, 'users');
     const row = target.closest('tr')
     const userEmail = row.getAttribute('data-user-email')
-
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
-    
+    console.log(usersQuery)
     get(usersQuery)
     .then((snapshot) => {
         if (snapshot.exists()) {
@@ -857,7 +853,7 @@ function handleUserDelete(target) {
 
     const row = target.closest('tr');
     const userEmail = row.getAttribute('data-user-email');
-    const userRef = ref(database, 'users/' + user.uid);
+    const usersRef = ref(database, 'users/');
 
     const usersQuery = query(usersRef, orderByChild('email'), equalTo(userEmail));
     get(usersQuery)
@@ -902,6 +898,7 @@ function handleUserDelete(target) {
             console.error('Error fetching user data:', error);
         });
 }
+
 
 //handles feedback request on manage users
 function handleFeedbackRequest(target) {
