@@ -8,10 +8,18 @@ describe("BookCarWash Functionality", () => {
 
     it("Throws an error if the input user is invalid", () => {
 
-        const consoleSpy = jest.spyOn(console, "error");
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
         BookCarWash(null);
         expect(consoleSpy).toHaveBeenCalledWith("No user is signed in.");
         console.error.mockRestore();
+    });
+
+    it("Throws does nothing if document has no submit button", () => {
+
+        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => { return })
+        BookCarWash("user");
+        expect(documentSpy).toHaveBeenCalledTimes(1);
+        document.getElementById.mockRestore();
     });
 });
 

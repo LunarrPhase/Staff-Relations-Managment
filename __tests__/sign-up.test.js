@@ -30,6 +30,7 @@ describe("Sign up functionality", () => {
         expect(SetRole(hrKey)).toBe("HR");
         expect(SetRole(managerKey)).toBe("Manager");
         expect(SetRole(userKey)).toBe("Staff");
+        expect(SetRole(undefined)).toBe(undefined);
     });
 
     it('Displays correct errors from error codes', () => {
