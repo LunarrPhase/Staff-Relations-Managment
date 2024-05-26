@@ -1,10 +1,163 @@
 import { handleRoleChange, handleUserDelete, handleFeedbackRequest, HandleEvent } from "../../src/firebase_functions.js";
 
 
+describe("handleRoleChange Functionality", () => {
+
+    document.getElementById = jest.fn().mockImplementation(() => {
+        return{
+            style: { display: "" },
+            addEventListener: function(){ return }
+        }
+    });
+
+    document.querySelector = jest.fn().mockImplementation(() => {
+        return{
+            addEventListener: function(){ return }
+        }
+    });
+
+    it("Throws error if the user is not in the database", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "email_not@realtime.db" } }
+            }
+        };
+
+        await handleRoleChange(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("User not found");
+        console.error.mockRestore();
+    });
+
+    it("Throws error if the promise is rejected", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        const error = new Error("Promise rejected");
+        
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "error" } }
+            }
+        };
+
+        await handleRoleChange(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("Error fetching user data:", error);
+        console.error.mockRestore();
+    });
+});
+
+
+describe("handleUserDelete Functionality", () => {
+
+    document.getElementById = jest.fn().mockImplementation(() => {
+        return{
+            style: { display: "" },
+            addEventListener: function(){ return }
+        }
+    });
+
+    document.querySelector = jest.fn().mockImplementation(() => {
+        return{
+            addEventListener: function(){ return }
+        }
+    });
+
+    it("Throws error if the user is not in the database", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "email_not@realtime.db" } }
+            }
+        };
+
+        await handleUserDelete(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("User not found");
+        console.error.mockRestore();
+    });
+
+    it("Throws error if the promise is rejected", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        const error = new Error("Promise rejected");
+        
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "error" } }
+            }
+        };
+
+        await handleUserDelete(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("Error fetching user data:", error);
+        console.error.mockRestore();
+    });
+});
+
+
+describe("handleFeedBackRequest Functionality", () => {
+
+    document.getElementById = jest.fn().mockImplementation(() => {
+        return{
+            style: { display: "" },
+            addEventListener: function(){ return }
+        }
+    });
+
+    document.querySelector = jest.fn().mockImplementation(() => {
+        return{
+            addEventListener: function(){ return }
+        }
+    })
+
+    it("Throws error if the user is not in the database", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "email_not@realtime.db" } }
+            }
+        };
+
+        await handleFeedbackRequest(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("User not found");
+        console.error.mockRestore();
+    });
+
+    it("Throws error if the promise is rejected", async () => {
+
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        const error = new Error("Promise rejected");
+        
+        const mockTarget = {
+            closest: function() {
+                return { getAttribute: function(){ return "error" } }
+            }
+        };
+
+        await handleFeedbackRequest(mockTarget);
+        expect(consoleSpy).toHaveBeenCalledWith("Error fetching user data:", error);
+        console.error.mockRestore();
+    });
+});
+
+
 describe("HandleEvent Functionality", () => {
 
-    
     it("Calls handleRoleChange when the input target is the circle", () => {
+
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return{
+                style: { display: "" },
+                addEventListener: function(){ return }
+            }
+        });
+    
+        document.querySelector = jest.fn().mockImplementation(() => {
+            return{
+                addEventListener: function(){ return "" }
+            }
+        });
 
         const mockTarget = {
             classList: {
@@ -59,91 +212,3 @@ describe("HandleEvent Functionality", () => {
         HandleEvent(mockEvent)
     });
 });
-
-
-describe("handleRoleChange Functionality", () => {
-
-    it("Updates role successfully when given a valid target", () => {
-
-        const mockTarget = {
-            closest: function() {
-                return { getAttribute: function(){ return true } }
-            }
-        };
-
-        document.getElementById = jest.fn().mockImplementation(() => {
-            return{
-                style: { display: "" },
-                addEventListener: function(){ return }
-            }
-        });
-
-        document.querySelector = jest.fn().mockImplementation(() => {
-            return{
-                addEventListener: function(){ return }
-            }
-        });
-
-        handleRoleChange(mockTarget);
-    });
-});
-
-
-describe("handleUserDelete Functionality", () => {
-
-    it("Deletes user successfully when given a valid target", () => {
-
-        const mockTarget = {
-            closest: function() {
-                return { getAttribute: function(){ return true } }
-            }
-        };
-
-        document.getElementById = jest.fn().mockImplementation(() => {
-            return{
-                style: { display: "" },
-                addEventListener: function(){ return }
-            }
-        });
-
-        document.querySelector = jest.fn().mockImplementation(() => {
-            return{
-                addEventListener: function(){ return }
-            }
-        })
-
-        handleUserDelete(mockTarget);
-    });
-});
-
-
-describe("handleFeedBackRequest Functionality", () => {
-
-    it("Updates role successfully when given a valid target", () => {
-
-        const mockTarget = {
-            closest: function() {
-                return {
-                    getAttribute: function(){
-                        return { toLowerCase: function(){ return true } }
-                    }
-                }
-            }
-        };
-
-        document.getElementById = jest.fn().mockImplementation(() => {
-            return{
-                style: { display: "" },
-                addEventListener: function(){ return }
-            }
-        });
-
-        document.querySelector = jest.fn().mockImplementation(() => {
-            return{
-                addEventListener: function(){ return }
-            }
-        })
-
-        handleFeedbackRequest(mockTarget);
-    });
-})

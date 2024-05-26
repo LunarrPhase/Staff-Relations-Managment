@@ -51,4 +51,17 @@ describe("CreateNewAccount functionality", () => {
         document.getElementById.mockRestore();
         mockFunctions.SetSignUpError.mockRestore();
     });
+
+    it("", async () => {
+
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return {
+                value: "valid",
+                textContent: "",
+                style: { display: "" }
+            }
+        });
+        
+        await CreateNewAccount("auth")
+    })
 });
