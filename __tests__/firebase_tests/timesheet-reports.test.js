@@ -7,7 +7,7 @@ describe("GenerateTimesheetCSV", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error")
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
     });
 
     afterEach(() => {
@@ -72,7 +72,7 @@ describe("GenerateTimesheetPDF", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error")//.mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => jest.fn());
     });
 
     afterEach(() => {
@@ -161,7 +161,7 @@ describe("GetTimesheetsByTask Functionality", () => {
         window.alert.mockRestore();
     });
 
-    it("Throws an error if there is a poor connecttion with the database", async () => {
+    it("Throws an error if there is a poor connection with the database", async () => {
 
         const mockUser = { uid: "poorNetwork" };
         await GetTimesheetsByTask(mockUser);
@@ -175,7 +175,7 @@ describe("GetTimesheetsByProject Functionality", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {

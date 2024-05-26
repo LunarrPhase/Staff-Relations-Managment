@@ -52,7 +52,7 @@ describe("LogOut Functionality", () => {
     }
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error")//.mockImplementation(() => {});
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {

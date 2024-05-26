@@ -1603,7 +1603,6 @@ async function GetTimesheetsByProject(user){
                         timesheetTableBody.innerHTML += timesheetRow;
                     });
                 }
-                console.log("Timesheets retrieved and sorted by project successfully");
             } catch (error) {
                 console.error("Error fetching and sorting timesheets: ", error);
             }
@@ -1681,7 +1680,6 @@ async function GetTimesheetsByTask(user){
                         timesheetTableBody.innerHTML += timesheetRow;
                     });
                 }
-                console.log("Timesheets retrieved and sorted by task description successfully");
             } catch (error) {
                 console.error("Error fetching and sorting timesheets: ", error);
             }

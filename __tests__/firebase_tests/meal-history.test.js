@@ -196,7 +196,7 @@ describe("GenerateTimesheetPDF", () => {
     let consoleSpy;
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => jest.fn());
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {
