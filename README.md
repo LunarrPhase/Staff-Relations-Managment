@@ -73,7 +73,7 @@ To use the application, follow these steps:
 - **database.rules.json**: Contains security rules for the database, typically for Firebase. These rules govern how data can be read and written in the database.
 - **firebase.json**: Configuration file for Firebase CLI, specifying how the project should be deployed and which Firebase services are used.
 - **firebase-debug.log**: A log file capturing debug information for Firebase-related operations. Useful for diagnosing issues with Firebase services.
-- **firestire.indexes.json**: Likely a typo and should be `firestore.indexes.json`, containing configuration for Firestore indexes which optimize query performance.
+- **firestore.indexes.json**: Likely a typo and should be `firestore.indexes.json`, containing configuration for Firestore indexes which optimize query performance.
 - **firestore.rules**: Security rules for Firestore, defining how data can be accessed and modified in the Firestore database.
 - **main-page.js**: Could be a main entry point or a specific page component for the application, depending on the context.
 - **mock.js**: Contains mock data or functions for testing purposes. Useful for simulating backend responses during development and testing.
