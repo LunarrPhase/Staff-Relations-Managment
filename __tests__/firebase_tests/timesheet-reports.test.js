@@ -99,6 +99,16 @@ describe("GenerateTimesheetPDF", () => {
         await GenerateTimesheetPDF(mockAuth);
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
     });
+
+    it ("Alerts if input user has no timesheets to generate", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {})
+        const mockAuth = { currentUser: { uid: "newID" } };
+
+        await GenerateTimesheetPDF(mockAuth);
+        expect(windowSpy).toHaveBeenCalledWith("No Timesheet History to generate PDF");
+        window.alert.mockRestore();
+    })
 });
 
 
@@ -139,7 +149,24 @@ describe("GetTimesheetsByTask Functionality", () => {
         expect(functionSpy).toHaveBeenCalled();
         document.getElementById.mockRestore();
         mockFunctions.truncateText.mockRestore();
-    })
+    });
+
+    it ("Alerts if input user has no timesheets to get", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {})
+        const mockUser = { uid: "newID" };
+
+        await GetTimesheetsByTask(mockUser);
+        expect(windowSpy).toHaveBeenCalledWith("No Timesheet History to display");
+        window.alert.mockRestore();
+    });
+
+    it("Throws an error if there is a poor connecttion with the database", async () => {
+
+        const mockUser = { uid: "poorNetwork" };
+        await GetTimesheetsByTask(mockUser);
+        expect(consoleSpy).toHaveBeenCalledWith("Error fetching and sorting timesheets: ", "Network Error");
+    });
 })
 
 
@@ -179,5 +206,22 @@ describe("GetTimesheetsByProject Functionality", () => {
         await GetTimesheetsByProject(mockUser);
         document.getElementById.mockRestore();
         mockFunctions.truncateText.mockRestore();
-    })
+    });
+
+    it ("Alerts if input user has no timesheets to get", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {})
+        const mockUser = { uid: "newID" };
+
+        await GetTimesheetsByProject(mockUser);
+        expect(windowSpy).toHaveBeenCalledWith("No Timesheet History to display");
+        window.alert.mockRestore();
+    });
+
+    it("Throws an error if there is a poor connecttion with the database", async () => {
+
+        const mockUser = { uid: "poorNetwork" };
+        await GetTimesheetsByProject(mockUser);
+        expect(consoleSpy).toHaveBeenCalledWith("Error fetching and sorting timesheets: ", "Network Error");
+    });
 })

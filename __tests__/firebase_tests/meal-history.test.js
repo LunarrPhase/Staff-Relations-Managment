@@ -109,6 +109,21 @@ describe("GenerateByDate Functionality", () => {
         console.log.mockRestore();
         document.getElementById.mockRestore();
     });
+
+    it("Puts up alert when user info is correct and database has no values", async () => {
+
+        const mockAuth = { currentUser: { uid: "newID" } }
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {})
+        
+        document.getElementById = jest.fn().mockImplementation(() => {
+            return { innerHTML: "" }
+        });
+        await GenerateByDate(mockAuth);
+        
+        expect(windowSpy).toHaveBeenCalledWith("No Meal History to display");
+        window.alert.mockRestore();
+        document.getElementById.mockRestore();
+    });
 });
 
 
@@ -207,5 +222,15 @@ describe("GenerateTimesheetPDF", () => {
         const mockAuth = { currentUser: { uid: null } };
         await GeneratePDF(mockAuth);
         expect(consoleSpy).toHaveBeenCalledWith("User ID not available");
+    });
+
+    it("Throws an error if the input auth has an valid user property with an invalid ID", async () => {
+
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+        const mockAuth = { currentUser: { uid: "newID" } };
+
+        await GeneratePDF(mockAuth);
+        expect(windowSpy).toHaveBeenCalledWith("No Meal History to generate");
+        window.alert.mockRestore();
     });
 });
