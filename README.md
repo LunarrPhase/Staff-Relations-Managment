@@ -40,7 +40,7 @@ To use the application, follow these steps:
 
 ## Key Resources
 
-- [Video Demo](#link-to-your-video-demo)
+- [Video Demo](https://www.youtube.com/watch?v=qMM9CJqOT0Y)
 - [Publicly Hosted Application](http://staff-relations-management.azurewebsites.net/)
 - [GitHub Repository](https://github.com/LunarrPhase/Staff-Relations-Managment)
 
