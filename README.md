@@ -35,7 +35,7 @@ This project, "Staff Relations Management," equips companies with a centralized 
 To use the application, follow these steps:
 1. Open your browser and navigate to `http://localhost:3000`.
 2. - Log in with your credentials. 
-    - If you don't have an account, create one then log in using one these access codes depending on your role: mR123123 (manager), hR456456 (HR), or uR789789 (staff)
+    - If you don't have an account, create one then log in using one these access codes depending on your role: manager: **mR123123**, HR: **hR456456**, Staff **uR789789**
 3. Use the dashboard to monitor and manage employee relations, task timesheets, and performance feedback.
 
 ## Key Resources
