@@ -44,7 +44,7 @@ describe("Getting current meal bookings", () => {
 
     it ("Throws error when user ID is invalid and calls Send Home", async () => {
 
-        consoleSpy = jest.spyOn(console, "error");
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
         const mockUser = { uid: null };
         await GetCurrentUserMealBookings(mockUser);
 
@@ -78,7 +78,7 @@ describe("Getting current user feedback notifications", () =>{
     let consoleSpy; 
 
     beforeEach(() => {
-        consoleSpy = jest.spyOn(console, "error");
+        consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     });
 
     afterEach(() => {

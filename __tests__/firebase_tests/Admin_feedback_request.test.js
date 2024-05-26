@@ -1,4 +1,3 @@
-//import { SendNotification, LoadUsersWith, handleRowClick, handleSendNotification } from "../../src/Admin_feedback_request.js";
 import { SendNotification, handleSendNotification } from "../../src/firebase_functions";
 
 describe("SendNotification Functionality", () => {

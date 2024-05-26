@@ -16,7 +16,7 @@ describe("BookCarWash Functionality", () => {
 
     it("Throws does nothing if document has no submit button", () => {
 
-        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => { return })
+        const documentSpy = jest.spyOn(document, "getElementById").mockImplementation(() => {})
         BookCarWash("user");
         expect(documentSpy).toHaveBeenCalledTimes(1);
         document.getElementById.mockRestore();
@@ -32,7 +32,7 @@ describe("SubmitBooking Functionality", () => {
 
     it("Puts up window alert if required document inputs are empty", () => {
 
-        const windowSpy = jest.spyOn(window, "alert");
+        const windowSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
         document.getElementById = jest.fn().mockImplementation((text) => {
             return { value: "" };
         });
